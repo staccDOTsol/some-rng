@@ -1,0 +1,151 @@
+@import url(https://fonts.googleapis.com/css?family=Exo:100);
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*background-color: #e9c966;*/
+  /*background-image: url("bg2.jpeg");*/
+  /*animation: 20000ms ease-in-out infinite color-change;*/
+  /*background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);*/
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.containa {
+  border-style: solid;
+  border-width: 6px;
+  border-color: black;
+  border-radius: 30px 30px 30px 30px;
+  width: 1000px;
+  text-align: center;
+  margin: auto;
+  padding-top: 3%;
+  padding-bottom: 5%;
+  font-size: 1.3em;
+  font-weight: bold;
+  background-image: url(bgrey1.jpeg)
+}
+/*
+@keyframes color-change {
+  0% {
+    background-color: #00FFA3;
+  }
+  20% {
+    background-color: #46f0b1;
+  }
+  40% {
+    background-color: #61edff;
+  }
+  60% {
+    background-color: #03E1FF;
+  }
+  80% {
+    background-color: #a36bff;
+  }
+  100% {
+    background-color: #DC1FFF;
+  }
+}
+*/
+
+#wheel {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  margin-top:7%;
+  cursor: pointer;
+
+}
+#wheel:hover {
+  animation: wheel 1s linear 0s infinite;
+}
+
+#wheel:active {
+  animation-play-state: paused;
+}
+
+@keyframes wheel {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@-webkit-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+/* Main styles */
+body {
+  margin-top: 13.5rem;
+  color: #999;
+  font: 400 16px/1.5 exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
+  text-align: center;
+  /* img size is 50x50 */
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Safari 4+ */
+  -moz-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Opera 12+ */
+  animation: bg-scrolling-reverse 0.92s infinite;
+  /* IE 10+ */
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+body::before {
+  content: "FLIP AND WIN";
+  font-size: 8rem;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.rules {
+  margin-top:5%;
+}

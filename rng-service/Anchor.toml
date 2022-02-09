@@ -1,0 +1,11 @@
+[provider]
+cluster = "devnet"
+wallet = "./throwaway.json"
+
+[programs.devnet]
+puppet-master = "37cqo9JLTq26HyVPt6LcLkQ4pcFBm6vUAS2n7GtEvrAd"
+
+[programs.localnet]
+
+[scripts]
+test = "yarn run mocha -t 1000000 tests/"

@@ -1,0 +1,21 @@
+Wallet PubKey : 4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ
+author => 4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ
+Failed to close author => 4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+operator => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC
+Failed to close operator => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+mint => GgtQFeVG55cjvh8sh5QekfkhU22yeVHR9MMRGRCPebEZ
+Failed to close mint => GgtQFeVG55cjvh8sh5QekfkhU22yeVHR9MMRGRCPebEZ | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+house => 8VcoezEVhXjFpaVBb5NfKiJaEGkg8qWbWrMBAbeUbS4P
+Failed to close house => 8VcoezEVhXjFpaVBb5NfKiJaEGkg8qWbWrMBAbeUbS4P | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+authorFeeAccount => 6P2yCJU6CMMTJb7pbQVNCBLfKk2JQpysRz7xKt2XmpUM
+Failed to close authorFeeAccount => 6P2yCJU6CMMTJb7pbQVNCBLfKk2JQpysRz7xKt2XmpUM | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+authorFeeAccountDestination => 4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ
+Failed to close authorFeeAccountDestination => 4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+operatorTreasury => 5ZTsjuzPLC7nCGF1VNR3EdkdSdQNaqbGf9oxwJAKsNJK
+Failed to close operatorTreasury => 5ZTsjuzPLC7nCGF1VNR3EdkdSdQNaqbGf9oxwJAKsNJK | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+operatorTreasuryDestination => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC
+Failed to close operatorTreasuryDestination => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+operatorFeeAccount => 6P2yCJU6CMMTJb7pbQVNCBLfKk2JQpysRz7xKt2XmpUM
+Failed to close operatorFeeAccount => 6P2yCJU6CMMTJb7pbQVNCBLfKk2JQpysRz7xKt2XmpUM | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
+operatorFeeDestination => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC
+Failed to close operatorFeeDestination => mXU7y3vPxVxPsmS9vduaTy81dQ2o8FvyvnXxFaiCLYC | due to failed to send transaction: Transaction simulation failed: Error processing Instruction 0: invalid account data for instruction
