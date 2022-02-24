@@ -2,8 +2,8 @@ import Component from './BaseComponent';
 import { Router } from 'preact-router';
 import {Helmet} from "react-helmet";
 
-import '../../notmerge2/components/bufferFill.ts'
-import { Providers } from '../../notmerge2/components/Providers.tsx'
+import './components/bufferFill.ts'
+import { Providers } from './components/Providers.tsx'
 import Helpers from './Helpers.js';
 import { html } from 'htm/preact';
 import QRScanner from './QRScanner.js';
@@ -19,7 +19,7 @@ import Store from './views/Store.js';
 import Checkout from './views/Checkout.js';
 import Product from './views/Product.js';
 import Login from './views/Login.js';
-import Profile from './views/Profile.js';
+import Profile from './views/Profile.tsx';
 import Group from './views/Group.js';
 import Message from './views/Message.js';
 import Follows from './views/Follows.js';
@@ -36,6 +36,9 @@ import Footer from './components/Footer.js';
 import State from './State.js';
 
 import logoType from '../assets/img/iris_logotype.png';
+
+import '../css/globals.css';
+import '../css/Home.module.css';
 
 import '../css/style.css';
 import '../css/cropper.min.css';

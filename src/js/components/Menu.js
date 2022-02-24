@@ -1,7 +1,7 @@
 import Component from "../BaseComponent";
 import State from "../State";
 import {html} from "htm/preact";
-import { Header } from '../../../notmerge2/components/Header.tsx'
+import { Header } from '../components/Header.tsx'
 import Helpers from "../Helpers";
 import logo from "../../assets/img/icon128.png";
 import logoType from "../../assets/img/iris_logotype.png";
