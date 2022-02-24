@@ -8,7 +8,7 @@ import Helpers from "../Helpers";
 import Component from "../BaseComponent";
 import State from "../State";
 
-const SUGGESTED_FOLLOW = 'hyECQHwSo7fgr2MVfPyakvayPeixxsaAWVtZ-vbaiSc.TXIp8MnCtrnW6n2MrYquWPcc-DTmZzMBmc2yaGv9gIU';
+const SUGGESTED_FOLLOW = 'copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA';
 
 export default class OnboardingNotification extends Component {
   componentDidMount() {

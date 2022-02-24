@@ -29,7 +29,7 @@ const DEFAULT_SETTINGS = {
     enableWebtorrent: !iris.util.isMobile,
     enablePublicPeerDiscovery: true,
     autoplayWebtorrent: true,
-    maxConnectedPeers: Helpers.isElectron ? 2 : 1
+    maxConnectedPeers: Helpers.isElectron ? 5 : 4
   }
 }
 
@@ -504,8 +504,8 @@ function followChatLink(str) {
       route(`/chat/${  chatId}`);
       return true;
     }
-    if (str.indexOf('https://iris.to') === 0) {
-      route(str.replace('https://iris.to', ''));
+    if (str.indexOf('https://autist.design') === 0) {
+      route(str.replace('https://autist.design', ''));
       return true;
     }
   }

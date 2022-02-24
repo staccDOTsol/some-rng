@@ -263,7 +263,7 @@ class Group extends View {
     }
     qrCodeEl.empty();
     new QRCode(qrCodeEl[0], {
-      text: `https://iris.to/${  window.location.pathname}`,
+      text: `https://autist.design/${  window.location.pathname}`,
       width: 300,
       height: 300,
       colorDark : "#000000",

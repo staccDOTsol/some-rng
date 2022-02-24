@@ -6,16 +6,17 @@ import Gun from 'gun';
 
 const MAX_PEER_LIST_SIZE = 10;
 const ELECTRON_GUN_URL = 'http://localhost:8767/gun';
-let maxConnectedPeers = Helpers.isElectron ? 2 : 1;
+let maxConnectedPeers = Helpers.isElectron ? 5 : 4;
 const DEFAULT_PEERS = {};
 
+DEFAULT_PEERS['https://ahemkek.herokuapp.com/gun'] = {};
 DEFAULT_PEERS['https://gun-rs.iris.to/gun'] = {};
 DEFAULT_PEERS['https://gun-us.herokuapp.com/gun'] = {};
 const loc = window.location;
 const host = loc.host;
 const is_localhost_but_not_dev = host.startsWith('localhost') && host !== 'localhost:8080';
 if (loc.hostname.endsWith('herokuapp.com') || is_localhost_but_not_dev) {
-  Object.keys(DEFAULT_PEERS).forEach(url => DEFAULT_PEERS[url].enabled = false);
+  Object.keys(DEFAULT_PEERS).forEach(url => DEFAULT_PEERS[url].enabled = true);
   DEFAULT_PEERS[loc.origin + '/gun'] = {enabled: true};
 }
 

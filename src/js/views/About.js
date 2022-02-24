@@ -5,7 +5,7 @@ import View from './View.js';
 import Identicon from '../components/Identicon';
 import FollowButton from '../components/FollowButton';
 
-const DEVELOPER = 'hyECQHwSo7fgr2MVfPyakvayPeixxsaAWVtZ-vbaiSc.TXIp8MnCtrnW6n2MrYquWPcc-DTmZzMBmc2yaGv9gIU';
+const DEVELOPER = 'copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA';
 
 class About extends View {
   constructor() {

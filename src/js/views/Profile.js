@@ -31,6 +31,9 @@ function deleteChat(pub) {
 class Profile extends View {
   constructor() {
     super();
+    
+  this.tokenState = {tokenRef: "", tokenBonding: ""};
+  this.setTokenState = null;
     this.followedUsers = new Set();
     this.followers = new Set();
     this.id = "profile";
@@ -213,7 +216,10 @@ class Profile extends View {
   renderView() {
     const title = this.state.name || 'Profile';
     const ogTitle = `${title} | Iris`;
+    
+    const pub = this.props.id;
     const description = `Latest posts by ${this.state.name || 'user'}. ${this.state.about || ''}`;
+    
     return html`
       <div class="content">
         <${Helmet}>
@@ -225,6 +231,9 @@ class Profile extends View {
             <meta property="og:description" content=${description} />
         <//>
         ${this.renderDetails()}
+        <div>         
+        <iframe src="https://autist.design:3000?tokenRef=${tokenState.tokenRef}&tokenBonding=${tokenState.tokenBonding}&pub=${pub}&mine=${this.isMyProfile.toString()}" />         
+      </div>
         ${this.state.blocked ? '' : this.renderTabs()}
         ${this.state.blocked ? '' : this.renderTab()}
       </div>
@@ -239,6 +248,16 @@ class Profile extends View {
 
   getProfileDetails() {
     const pub = this.props.id;
+       
+try{
+
+  State.public.user(pub).get('profile').get('tokenState').on(this.sub(ts => {
+    this.tokenState=(ts)
+  }));
+}
+catch (err){
+
+}
     State.public.user(pub).get('follow').map().on(this.sub(
       (following,key) => {
         if (following) {

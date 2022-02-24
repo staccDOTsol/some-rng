@@ -22,9 +22,9 @@ class Message extends Component {
   componentDidMount() {
     $(this.base).find('a').click(e => {
       const href = $(e.target).attr('href');
-      if (href && href.indexOf('https://iris.to/') === 0) {
+      if (href && href.indexOf('https://autist.design/') === 0) {
         e.preventDefault();
-        window.location = href.replace('https://iris.to/', '');
+        window.location = href.replace('https://autist.design/', '');
       }
     });
 

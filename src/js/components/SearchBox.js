@@ -9,7 +9,7 @@ import Session from '../Session.js';
 import $ from 'jquery';
 import _ from 'lodash';
 
-const suggestedFollow = 'hyECQHwSo7fgr2MVfPyakvayPeixxsaAWVtZ-vbaiSc.TXIp8MnCtrnW6n2MrYquWPcc-DTmZzMBmc2yaGv9gIU';
+const suggestedFollow = 'copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA';
 
 class SearchBox extends Component {
   constructor() {
@@ -75,7 +75,7 @@ class SearchBox extends Component {
     if (!query) { return; }
 
     if (this.props.onSelect) {
-      const s = query.split('https://iris.to/profile/');
+      const s = query.split('https://autist.design/profile/');
       if (s.length > 1) {
         return this.props.onSelect({key: s[1]});
       }
