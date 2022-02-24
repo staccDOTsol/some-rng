@@ -5,7 +5,7 @@ import Torrent from '../../components/Torrent';
 import State from '../../State.js';
 import Session from '../../Session.js';
 import iris from 'iris-lib';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import $ from 'jquery';
 import EmojiButton from '../../lib/emoji-button.js';
 import Gun from 'gun';

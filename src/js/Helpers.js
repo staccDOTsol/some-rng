@@ -1,6 +1,6 @@
 import {translate as t} from './Translation.js';
 import $ from 'jquery';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import iris from 'iris-lib';
 import Autolinker from 'autolinker';
 

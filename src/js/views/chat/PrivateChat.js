@@ -10,7 +10,7 @@ import Name from '../../components/Name';
 import Session from '../../Session.js';
 import Notifications from '../../Notifications.js';
 import NewChat from './NewChat.js';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import $ from 'jquery';
 import iris from 'iris-lib';
 import {Helmet} from 'react-helmet';

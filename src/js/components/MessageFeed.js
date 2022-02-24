@@ -5,7 +5,7 @@ import PublicMessage from './PublicMessage.js';
 import {  List, WindowScroller,CellMeasurer,CellMeasurerCache,} from 'react-virtualized';
 import State from '../State.js';
 import 'react-virtualized/styles.css';
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 class MessageFeed extends Component {
   constructor() {

@@ -12,7 +12,7 @@ import {ExistingAccountLogin} from '../Login.js';
 import Notifications from '../../Notifications.js';
 import PeerSettings from './PeerSettings';
 import $ from 'jquery';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import QRCode from '../../lib/qrcode.min';
 
 class Settings extends View {

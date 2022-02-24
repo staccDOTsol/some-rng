@@ -2,7 +2,7 @@ import Helpers from './Helpers.js';
 import Session from './Session.js';
 import { route } from 'preact-router';
 import State from './State.js';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import iris from 'iris-lib';
 import Gun from 'gun';
 import $ from 'jquery';

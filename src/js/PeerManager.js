@@ -1,7 +1,7 @@
 import State from './State.js';
 import Helpers from './Helpers.js';
 import Session from './Session.js';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import Gun from 'gun';
 
 const MAX_PEER_LIST_SIZE = 10;

@@ -7,7 +7,7 @@ import Identicon from './Identicon.js';
 import {translate as t} from '../Translation.js';
 import Session from '../Session.js';
 import $ from 'jquery';
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 const suggestedFollow = 'copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA';
 

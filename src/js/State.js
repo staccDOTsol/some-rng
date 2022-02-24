@@ -6,7 +6,7 @@ import 'gun/lib/radix';
 import 'gun/lib/radisk';
 import 'gun/lib/store';
 import 'gun/lib/rindexed';
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 import PeerManager from './PeerManager.js';
 import iris from 'iris-lib';

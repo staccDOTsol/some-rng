@@ -7,7 +7,7 @@ import ChatListItem from './ChatListItem.js';
 import { route } from 'preact-router';
 import Notifications from '../../Notifications.js';
 import ScrollViewport from 'preact-scroll-viewport';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import $ from 'jquery';
 
 class ChatList extends Component {

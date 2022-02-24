@@ -45,7 +45,7 @@
   "dependencies": {
     "@solana/wallet-adapter-react-ui": "^0.9.5",
     "@solana/web3.js": "^1.35.1",
-    "@strata-foundation/react": "^3.1.1-alpha.2",
+    "@strata-foundation/react": "1.1.0",
     "@strata-foundation/spl-token-bonding": "^3.2.5-bounty.3",
     "@strata-foundation/spl-token-collective": "^3.2.5-bounty.3",
     "@types/react": "^17.0.39",
@@ -56,7 +56,7 @@
     "htm": "^3.1.0",
     "iris-lib": "^0.0.158",
     "jquery": "^3.6.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "net": "^1.0.2",
     "preact": "^10.5.14",
     "preact-render-to-string": "^5.1.19",
