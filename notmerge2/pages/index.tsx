@@ -12,7 +12,7 @@ import { CreateButton, ITokenState } from '../components/CreateButton';
 import { TokenDisplay } from '../components/TokenDisplay';
 import styles from '../styles/Home.module.css';
 
-export const getServerSideProps: any = async (context) => {
+export const getServerSideProps: any = async (context as any) => {
   return {
     props: {
       foo: "bar"
