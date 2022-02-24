@@ -232,7 +232,7 @@ class Profile extends View {
         <//>
         ${this.renderDetails()}
         <div>         
-        <iframe frameBorder="0" src="https://34fa-20-106-149-29.ngrok.io/?tokenRef=${this.tokenState.tokenRef}&tokenBonding=${this.tokenState.tokenBonding}&pub=${pub}&mine=${this.isMyProfile.toString()}" width="100%" height="800px" />         
+        <iframe frameBorder="0" src="/next/?tokenRef=${this.tokenState.tokenRef}&tokenBonding=${this.tokenState.tokenBonding}&pub=${pub}&mine=${this.isMyProfile.toString()}" width="100%" height="800px" />         
       </div>
         ${this.state.blocked ? '' : this.renderTabs()}
         ${this.state.blocked ? '' : this.renderTab()}

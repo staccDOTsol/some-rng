@@ -1,6 +1,5 @@
 import { Swap } from '@strata-foundation/react';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { PublicKey } from '@solana/web3.js';
@@ -13,7 +12,7 @@ import { CreateButton, ITokenState } from '../components/CreateButton';
 import { TokenDisplay } from '../components/TokenDisplay';
 import styles from '../styles/Home.module.css';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: any = async (context) => {
   return {
     props: {
       foo: "bar"
@@ -21,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Home: NextPage = ({ foo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
 
     const router = useRouter()
     // @ts-ignore
