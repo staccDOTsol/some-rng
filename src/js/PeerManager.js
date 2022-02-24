@@ -6,7 +6,7 @@ import Gun from 'gun';
 
 const MAX_PEER_LIST_SIZE = 10;
 const ELECTRON_GUN_URL = 'http://localhost:8767/gun';
-let maxConnectedPeers = Helpers.isElectron ? 3 : 2;
+let maxConnectedPeers = Helpers.isElectron ? 2 : 1;
 const DEFAULT_PEERS = {};
 
 DEFAULT_PEERS['https://ahemkek.herokuapp.com/gun'] = {};

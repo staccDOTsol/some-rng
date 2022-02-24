@@ -29,7 +29,7 @@ const DEFAULT_SETTINGS = {
     enableWebtorrent: !iris.util.isMobile,
     enablePublicPeerDiscovery: true,
     autoplayWebtorrent: true,
-    maxConnectedPeers: Helpers.isElectron ? 3 : 2
+    maxConnectedPeers: Helpers.isElectron ? 2 : 1
   }
 }
 
