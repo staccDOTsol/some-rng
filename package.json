@@ -3,7 +3,7 @@
   "version": "2.1.1",
   "license": "MIT",
   "scripts": {
-    "build": "preact build --no-prerender",
+    "build": "preact build --no-prerender --no-inline-css",
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "echo 'dev server will start at http://localhost:8080';preact watch",
     "lint": "eslint src",
