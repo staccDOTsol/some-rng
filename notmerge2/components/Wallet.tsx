@@ -15,7 +15,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 import React, { FC, useMemo } from "react";
 
 export const DEFAULT_ENDPOINT =
-  process.env.NEXT_PUBLIC_SOLANA_URL || "https://api.devnet.solana.com";
+  process.env.NEXT_PUBLIC_SOLANA_URL || "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2";
 
 // Default styles that can be overridden by your app
 require("@solana/wallet-adapter-react-ui/styles.css");

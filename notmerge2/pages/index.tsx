@@ -36,8 +36,15 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<typeof getServerSid
       [tokenState, setTokenState] = React.useState<ITokenState>({"tokenRef": "", "tokenBonding": ""}); 
     }
     const pub  = router.query.pub;
-    const mine = router.query.mine;
-  
+    let mine = router.query.mine;
+  if (mine == "false"){
+    // @ts-ignore
+    mine = false;
+  }
+  else {
+    // @ts-ignore
+    mine = true;
+  }
   
           // @ts-ignore
   return (
