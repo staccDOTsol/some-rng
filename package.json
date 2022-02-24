@@ -45,7 +45,7 @@
   "dependencies": {
     "@solana/wallet-adapter-react-ui": "^0.9.5",
     "@solana/web3.js": "^1.35.1",
-    "@strata-foundation/react": "1.1.0",
+    "@strata-foundation/react": "2.2.1-alpha.8",
     "@strata-foundation/spl-token-bonding": "^3.2.5-bounty.3",
     "@strata-foundation/spl-token-collective": "^3.2.5-bounty.3",
     "@types/react": "^17.0.39",
