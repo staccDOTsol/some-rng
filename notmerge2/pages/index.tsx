@@ -1,5 +1,5 @@
 import { Swap } from '@strata-foundation/react';
-import type { InferGetServerSidePropsType, NextPage } from 'next';
+import type {  NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { PublicKey } from '@solana/web3.js';
@@ -12,11 +12,17 @@ import { CreateButton, ITokenState } from '../components/CreateButton';
 import { TokenDisplay } from '../components/TokenDisplay';
 import styles from '../styles/Home.module.css';
 
-const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
+
+const Home: NextPage = () => {
 
     const router = useRouter()
+    let pub  
+    let mine
     // @ts-ignore
     let tokenState, setTokenState;
+    let notgo = true;
+    if (router.query.tokenRef){
+      notgo = false;
     // @ts-ignore
     if (router.query.tokenRef.length > 4){
       // @ts-ignore
@@ -26,8 +32,8 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
       // @ts-ignore
       [tokenState, setTokenState] = React.useState<ITokenState>({"tokenRef": "", "tokenBonding": ""}); 
     }
-    const pub  = router.query.pub;
-    let mine = router.query.mine;
+    pub = router.query.pub;
+    mine = router.query.mine;
   if (mine == "false"){
     // @ts-ignore
     mine = false;
@@ -36,6 +42,7 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
     // @ts-ignore
     mine = true;
   }
+}
   
           // @ts-ignore
   return (
@@ -47,10 +54,13 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
       </Head>
 
       <main className={styles.main}>
-        
+        {!notgo ? ( 
+          <div>
           <TokenDisplay  {...tokenState} />
           <div style={{ width: "400px" }}>
-            {tokenState.tokenBonding && <Swap tokenBondingKey={tokenState.tokenBonding} />}
+           
+            { // @ts-ignore
+            tokenState.tokenBonding && <Swap tokenBondingKey={tokenState.tokenBonding} />}
           </div>
           <Toaster
             position="bottom-center"
@@ -62,8 +72,10 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<any>) => {
           {
           
           // @ts-ignore
-          mine && <CreateButton pub={pub} setTokenState={setTokenState} />}
-          
+          mine && <CreateButton pub={pub} setTokenState={setTokenState} />}</div>
+        ) : (
+          <div></div>
+        )}
       </main>
     </div>
   );
