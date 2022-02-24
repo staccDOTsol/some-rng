@@ -4,7 +4,7 @@ import Helpers from '../Helpers.js' ;
 import { html } from 'htm/preact';
 import { useState } from 'react';
 import { Swap } from '@strata-foundation/react';
-
+import { Header } from '../components/Header.tsx';
 import {translate as t} from '../Translation.js';
 import State from '../State.js';
 import Session from '../Session.js';
@@ -232,7 +232,7 @@ class Profile extends View {
     console.log(this.tokenState)
    const haha = ( <div>
  
-       
+          <Header />
           <TokenDisplay  {...this.tokenState} />
           <div style={{ width: "400px" }}>
              {isargh ? ( <Swap tokenBondingKey={this.tokenState.tokenBonding} /> ) : ( <div> </div>)}
