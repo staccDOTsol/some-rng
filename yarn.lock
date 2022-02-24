@@ -71,7 +71,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.17.0.tgz#86850b8597ea6962089770952075dcaabb8dba34"
   integrity sha512-392byTlpGWXMv4FbyWw3sAZ/FrW/DrwqLGXpy0mbyNe9Taqv1mg9yON5/o0cnr8XYCkFTZbC1eV+c+LAROgrng==
 
-"@babel/core@^7.1.0", "@babel/core@^7.11.1", "@babel/core@^7.12.3", "@babel/core@^7.13.16", "@babel/core@^7.15.0", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
+"@babel/core@7.x", "@babel/core@^7.1.0", "@babel/core@^7.11.1", "@babel/core@^7.12.3", "@babel/core@^7.13.16", "@babel/core@^7.15.0", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
   version "7.17.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.17.5.tgz#6cd2e836058c28f06a4ca8ee7ed955bbf37c8225"
   integrity sha512-/BBMw4EvjmyquN5O+t5eh0+YqB3XXJkYD2cjKpYtWOfFy4lQ4UozNSmxAcWT8r2XtZs0ewG+zrfsqeR15i1ajA==
@@ -996,7 +996,7 @@
     "@babel/helper-validator-option" "^7.16.7"
     "@babel/plugin-transform-typescript" "^7.16.7"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.0", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@7.x", "@babel/runtime@^7.0.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.0", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.17.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
   integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
@@ -2446,6 +2446,18 @@
   dependencies:
     buffer "~6.0.3"
 
+"@solana/spl-governance@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@solana/spl-governance/-/spl-governance-0.0.27.tgz#cee0cae0aa343762d6fd2d02e60793a79b2c1b73"
+  integrity sha512-oHKDJmTXbJAIiw1Edu2aspOWXj3P4wCZz0twdAQsxGHdrjrlFO2xjcWeCeDHBHT3WII0kbDamo6yoIWeXHd8Cw==
+  dependencies:
+    "@solana/web3.js" "^1.22.0"
+    bignumber.js "^9.0.1"
+    bn.js "^5.1.3"
+    borsh "^0.3.1"
+    bs58 "^4.0.1"
+    superstruct "^0.15.2"
+
 "@solana/spl-name-service@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@solana/spl-name-service/-/spl-name-service-0.1.3.tgz#33659ac84a4ef2e8498a56e9b220786ee70abd9b"
@@ -2464,6 +2476,13 @@
     fs "^0.0.1-security"
     tweetnacl "^1.0.3"
     webpack-dev-server "^3.11.2"
+
+"@solana/spl-token-registry@^0.2.2130":
+  version "0.2.2494"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.2494.tgz#6b0fd4afa8fdaa9531bc414d6e9591bc9a683c69"
+  integrity sha512-tc8gL7AkNmYL7QV8YUZ1IyxqZxDr+PlH9qpWIqmNgpkIyI7Et/Otq9pKsTzZHa3Kb0PP5puhYlJmjl9KeW3dUw==
+  dependencies:
+    cross-fetch "3.0.6"
 
 "@solana/spl-token@0.1.3":
   version "0.1.3"
@@ -2712,7 +2731,7 @@
     superstruct "^0.14.2"
     tweetnacl "^1.0.0"
 
-"@solana/web3.js@^1.12.0", "@solana/web3.js@^1.17.0", "@solana/web3.js@^1.2.2", "@solana/web3.js@^1.20.0", "@solana/web3.js@^1.21.0", "@solana/web3.js@^1.29.2", "@solana/web3.js@^1.30.2", "@solana/web3.js@^1.31.0", "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.35.1":
+"@solana/web3.js@^1.12.0", "@solana/web3.js@^1.17.0", "@solana/web3.js@^1.2.2", "@solana/web3.js@^1.20.0", "@solana/web3.js@^1.21.0", "@solana/web3.js@^1.22.0", "@solana/web3.js@^1.29.2", "@solana/web3.js@^1.30.2", "@solana/web3.js@^1.31.0", "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.35.1":
   version "1.35.1"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.35.1.tgz#777b039a3b51e63c347712a57c7db87c9d1db832"
   integrity sha512-3bDawFFI0KcvgI8Ae4N4hdQ8+Bg9gu6q+IkhPrYxOF6RYnB3U+9A4u+DhHZWLvTvgoTyesi/m5HzlleKtFEqRQ==
@@ -2742,10 +2761,22 @@
     eventemitter3 "^4.0.7"
     uuid "^8.3.2"
 
-"@strata-foundation/react@2.2.1-alpha.8":
-  version "2.2.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@strata-foundation/react/-/react-2.2.1-alpha.8.tgz#fa36fa15824d3597a5380c7999578bf08a269ed2"
-  integrity sha512-TsJbjv2jBFAbtz/+yzHegpJSqBcZJabG8anBrzlMHU34efM9S7S4r9Pk4J38LvtsjKcEo/M872F1hRhcDeCDdw==
+"@strata-foundation/marketplace-sdk@^3.2.5-bounty.3":
+  version "3.2.5-bounty.3"
+  resolved "https://registry.yarnpkg.com/@strata-foundation/marketplace-sdk/-/marketplace-sdk-3.2.5-bounty.3.tgz#a73e9347e9eef467069ef4e00be949d18828ebe0"
+  integrity sha512-xVReFXOw1RB6InlqmD1/bDWbVYDDzV0vznJF2+IkYOztxX5aRBCJqNvmOrIrsoONGaZdC2jq3lEpJyiLz42HVw==
+  dependencies:
+    "@project-serum/anchor" "^0.20.1"
+    "@solana/web3.js" "^1.32.0"
+    "@strata-foundation/spl-token-bonding" "^3.2.5-bounty.3"
+    "@strata-foundation/spl-utils" "^3.2.5-bounty.3"
+    bn.js "^5.2.0"
+    copyfiles "^2.4.1"
+
+"@strata-foundation/react@^3.2.5-bounty.3":
+  version "3.2.5-bounty.3"
+  resolved "https://registry.yarnpkg.com/@strata-foundation/react/-/react-3.2.5-bounty.3.tgz#26761367eb127c54ffc47f33594b5d49808f4daa"
+  integrity sha512-Ri808pBmHigq1UfPVOhLLc4XxZIT9icA8mAxTokSgRrqOT14VGcasJCk0klF7bkLabIZAzlXl4YenfwEnILSjA==
   dependencies:
     "@chakra-ui/react" "^1.7.2"
     "@emotion/react" "^11.6.0"
@@ -2753,37 +2784,30 @@
     "@hookform/resolvers" "^2.8.3"
     "@project-serum/anchor" "^0.20.1"
     "@project-serum/serum" "^0.13.61"
+    "@solana/spl-governance" "^0.0.27"
     "@solana/spl-token" "^0.1.8"
+    "@solana/spl-token-registry" "^0.2.2130"
     "@solana/wallet-adapter-base" "^0.9.1"
     "@solana/wallet-adapter-react" "^0.15.1"
     "@solana/wallet-adapter-wallets" "^0.14.0"
     "@solana/web3.js" "^1.32.0"
-    "@strata-foundation/spl-token-bonding" "^2.2.1-alpha.8+2df342d"
-    "@strata-foundation/spl-token-collective" "^2.2.1-alpha.8+2df342d"
-    "@strata-foundation/spl-utils" "^2.2.1-alpha.8+2df342d"
+    "@strata-foundation/marketplace-sdk" "^3.2.5-bounty.3"
+    "@strata-foundation/spl-token-bonding" "^3.2.5-bounty.3"
+    "@strata-foundation/spl-token-collective" "^3.2.5-bounty.3"
+    "@strata-foundation/spl-utils" "^3.2.5-bounty.3"
     "@toruslabs/solana-embed" "0.0.9"
     axios "^0.25.0"
     buffer "^6.0.3"
     dotenv "^10.0.0"
     eventemitter3 "^4.0.7"
     framer-motion "^5.3.0"
+    fuse.js "^6.5.3"
     path "^0.12.7"
     react-async-hook "^4.0.0"
     react-hook-form "^7.19.5"
     react-hot-toast "^2.1.1"
     react-icons "^4.3.1"
     yup "^0.32.11"
-
-"@strata-foundation/spl-token-bonding@^2.2.1-alpha.8+2df342d":
-  version "2.2.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@strata-foundation/spl-token-bonding/-/spl-token-bonding-2.2.1-alpha.8.tgz#5c4d57ec91feffd7c2d2fbbc69ec469b78f3ece5"
-  integrity sha512-c0p2+SzT2Kytc/W2qzxS8jHQoFcxob1MQ4ppmYFwdiYT5dp0cIOMzMQp3+q+HPymvG2jAbAO4lfBCYMJ3qjqBA==
-  dependencies:
-    "@project-serum/anchor" "^0.20.1"
-    "@solana/web3.js" "^1.32.0"
-    "@strata-foundation/spl-utils" "^2.2.1-alpha.8+2df342d"
-    bn.js "^5.2.0"
-    copyfiles "^2.4.1"
 
 "@strata-foundation/spl-token-bonding@^3.2.5-bounty.3":
   version "3.2.5-bounty.3"
@@ -2793,20 +2817,6 @@
     "@project-serum/anchor" "^0.20.1"
     "@solana/web3.js" "^1.32.0"
     "@strata-foundation/spl-utils" "^3.2.5-bounty.3"
-    bn.js "^5.2.0"
-    copyfiles "^2.4.1"
-
-"@strata-foundation/spl-token-collective@^2.2.1-alpha.8+2df342d":
-  version "2.2.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@strata-foundation/spl-token-collective/-/spl-token-collective-2.2.1-alpha.8.tgz#f79a97b98450ae92abe2f122a58cfcdfe6669041"
-  integrity sha512-e0+2Mpvr9fG/3Rle6A75Teh7Puu58CLqRfgNCRKpcFazXRY5WXrFcF5IZJ29oShJ/P+S2ehJ5KMwqjgqkEWdww==
-  dependencies:
-    "@bonfida/spl-name-service" "^0.1.22"
-    "@project-serum/anchor" "^0.20.1"
-    "@solana/web3.js" "^1.32.0"
-    "@strata-foundation/spl-token-bonding" "^2.2.1-alpha.8+2df342d"
-    "@strata-foundation/spl-token-staking" "^2.2.1-alpha.8+2df342d"
-    "@strata-foundation/spl-utils" "^2.2.1-alpha.8+2df342d"
     bn.js "^5.2.0"
     copyfiles "^2.4.1"
 
@@ -2824,16 +2834,6 @@
     bn.js "^5.2.0"
     copyfiles "^2.4.1"
 
-"@strata-foundation/spl-token-staking@^2.2.1-alpha.8+2df342d":
-  version "2.2.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@strata-foundation/spl-token-staking/-/spl-token-staking-2.2.1-alpha.8.tgz#7cfefecdbfc89ec20ab7dba2c285e2cc1df766a9"
-  integrity sha512-vMnK/Sa7HyZyOES4s7N4xDtNT0GH9SvbUQFvPOJueICYuICUvD7EQIbmi4DM2wwVJzcsN3ZKBROh4gMKvueZWQ==
-  dependencies:
-    "@solana/web3.js" "^1.32.0"
-    "@strata-foundation/spl-utils" "^2.2.1-alpha.8+2df342d"
-    bn.js "^5.2.0"
-    semver "^7.3.5"
-
 "@strata-foundation/spl-token-staking@^3.2.5-bounty.3":
   version "3.2.5-bounty.3"
   resolved "https://registry.yarnpkg.com/@strata-foundation/spl-token-staking/-/spl-token-staking-3.2.5-bounty.3.tgz#4cb0d1c005f412a291b4259fef683c802cc134d5"
@@ -2843,21 +2843,6 @@
     "@strata-foundation/spl-utils" "^3.2.5-bounty.3"
     bn.js "^5.2.0"
     semver "^7.3.5"
-
-"@strata-foundation/spl-utils@^2.2.1-alpha.8+2df342d":
-  version "2.2.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@strata-foundation/spl-utils/-/spl-utils-2.2.1-alpha.8.tgz#7a84c35c6a343d0e7760823499cb45e25a7e2d87"
-  integrity sha512-oh/ZJprccOJ+Ik/+ScK/aAwAjHSkvkBHcwAFmBJIP0o32M6xix1jnEjT/8/c/DQJhN0MSju8cObXIDhrYwoMBA==
-  dependencies:
-    "@metaplex-foundation/mpl-token-metadata" "^1.1.0"
-    "@metaplex/arweave-cost" "1.0.4"
-    "@metaplex/js" "^4.3.0"
-    "@solana/spl-name-service" "^0.1.3"
-    "@solana/web3.js" "^1.32.0"
-    bs58 "^4.0.1"
-    localstorage-memory "^1.0.3"
-    superstruct "0.14.2"
-    tweetnacl "^1.0.3"
 
 "@strata-foundation/spl-utils@^3.2.5-bounty.3":
   version "3.2.5-bounty.3"
@@ -3221,10 +3206,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react@^17.0.39":
-  version "17.0.39"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.39.tgz#d0f4cde092502a6db00a1cded6e6bf2abb7633ce"
-  integrity sha512-UVavlfAxDd/AgAacMa60Azl7ygyQNRwC/DsHZmKgNvPmRR5p70AJ5Q9EAmL2NWOJmeV+vVUI4IAP7GZrN8h8Ug==
+"@types/react@^16.0":
+  version "16.14.23"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.23.tgz#37201b9f2324c5ff8fa4600dbf19079dfdffc880"
+  integrity sha512-WngBZLuSkP4IAgPi0HOsGCHo6dn3CcuLQnCfC17VbA7YBgipZiZoTOhObwl/93DsFW0Y2a/ZXeonpW4DxirEJg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -4357,7 +4342,7 @@ big.js@^5.2.2:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@^9.0.2:
+bignumber.js@^9.0.1, bignumber.js@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
@@ -4550,6 +4535,16 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+borsh@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/borsh/-/borsh-0.3.1.tgz#c31c3a149610e37913deada80e89073fb15cf55b"
+  integrity sha512-gJoSTnhwLxN/i2+15Y7uprU8h3CKI+Co4YKZKvrGYUy0FwHWM20x5Sx7eU8Xv4HQqV+7rb4r3P7K1cBIQe3q8A==
+  dependencies:
+    "@types/bn.js" "^4.11.5"
+    bn.js "^5.0.0"
+    bs58 "^4.0.0"
+    text-encoding-utf-8 "^1.0.2"
 
 borsh@^0.4.0:
   version "0.4.0"
@@ -5692,6 +5687,13 @@ critters-webpack-plugin@^2.5.0:
     pretty-bytes "^4.0.2"
     webpack-log "^2.0.0"
     webpack-sources "^1.3.0"
+
+cross-fetch@3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.6.tgz#3a4040bc8941e653e0e9cf17f29ebcd177d3365c"
+  integrity sha512-KBPUbqgFjzWlVcURG+Svp9TlhA5uliYtiNx/0r8nv0pdypeQCRJ9IaSIc3q/x3q8t3F75cHuwxVql1HFGHCNJQ==
+  dependencies:
+    node-fetch "2.6.1"
 
 cross-fetch@^3.1.4:
   version "3.1.5"
@@ -7674,7 +7676,7 @@ functions-have-names@^1.2.2:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.2.tgz#98d93991c39da9361f8e50b337c4f6e41f120e21"
   integrity sha512-bLgc3asbWdwPbx2mNk2S49kmJCuQeu0nfmaOgbs8WIyzzkw3r4htszdIi9Q9EMezDPTYuJx2wvjZ/EwgAthpnA==
 
-fuse.js@^6.4.2:
+fuse.js@^6.4.2, fuse.js@^6.5.3:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.5.3.tgz#7446c0acbc4ab0ab36fa602e97499bdb69452b93"
   integrity sha512-sA5etGE7yD/pOqivZRBvUBd/NaL2sjAu6QuSaFoe1H2BrJSkH/T/UXAJ8CdXdw7DvY3Hs8CXKYkDWX7RiP5KOg==
@@ -10605,6 +10607,11 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.2.tgz#432cfa82962ce494b132e9d72a15b29f71ff5d32"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
+node-fetch@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-fetch@2.6.7, node-fetch@^2.6.1:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
@@ -12737,6 +12744,16 @@ react-clientside-effect@^1.2.5:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
+react-dom@^16.0:
+  version "16.14.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
+  integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
+
 react-dom@^17.0.0:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
@@ -12866,6 +12883,15 @@ react-virtualized@^9.22.3:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.4"
+
+react@^16.0:
+  version "16.14.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
+  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 react@^17.0.0:
   version "17.0.2"
@@ -13381,6 +13407,14 @@ saxes@^5.0.1:
   integrity sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==
   dependencies:
     xmlchars "^2.2.0"
+
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+  integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 scheduler@^0.20.2:
   version "0.20.2"
@@ -14284,6 +14318,11 @@ superstruct@0.14.2, superstruct@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.14.2.tgz#0dbcdf3d83676588828f1cf5ed35cda02f59025b"
   integrity sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==
+
+superstruct@^0.15.2:
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.15.3.tgz#07edfc715259ebfe3b4b2e4cb53e8e45b51674a4"
+  integrity sha512-wilec1Rg3FtKuRjRyCt70g5W29YUEuaLnybdVQUI+VQ7m0bw8k7TzrRv5iYmo6IpjLVrwxP5t3RgjAVqhYh4Fg==
 
 supports-color@^5.3.0:
   version "5.5.0"
