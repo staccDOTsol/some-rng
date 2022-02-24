@@ -25,8 +25,16 @@ const Home: NextPage = ({ foo }: InferGetServerSidePropsType<typeof getServerSid
 
     const router = useRouter()
     // @ts-ignore
-    const [tokenState, setTokenState] = React.useState<ITokenState>({"tokenRef": new PublicKey(router.query.tokenRef), "tokenBonding": new PublicKey(router.query.tokenBonding)});
-
+    let tokenState, setTokenState;
+    // @ts-ignore
+    if (router.query.tokenRef.length > 4){
+      // @ts-ignore
+      [tokenState, setTokenState] = React.useState<ITokenState>({"tokenRef": new PublicKey(router.query.tokenRef), "tokenBonding": new PublicKey(router.query.tokenBonding)});
+    }
+    else {
+      // @ts-ignore
+      [tokenState, setTokenState] = React.useState<ITokenState>({"tokenRef": "", "tokenBonding": ""}); 
+    }
     const pub  = router.query.pub;
     const mine = router.query.mine;
   
