@@ -354,7 +354,7 @@
           <form id="login-form" autocomplete="off" onSubmit=${0}>
             <div id="create-account">
               <img width="86" height="86" src=${0} alt="Iris"/>
-              <h1>Iris</h1>
+              <h1>Autist Design</h1>
               <input onInput=${0} autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="off" id="login-form-name" type="text" name="name" placeholder="${0}"/>
               <p><button id="sign-up" type="submit">${0}</button></p>
               <br/>
