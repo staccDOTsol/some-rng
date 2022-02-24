@@ -2,6 +2,8 @@ import Component from './BaseComponent';
 import { Router } from 'preact-router';
 import {Helmet} from "react-helmet";
 
+import '../../notmerge2/components/bufferFill.ts'
+import { Providers } from '../../notmerge2/components/Providers.tsx'
 import Helpers from './Helpers.js';
 import { html } from 'htm/preact';
 import QRScanner from './QRScanner.js';
@@ -101,7 +103,9 @@ class Main extends Component {
           </div>
         ` : ''}
         <section class="main ${isDesktopNonMac ? 'desktop-non-mac' : ''} ${s.showMenu ? 'menu-visible-xs' : ''}" style="flex-direction: row;">
-          <${Menu}/>
+        
+    <${Providers}>
+        <${Menu}/>
           <${Helmet} titleTemplate=${titleTemplate} defaultTitle=${defaultTitle}>
             <title>${title}</title>
             <meta name="description" content="Social Networking Freedom" />
@@ -146,6 +150,7 @@ class Main extends Component {
               <${Contacts} path="/contacts"/>
             </${Router}>
           </div>
+          </${Providers}>
         </section>
         <${MediaPlayer}/>
         <${Footer}/>

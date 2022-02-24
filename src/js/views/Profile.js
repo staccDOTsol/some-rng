@@ -32,7 +32,7 @@ class Profile extends View {
   constructor() {
     super();
     
-  this.tokenState = {tokenRef: "", tokenBonding: ""};
+  this.tokenState = {};
   this.setTokenState = null;
     this.followedUsers = new Set();
     this.followers = new Set();
@@ -216,10 +216,30 @@ class Profile extends View {
   renderView() {
     const title = this.state.name || 'Profile';
     const ogTitle = `${title} | Iris`;
-    
+    const mine = this.isMyProfile;
     const pub = this.props.id;
     const description = `Latest posts by ${this.state.name || 'user'}. ${this.state.about || ''}`;
-    
+    const haha = function (){
+     return( <div>
+        <TokenDisplay  {...this.tokenState} />
+        <div style={{ width: "400px" }}>
+         
+          { // @ts-ignore
+          this.tokenState.tokenBonding && <Swap tokenBondingKey={this.tokenState.tokenBonding} />}
+        </div>
+        <Toaster
+          position="bottom-center"
+          containerStyle={{
+            margin: "auto",
+            width: "420px",
+          }}
+        />
+        {
+        
+        // @ts-ignore
+        mine && <CreateButton pub={pub} setTokenState={this.setTokenState} />}</div>
+)
+    }
     return html`
       <div class="content">
         <${Helmet}>
@@ -231,9 +251,7 @@ class Profile extends View {
             <meta property="og:description" content=${description} />
         <//>
         ${this.renderDetails()}
-        <div>         
-        <iframe frameBorder="0" src="/next.html?tokenRef=${this.tokenState.tokenRef}&tokenBonding=${this.tokenState.tokenBonding}&pub=${pub}&mine=${this.isMyProfile.toString()}" width="100%" height="800px" />         
-      </div>
+        ${haha}
         ${this.state.blocked ? '' : this.renderTabs()}
         ${this.state.blocked ? '' : this.renderTab()}
       </div>
