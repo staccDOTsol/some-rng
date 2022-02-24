@@ -9,7 +9,7 @@ const ELECTRON_GUN_URL = 'http://localhost:8767/gun';
 let maxConnectedPeers = Helpers.isElectron ? 2 : 1;
 const DEFAULT_PEERS = {};
 
-DEFAULT_PEERS['https://ahemkek.herokuapp.com/gun'] = {};
+DEFAULT_PEERS['https://autist.design/gun'] = {};
 DEFAULT_PEERS['https://gun-rs.iris.to/gun'] = {};
 DEFAULT_PEERS['https://gun-us.herokuapp.com/gun'] = {};
 const loc = window.location;
