@@ -1,7 +1,6 @@
 import Component from "../BaseComponent";
 import State from "../State";
 import {html} from "htm/preact";
-import { Header } from '../components/Header.tsx'
 import Helpers from "../Helpers";
 import logo from "../../assets/img/icon128.png";
 import logoType from "../../assets/img/iris_logotype.png";
@@ -33,7 +32,6 @@ export default class Menu extends Component {
   render() {
     return html`
       <div class="application-list">
-      <${Header} />
         ${Helpers.isElectron ? html`<div class="electron-padding"/>` : html`
           <a href="/" onClick=${() => this.menuLinkClicked()} tabindex="0" class="logo">
             <div class="mobile-menu-icon visible-xs-inline-block">${Icons.menu}</div>
