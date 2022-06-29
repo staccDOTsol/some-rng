@@ -49,24 +49,24 @@ app.get("/join",async (req: Request, res: Response) => {
   let c = Math.floor(Math.random() * twofiddy)
   let c2 = 0
   let config = template
-  fs.readdirSync('./pending').forEach(file => {
+  fs.readdirSync('/app/reveal-worker-express/pending').forEach(file => {
     console.log(file)
     //console.log(file);
     if (c == c2){
-      //fs.copyFileSync ('./pending/' + file, './notpending/' + req.query.player)
-      config = JSON.parse(fs.readFileSync('./pending/' + file).toString())//req.query.player).toString())
+      //fs.copyFileSync ('/app/reveal-worker-express/pending/' + file, '/app/reveal-worker-express/notpending/' + req.query.player)
+      config = JSON.parse(fs.readFileSync('/app/reveal-worker-express/pending/' + file).toString())//req.query.player).toString())
 
-      fs.unlinkSync('./pending/' + file)
+      fs.unlinkSync('/app/reveal-worker-express/pending/' + file)
     
       config.tokensToJoin[0].amount = parseInt(req.query.risk as string)
-      fs.writeFileSync('./notpending/'+req.query.player, JSON.stringify(config))
+      fs.writeFileSync('/app/reveal-worker-express/notpending/'+req.query.player, JSON.stringify(config))
    
     }
     c2++;
   });
 if (config.tokensToJoin[0].amount  < 0.5 * 10 ** 9){
   console.log('gud')
-  const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('../../id.json').toString())))//new Uint8Array(walletKey));
+  const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
   const anchorWallet = new NodeWallet(walletKeyPair)
   console.log(`wallet public key: ${walletKeyPair.publicKey}`);
   console.log('joinnnnin')
@@ -310,7 +310,7 @@ let index = 0
 
 const setup = config.tokensToJoin[index];
 
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 setTimeout(async function(){
@@ -456,19 +456,19 @@ await anchorProgram.drainOracle(
 try {
   lols.slice(lols.indexOf(req.query.player as string), 1)
 
-fs.unlinkSync('./notpending/' + req.query.player) 
+fs.unlinkSync('/app/reveal-worker-express/notpending/' + req.query.player) 
 }
 catch (err){
 lols.slice(lols.indexOf(req.query.player as string), 1)
 }
   }
 
-// fs.unlinkSync('./notpending/' + file) 
+// fs.unlinkSync('/app/reveal-worker-express/notpending/' + file) 
 } catch (err){
   console.log(err)
-// fs.unlinkSync('./notpending/' + file)
+// fs.unlinkSync('/app/reveal-worker-express/notpending/' + file)
 
-//fs.unlinkSync('./notpending/' + req.query.player) 
+//fs.unlinkSync('/app/reveal-worker-express/notpending/' + req.query.player) 
 lols.slice(lols.indexOf(req.query.player as string), 1)
 }
 
@@ -529,9 +529,9 @@ let template = {
 let blarg = true 
 let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
 setTimeout(async function(){
-    fs.readdirSync('./notpending').forEach(async file => {
-let config = JSON.parse(fs.readFileSync('./notpending/' + file).toString())
-const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./id.json').toString())))//new Uint8Array(walletKey));
+    fs.readdirSync('/app/reveal-worker-express/notpending').forEach(async file => {
+let config = JSON.parse(fs.readFileSync('/app/reveal-worker-express/notpending/' + file).toString())
+const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
 console.log(`wallet public key: ${walletKeyPair.publicKey}`);
 const anchorWallet = new NodeWallet(walletKeyPair)
 
@@ -761,7 +761,7 @@ let index = 0
 
 const setup = config.tokensToJoin[index];
 
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 setTimeout(async function(){
@@ -878,7 +878,7 @@ blarg = false
   
   let c = 0;
   // @ts-ignore
-  fs.readdirSync('./pending').forEach(file => {
+  fs.readdirSync('/app/reveal-worker-express/pending').forEach(file => {
     //console.log(file);
     c++;
   });
@@ -889,12 +889,12 @@ blarg = false
     let newseed = new Keypair().publicKey.toBase58();
     let arg = template 
     arg.oracleState.seed = newseed
-    let configPath = './pending/'+new Date().getTime().toString()
+    let configPath = '/app/reveal-worker-express/pending/'+new Date().getTime().toString()
     fs.writeFileSync(configPath, JSON.stringify(arg))
     
 
-    //const walletKeyPair = loadWalletKey('./id.json');
-    const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./id.json').toString())))//new Uint8Array(walletKey));
+    //const walletKeyPair = loadWalletKey('/app/reveal-worker-express/id.json');
+    const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
     console.log(`wallet public key: ${walletKeyPair.publicKey}`);
     const anchorWallet = new NodeWallet(walletKeyPair)
 
@@ -982,7 +982,7 @@ new web3.PublicKey(config.oracleState.authority)
     index:new BN(setup.index),
   }
 );
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 
