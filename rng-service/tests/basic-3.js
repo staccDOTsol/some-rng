@@ -19,7 +19,7 @@ async function loadHouseProgram(walletKeyPair) {
   const solConnection = new Connection("https://api.devnet.solana.com");
   const walletWrapper = new anchor.Wallet(walletKeyPair);
   const provider = new anchor.Provider(solConnection, walletWrapper, {
-    preflightCommitment: "singleGossip", commitment: "singleGossip",
+    preflightCommitment: "confirmed", commitment: "confirmed",
   });
   const idl = await anchor.Program.fetchIdl(
       HOUSE_PROGRAM_ID,
@@ -56,7 +56,7 @@ const solConnection = new anchor.web3.Connection(
     "https://api.devnet.solana.com",
 );
 const provider = new anchor.Provider(solConnection, walletWrapper, {
-  preflightCommitment: "singleGossip", commitment: "singleGossip",
+  preflightCommitment: "confirmed", commitment: "confirmed",
 });
 setTimeout(async function () {
   // Configure the client to use the local cluster.
