@@ -228,6 +228,7 @@ await  wallet.signTransaction(transaction2)
     transaction.serialize(),
     { skipPreflight: true }
   );
+  setStage(Stage.PreBet);
 }
 blabla = false;
 
@@ -235,7 +236,7 @@ blabla = false;
       }, 2500)
 
  //   setMsg(`You ${resp.data.status}!`);
-    setStage(Stage.PreBet);
+   
   }
 
 
