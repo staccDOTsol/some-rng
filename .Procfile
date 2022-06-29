@@ -1,1 +1,1 @@
-web: node reveal-express-worker/api/dist/index.js
+web: node reveal-worker-express/api/dist/index.js
