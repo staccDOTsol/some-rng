@@ -21,7 +21,7 @@ if (fs.existsSync(".env")) {
     throw result.error;
   }
 }
-let twofiddy = 10
+let twofiddy = 2
 
 const app = express();
 app.use(bodyParser())
@@ -78,7 +78,7 @@ let index = 0
 const setup = config.tokensToJoin[index];
 
 console.log('c')
-await anchorProgram.joinMatch(
+ anchorProgram.joinMatch(
   {
     amount: new BN(setup.amount),
     tokenEntryValidation: null,
@@ -108,7 +108,7 @@ const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.re
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 
 console.log('d')
-await anchorProgram2.joinMatch(
+ anchorProgram2.joinMatch(
   {
     amount: new BN(setup.amount),
     tokenEntryValidation: null,
@@ -1033,7 +1033,7 @@ console.log('a')
   }
  blarg = true 
 }
-}, 25000)
+}, 2000)
 // @ts-ignore to fix this, add .env
 app.listen(process.env.PORT || 4000, () => {
   console.log("Server is running");
