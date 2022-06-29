@@ -14,7 +14,7 @@ import {
 } from "@solana/web3.js";
 import log from "loglevel";
 
-export const DEFAULT_TIMEOUT = 15000;
+export const DEFAULT_TIMEOUT = 450000;
 
 export const getUnixTs = () => {
   return new Date().getTime() / 1000;

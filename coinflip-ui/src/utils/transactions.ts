@@ -42,7 +42,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    block || (await connection.getRecentBlockhash(commitment))
+    block || (await connection.getLatestBlockhash(commitment))
   ).blockhash;
 
   if (includesFeePayer) {
@@ -83,7 +83,7 @@ export async function sendTransactionWithRetry(
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    await connection.getRecentBlockhash(commitment)
+    await connection.getLatestBlockhash(commitment)
   ).blockhash;
 
   transaction.feePayer = wallet.publicKey;
@@ -138,7 +138,7 @@ export async function sendSignedTransaction({
       txid,
       timeout,
       connection,
-      "confirmed",
+      "singleGossip",
       true
     );
 

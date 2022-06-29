@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Program } from "@raindrops-protocol/sol-kit";
 import { web3 } from "@project-serum/anchor";
 

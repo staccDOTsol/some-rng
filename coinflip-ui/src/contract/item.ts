@@ -1294,9 +1294,9 @@ export async function getItemProgram(
   env: string,
   customRpcUrl: string
 ): Promise<ItemProgram> {
-  if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
+  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
 
-  const solConnection = new web3.Connection(customRpcUrl || getCluster(env));
+  const solConnection = new web3.Connection(customRpcUrl, {confirmTransactionInitialTimeout: 600000})
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);

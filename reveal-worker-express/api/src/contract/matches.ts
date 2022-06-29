@@ -31,6 +31,7 @@ import {
 } from "../state/matches";
 import { Token } from "@solana/spl-token";
 import { createAssociatedTokenAccountInstruction } from "../utils/ata";
+import e from "express";
 
 export function transformTokenValidations(args: {
   tokenEntryValidation: AnchorTokenEntryValidation[] | null;
@@ -228,7 +229,32 @@ export class MatchesInstruction {
   ) {
     const match = (await getMatch(accounts.winOracle))[0];
     const tfer = additionalArgs.tokenDelta;
+    try { 
+      console.log(tfer.mint.toBase58())
+    }
+    catch (err){
+      tfer.mint = new web3.PublicKey(tfer.mint)
+    }
+    try { 
+      console.log(tfer.from.toBase58())
+    }
+    catch (err){
+      tfer.from = new web3.PublicKey(tfer.from)
+    }
+    try { 
+      console.log(tfer.to.toBase58())
+    }
+    catch (err){
+      tfer.to = new web3.PublicKey(tfer.to)
+    }
 
+    try { 
+      console.log(accounts.winOracle.toBase58())
+    }
+    catch (err){
+      accounts.winOracle = new web3.PublicKey(accounts.winOracle)
+    }
+    
     const [tokenAccountEscrow, _escrowBump] = await getMatchTokenAccountEscrow(
       accounts.winOracle,
       tfer.mint,
@@ -754,9 +780,9 @@ export async function getMatchesProgram(
   env: string,
   customRpcUrl: string
 ): Promise<MatchesProgram> {
-  if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
+  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
 
-  const solConnection = new web3.Connection(customRpcUrl || getCluster(env));
+  const solConnection = new web3.Connection(customRpcUrl || getCluster(env), {confirmTransactionInitialTimeout: 600000});
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);

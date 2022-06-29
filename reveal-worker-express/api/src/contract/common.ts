@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AnchorPermissivenessType, PermissivenessType } from "../state/common";
 import { Program, web3, BN, AnchorProvider } from "@project-serum/anchor";
 import { getAtaForMint, getItemPDA, getMetadata } from "../utils/pda";

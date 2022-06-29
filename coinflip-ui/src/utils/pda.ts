@@ -17,6 +17,7 @@ export const getAtaForMint = async (
   mint: web3.PublicKey,
   wallet: web3.PublicKey
 ): Promise<[web3.PublicKey, number]> => {
+  
   return await web3.PublicKey.findProgramAddress(
     [wallet.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
     SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
@@ -26,6 +27,7 @@ export const getAtaForMint = async (
 export const getMatch = async (
   oracle: web3.PublicKey
 ): Promise<[web3.PublicKey, number]> => {
+  
   return await web3.PublicKey.findProgramAddress(
     [Buffer.from(MATCHES_PREFIX), oracle.toBuffer()],
     MATCHES_ID

@@ -28,7 +28,7 @@ export async function loadHouseProgram(walletWrapper: Keypair) {
   const solConnection = new Connection("https://api.devnet.solana.com");
   const walletWrapper2 = new anchor.Wallet(walletWrapper);
   const provider = new anchor.Provider(solConnection, walletWrapper2, {
-    preflightCommitment: 'confirmed', commitment: 'confirmed'
+    preflightCommitment: "singleGossip", commitment: "singleGossip"
   });
   const idl = await anchor.Program.fetchIdl(
       HOUSE_PROGRAM_ID,
