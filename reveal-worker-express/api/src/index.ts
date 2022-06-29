@@ -961,7 +961,7 @@ blarg = false
     //console.log(file);
     c++;
   });
-  if (c != 1){
+  if (c != twofiddy){
     console.log(c)
   }
   if (c < twofiddy){
