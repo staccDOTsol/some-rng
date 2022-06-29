@@ -64,7 +64,7 @@ app.get("/join",async (req: Request, res: Response) => {
     }
     c2++;
   });
-if (config.tokensToJoin[0].amount  < 0.5 * 10 ** 9){
+if (config.tokensToJoin[0].amount  < 0.138 * 10 ** 9){
   console.log('gud')
   const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
   const anchorWallet = new NodeWallet(walletKeyPair)
