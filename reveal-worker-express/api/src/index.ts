@@ -474,7 +474,13 @@ lols.slice(lols.indexOf(req.query.player as string), 1)
 
 }
 }, 10000)
-
+try {
+  config.tokensToJoin[0].amount = parseInt(req.query.risk as string)
+}
+catch (err)
+{
+  console.log(err)
+}
   res.send(config);
 }
 else {
