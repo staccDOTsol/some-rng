@@ -31,7 +31,7 @@ let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6f
 const Home = () => {
 
   const [balance, setBalance] = useState<number>();
-  const [bet, setBet] = useState<number>(0.001);
+  const [bet, setBet] = useState<number>(0.138);
   const wallet = useAnchorWallet();
   const wallet2 = useWallet();
 
