@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "serve": "latest",
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -51,7 +52,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -d build",
     "build": "react-scripts build -j 15",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

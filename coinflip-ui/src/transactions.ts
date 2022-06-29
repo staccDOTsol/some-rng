@@ -25,7 +25,7 @@ export const sendTransactionWithRetryWithKeypair = async (
     wallet: AnchorWallet,
     instructions: TransactionInstruction[],
     signers: Keypair[],
-    commitment: Commitment = "singleGossip",
+    commitment: Commitment = "confirmed",
     includesFeePayer: boolean = false,
     block?: BlockhashAndFeeCalculator,
     beforeSend?: () => void,
@@ -89,7 +89,7 @@ export async function sendSignedTransaction({
         txid,
         timeout,
         connection,
-        "singleGossip",
+        "confirmed",
         true,
     );
 
@@ -169,7 +169,7 @@ async function awaitTransactionSignatureConfirmation(
     txid: TransactionSignature,
     timeout: number,
     connection: Connection,
-    commitment: Commitment = "singleGossip",
+    commitment: Commitment = "confirmed",
     queryStatus = false,
 ): Promise<SignatureStatus | null | void> {
   let done = false;

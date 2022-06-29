@@ -31,7 +31,7 @@ let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6f
 const Home = () => {
 
   const [balance, setBalance] = useState<number>();
-  const [bet, setBet] = useState<number>(0.000001);
+  const [bet, setBet] = useState<number>(0.001);
   const wallet = useAnchorWallet();
   const wallet2 = useWallet();
 
@@ -44,8 +44,8 @@ const Home = () => {
       const num = parseFloat(e.target.value);
       if (num >= 1) {
         setBet(1);
-      } else if (num <= 0.000001) {
-        setBet(0.000001);
+      } else if (num <= 0.001) {
+        setBet(0.001);
       } else {
         setBet(num);
       }
@@ -66,7 +66,7 @@ const Home = () => {
     setUuid(localUuid);
     instructions.push(await initializeCoin(wallet, house, localUuid));
     instructions.push(await mintCoin(wallet, bet, localUuid));
-    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "singleGossip", false);
+    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "confirmed", false);
     */
    console.log({
     player: wallet.publicKey.toBase58(),
@@ -270,7 +270,7 @@ blabla = false;
                     <FilledInput
                         type={"number"}
                         autoFocus={true}
-                        inputProps={{"step": 0.000001}}
+                        inputProps={{"step": 0.001}}
                         id="filled-adornment-amount"
                         value={bet}
                         onChange={setBetAmount}
