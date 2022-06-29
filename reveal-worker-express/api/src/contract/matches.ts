@@ -710,19 +710,40 @@ export class MatchesProgram {
     accounts: LeaveMatchAccounts,
     additionalArgs: LeaveMatchAdditionalArgs
   ) {
-    const { instructions, signers } = await this.instruction.leaveMatch(
-      args,
-      accounts,
-      additionalArgs
+    const match = (await getMatch(additionalArgs.winOracle))[0];
+
+    const destinationTokenAccount = (
+      await getAtaForMint(accounts.tokenMint, accounts.receiver)
+    )[0];
+
+    const [tokenAccountEscrow, _escrowBump] = await getMatchTokenAccountEscrow(
+      additionalArgs.winOracle,
+      accounts.tokenMint,
+      (this.program.provider as AnchorProvider).wallet.publicKey
     );
 
-    await sendTransactionWithRetry(
-      (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,
-      instructions,
-      signers
-    );
+    const signers = [];
+
+    return {
+      instructions: [
+        await this.program.methods
+          .leaveMatch(args)
+          .accounts({
+            matchInstance: match,
+            tokenAccountEscrow,
+            tokenMint: accounts.tokenMint,
+            destinationTokenAccount,
+            receiver: (this.program.provider as AnchorProvider).wallet
+              .publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+          })
+          .instruction(),
+      ],
+      signers,
+    };
   }
+
+
 
   async updateMatch(
     args: UpdateMatchArgs,

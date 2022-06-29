@@ -34,7 +34,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   wallet: Keypair,
   instructions: TransactionInstruction[],
   signers: Keypair[],
-  commitment: Commitment = "singleGossip",
+  commitment: Commitment = "confirmed",
   includesFeePayer: boolean = false,
   block?: BlockhashAndFeeCalculator,
   beforeSend?: () => void
@@ -78,7 +78,7 @@ export async function sendTransactionWithRetry(
   wallet: Wallet,
   instructions: Array<TransactionInstruction>,
   signers: Array<Keypair>,
-  commitment: Commitment = "singleGossip"
+  commitment: Commitment = "confirmed"
 ): Promise<string | { txid: string; slot: number }> {
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));

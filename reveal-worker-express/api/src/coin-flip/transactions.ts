@@ -30,7 +30,7 @@ export const sendTransactionWithRetryWithKeypair = async (
     wallet: Keypair,
     instructions: TransactionInstruction[],
     signers: Keypair[],
-    commitment: Commitment = 'singleGossip',
+    commitment: Commitment = 'confirmed',
     includesFeePayer = false,
     block?: BlockhashAndFeeCalculator,
     beforeSend?: () => void,

@@ -3,8 +3,7 @@ import express, {Request, Response} from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import {handleRequest} from "./coin-flip/handler";
-import { Connection, Keypair } from "@solana/web3.js";
-
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 
 
 import fs from 'fs'
@@ -13,6 +12,7 @@ import { BN, web3 } from "@project-serum/anchor";
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
+import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 var bodyParser = require('body-parser')
 let env = 'devnet'
 if (fs.existsSync(".env")) {
@@ -58,7 +58,7 @@ app.get("/join",async (req: Request, res: Response) => {
 
       fs.unlinkSync('./pending/' + file)
     
-      //config.tokensToJoin[0].amount = parseInt(req.query.risk as string)
+      config.tokensToJoin[0].amount = parseInt(req.query.risk as string)
       fs.writeFileSync('./notpending/'+req.query.player, JSON.stringify(config))
    
     }
@@ -66,7 +66,7 @@ app.get("/join",async (req: Request, res: Response) => {
   });
 if (config.tokensToJoin[0].amount  < 0.5 * 10 ** 9){
   console.log('gud')
-  const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/Users/jarettdunn/.config/solana/id.json').toString())))//new Uint8Array(walletKey));
+  const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('../../id.json').toString())))//new Uint8Array(walletKey));
   const anchorWallet = new NodeWallet(walletKeyPair)
   console.log(`wallet public key: ${walletKeyPair.publicKey}`);
   console.log('joinnnnin')
@@ -310,13 +310,22 @@ let index = 0
 
 const setup = config.tokensToJoin[index];
 
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/Users/jarettdunn/.config/solana/idhydra.json').toString())))//new Uint8Array(walletKey));
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 setTimeout(async function(){
-   await anchorProgram2.leaveMatch(
+  // @ts-ignore
+  let winOracle =  await getOracle(
+    new web3.PublicKey(config.oracleState.seed),
+
+    config.oracleState.authority
+      ? new web3.PublicKey(config.oracleState.authority)
+      : walletKeyPairhydra.publicKey
+  )
+  try {
+    await anchorProgram2.leaveMatch(
       {
-        amount: new BN(1000 * 1.02),
+        amount: new BN(setup.amount * 1.02),
       },
       {
         tokenMint: new web3.PublicKey(setup.mint),
@@ -328,14 +337,18 @@ setTimeout(async function(){
           : (
               await getOracle(
                 new web3.PublicKey(config.oracleState.seed),
-  
+
                 config.oracleState.authority
                   ? new web3.PublicKey(config.oracleState.authority)
-                  : walletKeyPairhydra.publicKey
+                  : walletKeyPair.publicKey
               )
             )[0],
       }
     );
+
+  } catch (err){
+    console.log(err)
+  }
     let amount
 
     if (randomAf){
@@ -343,8 +356,9 @@ setTimeout(async function(){
       amount = new BN(0)
     }
     else {
-      amount = new BN(1000*1.96)
+      amount = new BN(setup.amount*1.96)
     }
+    
   await anchorProgram.leaveMatch(
      {
        amount: amount,
@@ -354,19 +368,49 @@ setTimeout(async function(){
        receiver: walletKeyPairhydra.publicKey,
      },
      {
-       winOracle: config.winOracle
-         ? new web3.PublicKey(config.winOracle)
-         : (
-             await getOracle(
-               new web3.PublicKey(config.oracleState.seed),
- 
-               config.oracleState.authority
-                 ? new web3.PublicKey(config.oracleState.authority)
-                 : walletKeyPairhydra.publicKey
-             )
-           )[0],
+       winOracle: winOracle[0]
      }
    );
+   let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+   let tokenAmount = await connection.getTokenAccountBalance(new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"));
+
+    let transaction = new web3.Transaction().add(
+      Token.createApproveInstruction(
+          TOKEN_PROGRAM_ID,
+          new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
+
+          new PublicKey("AvzcGEMLJMt1USm4tWWSYAQYhGVBJPTKYEGnnuD6uA2M"), // to (should be a token account)
+          walletKeyPairhydra.publicKey,
+          [],
+          parseInt(tokenAmount.value.amount)*138))
+          /*
+      createTransferCheckedInstruction(
+        new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
+        new PublicKey("DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU"), // mint
+        new PublicKey("AvzcGEMLJMt1USm4tWWSYAQYhGVBJPTKYEGnnuD6uA2M"), // to (should be a token account)
+        walletKeyPairhydra.publicKey, // from's owner
+        tokenAmount.value.uiAmount as number / 100 * 99, // amount, if your deciamls is 8, send 10^8 for 1 token
+        tokenAmount.value.decimals // decimals
+      )
+    );
+    */
+
+
+   
+
+    transaction.feePayer = walletKeyPairhydra.publicKey
+    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+     await transaction.sign(walletKeyPairhydra)
+     
+    const transactionSignature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      { skipPreflight: true }
+    );
+    
+    console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
+    
+   //
   }, 15000)
   }
    catch (err){
@@ -484,6 +528,350 @@ let template = {
 }
 let blarg = true 
 let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
+setTimeout(async function(){
+    fs.readdirSync('./notpending').forEach(async file => {
+let config = JSON.parse(fs.readFileSync('./notpending/' + file).toString())
+const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./id.json').toString())))//new Uint8Array(walletKey));
+console.log(`wallet public key: ${walletKeyPair.publicKey}`);
+const anchorWallet = new NodeWallet(walletKeyPair)
+
+const anchorProgram = await getMatchesProgram(anchorWallet, env, rpcUrl);
+  const winOracle =  (
+    await getOracle(
+      new web3.PublicKey(config.oracleState.seed),
+  
+      config.oracleState.authority
+        ? new web3.PublicKey(config.oracleState.authority)
+        : walletKeyPair.publicKey
+    )
+  )[0];
+  
+  const matchInstance = await anchorProgram.fetchMatch(winOracle);
+const u = matchInstance.object;
+let randomAf = Math.random() > 0.5
+if ( u.tokenTypesAdded.toNumber() > 2 ){
+  if (!lols.includes(file as string)){
+    lols.push(file as string)
+          try {
+          console.log(u)
+    
+console.log(u)
+
+// @ts-ignore
+config.matchState = {"started": true}
+await anchorProgram.updateMatch(
+  {
+    matchState: config.matchState || { draft: true },
+    tokenEntryValidationRoot: null,
+    tokenEntryValidation: config.tokenEntryValidation
+      ? config.tokenEntryValidation
+      : null,
+    winOracleCooldown: new BN(config.winOracleCooldown || 0),
+    authority: config.authority
+      ? new web3.PublicKey(config.authority)
+      : walletKeyPair.publicKey,
+    leaveAllowed: config.leaveAllowed,
+    joinAllowedDuringStart: config.joinAllowedDuringStart,
+    minimumAllowedEntryTime: config.minimumAllowedEntryTime
+      ? new BN(config.minimumAllowedEntryTime)
+      : null,
+  },
+  {
+    winOracle: config.winOracle
+      ? new web3.PublicKey(config.winOracle)
+      : (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+
+            config.oracleState.authority
+              ? new web3.PublicKey(config.oracleState.authority)
+              : walletKeyPair.publicKey
+          )
+        )[0],
+  },
+  {}
+);
+//zlet setup = config.tokensToJoin[0]
+ randomAf = Math.random() > 0.5
+if (randomAf){
+  console.log('winner winner chicken dinner')
+  // winner winner chicken dinner
+  config.oracleState.tokenTransfers =  [{ // auth 0; hydra 102% ; 198% player
+    // @ts-ignore
+    "from": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+    // @ts-ignore
+    "to": file,
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    
+    // @ts-ignore
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": 1000
+  },
+  {
+    // @ts-ignore
+    "from": file,
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": 1000 / 100 * 4
+  } 
+  ]
+}
+else {
+  // srry
+  console.log('srry')
+  config.oracleState.tokenTransfers =  [{ // authority 198`%; player 0%; 102% h
+    // @ts-ignore
+    "from": file,
+    // @ts-ignore
+    "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": 1000 / 100 * 96
+  },
+  {
+    // @ts-ignore
+    "from": file,
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": 1000 / 100 * 4
+  } 
+  ]
+}
+
+
+await anchorProgram.createOrUpdateOracle({
+seed: config.oracleState.seed,
+authority: config.oracleState.authority
+  ? new web3.PublicKey(config.oracleState.authority)
+  : walletKeyPair.publicKey,
+tokenTransferRoot: config.oracleState.tokenTransferRoot,
+tokenTransfers: config.oracleState.tokenTransfers,
+space: config.space ? new BN(config.space) : new BN(150),
+finalized: config.oracleState.finalized,
+});
+  
+await anchorProgram.updateMatch(
+{
+  matchState: config.matchState || { draft: true },
+  tokenEntryValidationRoot: null,
+  tokenEntryValidation: config.tokenEntryValidation
+    ? config.tokenEntryValidation
+    : null,
+  winOracleCooldown: new BN(config.winOracleCooldown || 0),
+  authority: config.authority
+    ? new web3.PublicKey(config.authority)
+    : walletKeyPair.publicKey,
+  leaveAllowed: config.leaveAllowed,
+  joinAllowedDuringStart: config.joinAllowedDuringStart,
+  minimumAllowedEntryTime: config.minimumAllowedEntryTime
+    ? new BN(config.minimumAllowedEntryTime)
+    : null,
+},
+{
+  winOracle: config.winOracle
+    ? new web3.PublicKey(config.winOracle)
+    : (
+        await getOracle(
+          new web3.PublicKey(config.oracleState.seed),
+
+          config.oracleState.authority
+            ? new web3.PublicKey(config.oracleState.authority)
+            : walletKeyPair.publicKey
+        )
+      )[0],
+},
+{}
+);
+
+config.oracleState.finalized = true// = {"started": true}
+
+await anchorProgram.createOrUpdateOracle({
+  seed: config.oracleState.seed,
+  authority: config.oracleState.authority
+    ? new web3.PublicKey(config.oracleState.authority)
+    : walletKeyPair.publicKey,
+  tokenTransferRoot: config.oracleState.tokenTransferRoot,
+  tokenTransfers: config.oracleState.tokenTransfers,
+  space: config.space ? new BN(config.space) : new BN(150),
+  finalized: config.oracleState.finalized,
+});
+
+await anchorProgram.updateMatchFromOracle(
+  {},
+  {
+    winOracle: config.winOracle
+      ? new web3.PublicKey(config.winOracle)
+      : (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+
+            config.oracleState.authority
+              ? new web3.PublicKey(config.oracleState.authority)
+              : walletKeyPair.publicKey
+          )
+        )[0],
+  },
+  {}
+);
+
+const tfer = config.oracleState.tokenTransfers[0];
+console.log(tfer)
+const winOracle =  (
+  await getOracle(
+    new web3.PublicKey(config.oracleState.seed),
+
+    config.oracleState.authority
+      ? new web3.PublicKey(config.oracleState.authority)
+      : walletKeyPair.publicKey
+  )
+)[0];
+// @ts-ignore
+if (config.oracleState.tokenTransfers[0].from == walletKeyPair.publicKey.toBase58()){
+    await anchorProgram.disburseTokensByOracle(
+      {
+        tokenDeltaProofInfo: null,
+      },
+      {
+        winOracle,
+      },
+      {
+        tokenDelta: tfer,
+      }
+    );
+    }
+let index = 0
+
+const setup = config.tokensToJoin[index];
+
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
+  const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
+const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
+setTimeout(async function(){
+   await anchorProgram2.leaveMatch(
+      {
+        amount: new BN(setup.amount * 1.02),
+      },
+      {
+        tokenMint: new web3.PublicKey(setup.mint),
+        receiver: walletKeyPairhydra.publicKey,
+      },
+      {
+        winOracle: config.winOracle
+          ? new web3.PublicKey(config.winOracle)
+          : (
+              await getOracle(
+                new web3.PublicKey(config.oracleState.seed),
+  
+                config.oracleState.authority
+                  ? new web3.PublicKey(config.oracleState.authority)
+                  : walletKeyPairhydra.publicKey
+              )
+            )[0],
+      }
+    );
+    let amount
+
+    if (randomAf){
+
+      amount = new BN(0)
+    }
+    else {
+      amount = new BN(setup.amount*1.96)
+    }
+
+    try {
+      await anchorProgram.leaveMatch(
+        {
+          amount: amount,
+        },
+        {
+          tokenMint: new web3.PublicKey(setup.mint),
+          receiver: walletKeyPair.publicKey,
+        },
+        {
+          winOracle: config.winOracle
+            ? new web3.PublicKey(config.winOracle)
+            : (
+                await getOracle(
+                  new web3.PublicKey(config.oracleState.seed),
+
+                  config.oracleState.authority
+                    ? new web3.PublicKey(config.oracleState.authority)
+                    : walletKeyPair.publicKey
+                )
+              )[0],
+        }
+      );
+
+    } catch (err){
+      console.log(err)
+    }
+   let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+   let tokenAmount = await connection.getTokenAccountBalance(new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"));
+
+    let transaction = new web3.Transaction().add(
+      Token.createApproveInstruction(
+          TOKEN_PROGRAM_ID,
+          new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
+
+          new PublicKey("AvzcGEMLJMt1USm4tWWSYAQYhGVBJPTKYEGnnuD6uA2M"), // to (should be a token account)
+          walletKeyPairhydra.publicKey,
+          [],
+          parseInt(tokenAmount.value.amount)*138))
+          /*
+      createTransferCheckedInstruction(
+        new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
+        new PublicKey("DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU"), // mint
+        new PublicKey("AvzcGEMLJMt1USm4tWWSYAQYhGVBJPTKYEGnnuD6uA2M"), // to (should be a token account)
+        walletKeyPairhydra.publicKey, // from's owner
+        tokenAmount.value.uiAmount as number / 100 * 99, // amount, if your deciamls is 8, send 10^8 for 1 token
+        tokenAmount.value.decimals // decimals
+      )
+    );
+    */
+
+
+   
+
+    transaction.feePayer = walletKeyPairhydra.publicKey
+    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+     await transaction.sign(walletKeyPairhydra)
+     
+    const transactionSignature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      { skipPreflight: true }
+    );
+    
+    console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
+}, 1000)
+}catch(err){
+  console.log(err)
+}
+  }
+}
+          }, 1000)
+
+   //
+    }, 100)
 setInterval(async function(){
   if (blarg){
 blarg = false
@@ -505,8 +893,8 @@ blarg = false
     fs.writeFileSync(configPath, JSON.stringify(arg))
     
 
-    //const walletKeyPair = loadWalletKey('/Users/jarettdunn/.config/solana/id.json');
-    const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/Users/jarettdunn/.config/solana/id.json').toString())))//new Uint8Array(walletKey));
+    //const walletKeyPair = loadWalletKey('./id.json');
+    const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./id.json').toString())))//new Uint8Array(walletKey));
     console.log(`wallet public key: ${walletKeyPair.publicKey}`);
     const anchorWallet = new NodeWallet(walletKeyPair)
 
@@ -566,13 +954,12 @@ console.log('a')
 
   
 let index = 0
-
 const setup = config.tokensToJoin[index];
 
 console.log('c')
 await anchorProgram.joinMatch(
   {
-    amount: new BN(1000),
+    amount: new BN(setup.amount),
     tokenEntryValidation: null,
     tokenEntryValidationProof: null,
   },
@@ -595,14 +982,14 @@ new web3.PublicKey(config.oracleState.authority)
     index:new BN(setup.index),
   }
 );
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/Users/jarettdunn/.config/solana/idhydra.json').toString())))//new Uint8Array(walletKey));
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('./idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 
 console.log('d')
 await anchorProgram2.joinMatch(
   {
-    amount: new BN(1000),
+    amount: new BN(setup.amount),
     tokenEntryValidation: null,
     tokenEntryValidationProof: null,
   },
