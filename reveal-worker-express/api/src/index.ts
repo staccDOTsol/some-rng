@@ -45,7 +45,7 @@ app.post("/derp",async (req: Request, res: Response) => {
   res.send(200)
 })
 app.get("/join",async (req: Request, res: Response) => {
-  
+  try {
   let c = Math.floor(Math.random() * twofiddy)
   let c2 = 0
   let config = template
@@ -480,6 +480,10 @@ lols.slice(lols.indexOf(req.query.player as string), 1)
 else {
   res.send(500)
 }
+  } 
+  catch (err){
+    console.log(err)
+  }
 });
 
 let lols: string[] = [] 
