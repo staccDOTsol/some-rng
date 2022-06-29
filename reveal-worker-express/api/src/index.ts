@@ -71,6 +71,68 @@ if (config.tokensToJoin[0].amount  <= 0.138 * 10 ** 9){
   console.log(`wallet public key: ${walletKeyPair.publicKey}`);
   console.log('joinnnnin')
   const anchorProgram = await getMatchesProgram(anchorWallet, env, rpcUrl);
+
+
+  
+let index = 0
+const setup = config.tokensToJoin[index];
+
+console.log('c')
+await anchorProgram.joinMatch(
+  {
+    amount: new BN(setup.amount),
+    tokenEntryValidation: null,
+    tokenEntryValidationProof: null,
+  },
+  {
+    tokenMint: new web3.PublicKey(setup.mint),
+    sourceTokenAccount: null,
+    tokenTransferAuthority: null,
+    validationProgram: setup.validationProgram
+      ? new web3.PublicKey(setup.validationProgram)
+      : null,
+  },
+  {
+    winOracle:  (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+new web3.PublicKey(config.oracleState.authority)
+          )
+        )[0],
+    sourceType: setup.sourceType as TokenType,
+    index:new BN(setup.index),
+  }
+);
+const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
+  const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
+const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
+
+console.log('d')
+await anchorProgram2.joinMatch(
+  {
+    amount: new BN(setup.amount),
+    tokenEntryValidation: null,
+    tokenEntryValidationProof: null,
+  },
+  {
+    tokenMint: new web3.PublicKey(setup.mint),
+    sourceTokenAccount: null,
+    tokenTransferAuthority: null,
+    validationProgram: setup.validationProgram
+      ? new web3.PublicKey(setup.validationProgram)
+      : null,
+  },
+  {
+    winOracle:  (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+new web3.PublicKey(config.oracleState.authority)
+          )
+        )[0],
+    sourceType: setup.sourceType as TokenType,
+    index:new BN(setup.index),
+  }
+);
 console.log('bla')
   await anchorProgram.createOrUpdateOracle({
     seed: config.oracleState.seed,
@@ -968,67 +1030,6 @@ console.log('a')
       {},
       config.oracleState
     );
-
-  
-let index = 0
-const setup = config.tokensToJoin[index];
-
-console.log('c')
-await anchorProgram.joinMatch(
-  {
-    amount: new BN(setup.amount),
-    tokenEntryValidation: null,
-    tokenEntryValidationProof: null,
-  },
-  {
-    tokenMint: new web3.PublicKey(setup.mint),
-    sourceTokenAccount: null,
-    tokenTransferAuthority: null,
-    validationProgram: setup.validationProgram
-      ? new web3.PublicKey(setup.validationProgram)
-      : null,
-  },
-  {
-    winOracle:  (
-          await getOracle(
-            new web3.PublicKey(config.oracleState.seed),
-new web3.PublicKey(config.oracleState.authority)
-          )
-        )[0],
-    sourceType: setup.sourceType as TokenType,
-    index:new BN(setup.index),
-  }
-);
-const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
-  const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
-const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
-
-console.log('d')
-await anchorProgram2.joinMatch(
-  {
-    amount: new BN(setup.amount),
-    tokenEntryValidation: null,
-    tokenEntryValidationProof: null,
-  },
-  {
-    tokenMint: new web3.PublicKey(setup.mint),
-    sourceTokenAccount: null,
-    tokenTransferAuthority: null,
-    validationProgram: setup.validationProgram
-      ? new web3.PublicKey(setup.validationProgram)
-      : null,
-  },
-  {
-    winOracle:  (
-          await getOracle(
-            new web3.PublicKey(config.oracleState.seed),
-new web3.PublicKey(config.oracleState.authority)
-          )
-        )[0],
-    sourceType: setup.sourceType as TokenType,
-    index:new BN(setup.index),
-  }
-);
   }
  blarg = true 
 }
