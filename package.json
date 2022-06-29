@@ -5,7 +5,7 @@
   "main": "api/dist/index.js",
   "scripts": {
     "install-all": "npm install && npm install --prefix client",
-    "start": "cd reveal-worker-express && npm build && node ./api/dist/index.js",
+    "start": "cd reveal-worker-express && node ./api/dist/index.js",
     "server": "nodemon ./api/dist/index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"tsc -w\" \"npm run server\" \"npm run client\"",
