@@ -530,6 +530,7 @@ let blarg = true
 let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
 setTimeout(async function(){
     fs.readdirSync('/app/reveal-worker-express/notpending').forEach(async file => {
+      try {
 let config = JSON.parse(fs.readFileSync('/app/reveal-worker-express/notpending/' + file).toString())
 const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('/app/reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
 console.log(`wallet public key: ${walletKeyPair.publicKey}`);
@@ -867,11 +868,17 @@ setTimeout(async function(){
   console.log(err)
 }
   }
+
 }
+      } catch (err){
+        console.log(err)
+      }
           }, 1000)
+          
 
    //
     }, 100)
+    
 setInterval(async function(){
   if (blarg){
 blarg = false
