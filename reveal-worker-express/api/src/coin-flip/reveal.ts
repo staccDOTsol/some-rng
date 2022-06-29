@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {Keypair, PublicKey, SystemProgram, TransactionInstruction, SYSVAR_RECENT_BLOCKHASHES_PUBKEY} from "@solana/web3.js";
 import {getPlayerAccount, loadHouseProgram, loadWalletKey} from "./utils";
 import {house} from "./constants";

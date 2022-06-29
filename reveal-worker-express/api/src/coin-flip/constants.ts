@@ -7,5 +7,5 @@ export const jare = "4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ";
 export const author = new PublicKey(jare);
 export const house = new PublicKey("ASTu9TrWQkQL693SzAZ2533f871WUP3RxkW9y6nLGP9L");
 export const DEFAULT_TIMEOUT = 30000;
-export const DEVNET = "https://psytrbhymqlkfrhudd.dev.genesysgo.net:8899/";
+export const DEVNET = "https://ssc-dao.genesysgo.net/";
 export const MAINNET = "https://ssc-dao.genesysgo.net/";

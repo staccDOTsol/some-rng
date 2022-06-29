@@ -14,7 +14,6 @@ import {
 import { DEFAULT_TIMEOUT } from './constants';
 import log from 'loglevel';
 import {AnchorWallet} from "@solana/wallet-adapter-react";
-import {sleep, getUnixTs} from "./utils";
 
 interface BlockhashAndFeeCalculator {
   blockhash: Blockhash;
@@ -34,18 +33,8 @@ export const sendTransactionWithRetryWithKeypair = async (
   const transaction = new Transaction();
   instructions.forEach(instruction => transaction.add(instruction));
   transaction.recentBlockhash = (
-      block || (await connection.getRecentBlockhash(commitment))
+      block || (await connection.getLatestBlockhash(commitment))
   ).blockhash;
-
-  if (includesFeePayer) {
-    transaction.setSigners(...signers.map(s => s.publicKey));
-  } else {
-    transaction.setSigners(
-        // fee payed by the wallet owner
-        wallet.publicKey,
-        ...signers.map(s => s.publicKey),
-    );
-  }
 
   // if (signers.length > 0) {
   //   transaction.sign(...[wallet, ...signers]);
@@ -56,6 +45,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   // if (beforeSend) {
   //   beforeSend();
   // }
+  transaction.feePayer = wallet.publicKey
   await wallet?.signTransaction(transaction);
   const { txid, slot } = await sendSignedTransaction({
     connection,
@@ -78,7 +68,7 @@ export async function sendSignedTransaction({
   timeout?: number;
 }): Promise<{ txid: string; slot: number }> {
   const rawTransaction = signedTransaction.serialize();
-  const startTime = getUnixTs();
+  const startTime = new Date().getTime()//getUnixTs();
   let slot = 0;
   const txid: TransactionSignature = await connection.sendRawTransaction(
       rawTransaction,
@@ -90,14 +80,9 @@ export async function sendSignedTransaction({
   log.debug('Started awaiting confirmation for', txid);
 
   let done = false;
-  (async () => {
-    while (!done && getUnixTs() - startTime < timeout) {
-      connection.sendRawTransaction(rawTransaction, {
+     await  connection.sendRawTransaction(rawTransaction, {
         skipPreflight: true,
       });
-      await sleep(500);
-    }
-  })();
   try {
     const confirmation = await awaitTransactionSignatureConfirmation(
         txid,
@@ -118,6 +103,7 @@ export async function sendSignedTransaction({
     slot = confirmation?.slot || 0;
   } catch (err) {
     log.error('Timeout Error caught', err);
+    // @ts-ignore
     if (err.timeout) {
       throw new Error('Timed out awaiting confirmation on transaction');
     }
@@ -148,7 +134,7 @@ export async function sendSignedTransaction({
     done = true;
   }
 
-  log.debug('Latency (ms)', txid, getUnixTs() - startTime);
+  log.debug('Latency (ms)', txid, new Date().getTime() - startTime);
   return { txid, slot };
 }
 
@@ -255,7 +241,6 @@ async function awaitTransactionSignatureConfirmation(
           }
         }
       })();
-      await sleep(2000);
     }
   });
 

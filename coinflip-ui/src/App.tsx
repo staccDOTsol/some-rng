@@ -3,7 +3,6 @@ import { useMemo } from "react";
 
 import Home from "./Home";
 
-import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   getPhantomWallet,
@@ -49,15 +48,11 @@ const theme = createTheme({
 });
 
 const App = () => {
-  const endpoint = useMemo(() => clusterApiUrl(network), []);
+  const endpoint = useMemo(() => "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"  , []);
 
   const wallets = useMemo(
     () => [
-        getPhantomWallet(),
-        getSlopeWallet(),
-        getSolflareWallet(),
-        getSolletWallet({ network }),
-        getSolletExtensionWallet({ network })
+        getPhantomWallet()
     ],
     []
   );
