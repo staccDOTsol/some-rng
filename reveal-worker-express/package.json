@@ -9,7 +9,7 @@
     "server": "nodemon ./api/dist/index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"tsc -w\" \"npm run server\" \"npm run client\"",
-    "build": "tsc"
+    "build": "mkdir notpending && mkdir pending && tsc"
   },
   "keywords": [],
   "author": "",
