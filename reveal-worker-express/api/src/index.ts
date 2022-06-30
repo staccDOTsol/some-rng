@@ -21,7 +21,7 @@ if (fs.existsSync(".env")) {
     throw result.error;
   }
 }
-let twofiddy = 0
+let twofiddy = 2
 
 const app = express();
 app.use(bodyParser())
