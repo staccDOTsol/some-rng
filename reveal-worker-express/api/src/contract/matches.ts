@@ -6,7 +6,6 @@ import {
   BN,
   Provider,
   AnchorProvider,
-  Wallet,
 } from "@project-serum/anchor";
 import { SystemProgram } from "@solana/web3.js";
 
@@ -32,6 +31,7 @@ import {
 } from "../state/matches";
 import { Token } from "@solana/spl-token";
 import { createAssociatedTokenAccountInstruction } from "../utils/ata";
+import e from "express";
 
 export function transformTokenValidations(args: {
   tokenEntryValidation: AnchorTokenEntryValidation[] | null;
@@ -229,7 +229,32 @@ export class MatchesInstruction {
   ) {
     const match = (await getMatch(accounts.winOracle))[0];
     const tfer = additionalArgs.tokenDelta;
+    try { 
+      console.log(tfer.mint.toBase58())
+    }
+    catch (err){
+      tfer.mint = new web3.PublicKey(tfer.mint)
+    }
+    try { 
+      console.log(tfer.from.toBase58())
+    }
+    catch (err){
+      tfer.from = new web3.PublicKey(tfer.from)
+    }
+    try { 
+      console.log(tfer.to.toBase58())
+    }
+    catch (err){
+      tfer.to = new web3.PublicKey(tfer.to)
+    }
 
+    try { 
+      console.log(accounts.winOracle.toBase58())
+    }
+    catch (err){
+      accounts.winOracle = new web3.PublicKey(accounts.winOracle)
+    }
+    
     const [tokenAccountEscrow, _escrowBump] = await getMatchTokenAccountEscrow(
       accounts.winOracle,
       tfer.mint,
@@ -617,9 +642,9 @@ export class MatchesProgram {
       );
 
     await sendTransactionWithRetry(
-     
       (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,    instructions,
+      (this.program.provider as AnchorProvider).wallet,
+      instructions,
       signers
     );
   }
@@ -636,7 +661,6 @@ export class MatchesProgram {
     );
 
     await sendTransactionWithRetry(
-     
       (this.program.provider as AnchorProvider).connection,
       (this.program.provider as AnchorProvider).wallet,
       instructions,
@@ -645,6 +669,7 @@ export class MatchesProgram {
   }
 
   async drainOracle(
+    wallie: any,
     args: DrainOracleArgs,
     accounts: DrainOracleAccounts,
     _additionalArgs = {}
@@ -655,7 +680,6 @@ export class MatchesProgram {
     );
 
     await sendTransactionWithRetry(
-      
       (this.program.provider as AnchorProvider).connection,
       (this.program.provider as AnchorProvider).wallet,
       instructions,
@@ -664,6 +688,7 @@ export class MatchesProgram {
   }
 
   async joinMatch(
+    wallie: any,
     args: JoinMatchArgs,
     accounts: JoinMatchAccounts,
     additionalArgs: JoinMatchAdditionalArgs
@@ -675,32 +700,53 @@ export class MatchesProgram {
     );
 
     await sendTransactionWithRetry(
-    
-      (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,    instructions,
+        new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
+  wallie,    
+      instructions,
       signers
     );
   }
 
   async leaveMatch(
+    wallie: any,
     args: LeaveMatchArgs,
     accounts: LeaveMatchAccounts,
     additionalArgs: LeaveMatchAdditionalArgs
   ) {
-    const { instructions, signers } = await this.instruction.leaveMatch(
-      args,
-      accounts,
-      additionalArgs
+    const match = (await getMatch(additionalArgs.winOracle))[0];
+
+    const destinationTokenAccount = (
+      await getAtaForMint(accounts.tokenMint, accounts.receiver)
+    )[0];
+
+    const [tokenAccountEscrow, _escrowBump] = await getMatchTokenAccountEscrow(
+      additionalArgs.winOracle,
+      accounts.tokenMint,
+      (this.program.provider as AnchorProvider).wallet.publicKey
     );
 
-    await sendTransactionWithRetry(
-    
-      (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,
-      instructions,
-      signers
-    );
+    const signers = [];
+
+    return {
+      instructions: [
+        await this.program.methods
+          .leaveMatch(args)
+          .accounts({
+            matchInstance: match,
+            tokenAccountEscrow,
+            tokenMint: accounts.tokenMint,
+            destinationTokenAccount,
+            receiver: (this.program.provider as AnchorProvider).wallet
+              .publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+          })
+          .instruction(),
+      ],
+      signers,
+    };
   }
+
+
 
   async updateMatch(
     args: UpdateMatchArgs,
@@ -758,9 +804,9 @@ export async function getMatchesProgram(
   env: string,
   customRpcUrl: string
 ): Promise<MatchesProgram> {
-  if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
+  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
 
-  const solConnection = new web3.Connection(customRpcUrl || getCluster(env));
+  const solConnection = new web3.Connection(customRpcUrl || getCluster(env), {confirmTransactionInitialTimeout: 600000});
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);

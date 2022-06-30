@@ -104,6 +104,7 @@ const setup = config.tokensToJoin[index];
 
 console.log('c')
  anchorProgram.joinMatch(
+  new NodeWallet(walletKeyPair),
   {
     amount: new BN(setup.amount),
     tokenEntryValidation: null,
@@ -133,7 +134,7 @@ const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.re
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 
 console.log('d')
- anchorProgram2.joinMatch(
+ anchorProgram2.joinMatch(new NodeWallet(walletKeyPairhydra),
   {
     amount: new BN(setup.amount),
     tokenEntryValidation: null,
@@ -412,6 +413,7 @@ setTimeout(async function(){
   )
   try {
     await anchorProgram2.leaveMatch(
+      new NodeWallet(walletKeyPairhydra),
       {
         amount: new BN(setup.amount * 1.02),
       },
@@ -448,6 +450,7 @@ setTimeout(async function(){
     }
     
   await anchorProgram.leaveMatch(
+    new NodeWallet(walletKeyPair),
      {
        amount: amount,
      },
@@ -513,6 +516,7 @@ try {
     if (!lols.includes(req.query.player as string)){
 /*
 await anchorProgram.drainMatch(
+  new NodeWallet(walletKeyPair),
 {},
 {
   receiver: walletKeyPair.publicKey,
@@ -532,6 +536,7 @@ await anchorProgram.drainMatch(
 }
 );
 await anchorProgram.drainOracle(
+  new NodeWallet(walletKeyPair),
 {
   seed: config.oracleState.seed,
   authority: config.oracleState.authority
