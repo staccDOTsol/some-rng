@@ -166,8 +166,12 @@ if (oracleInstance.object.tokenTransfers[0].from == wallet.publicKey.toBase58())
   let signers2 = aha2.signers 
   let instructions2 = aha2.instructions
  transaction2.add(...instructions2);
+  if (aha2.signers.length > 0){
+  await transaction2.sign(...aha2.signers)
+ }
 }
   var tfer = oracleInstance.object.tokenTransfers[1];
+  if (tfer.from == wallet.publicKey.toBase58()){
 
   var aha2 = await anchorProgram.disburseTokensByOracle(
     {
@@ -182,11 +186,13 @@ if (oracleInstance.object.tokenTransfers[0].from == wallet.publicKey.toBase58())
   );
   let instructions138 = aha2.instructions
 transaction2.add(...instructions138);
-  transaction2.feePayer = wallet.publicKey
-  transaction2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
- if (aha2.signers.length > 0){
+if (aha2.signers.length > 0){
   await transaction2.sign(...aha2.signers)
  }
+  }
+  transaction2.feePayer = wallet.publicKey
+  transaction2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
 await  wallet.signTransaction(transaction2)
   const transactionSignature2 = await connection.sendRawTransaction(
     transaction2.serialize(),
@@ -222,8 +228,8 @@ await  wallet.signTransaction(transaction2)
   const transaction = new web3.Transaction().add(...instructions);
   transaction.feePayer = wallet.publicKey
   transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-  if (aha2.signers.length > 0){
-    await transaction.sign(...aha2.signers)
+  if (signers.length > 0){
+    await transaction.sign(...signers)
    }
    await  wallet.signTransaction(transaction)
   const transactionSignature = await connection.sendRawTransaction(
@@ -239,7 +245,7 @@ await  wallet.signTransaction(transaction2)
 blabla = false;
 
         }
-      }, 2500)
+      }, 30500)
 
  //   setMsg(`You ${resp.data.status}!`);
    
