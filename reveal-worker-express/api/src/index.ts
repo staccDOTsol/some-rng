@@ -147,6 +147,7 @@ console.log('bla')
 
 
 setInterval(async function(){
+  try {
   const winOracle =  (
     await getOracle(
       new web3.PublicKey(config.oracleState.seed),
@@ -376,6 +377,7 @@ const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.re
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
 setTimeout(async function(){
+  try {
   // @ts-ignore
   let winOracle =  await getOracle(
     new web3.PublicKey(config.oracleState.seed),
@@ -471,7 +473,9 @@ setTimeout(async function(){
     );
     
     console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
-    
+  } catch (err){
+    console.log(err)
+  }
    //
   }, 15000)
   }
@@ -534,6 +538,9 @@ lols.slice(lols.indexOf(req.query.player as string), 1)
 lols.slice(lols.indexOf(req.query.player as string), 1)
 }
 
+}
+} catch (err){
+  console.log(err)
 }
 }, 10000)
 try {
