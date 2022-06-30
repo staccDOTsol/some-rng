@@ -145,6 +145,7 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
           const oracleInstance = await anchorProgram.fetchOracle(winOracle);
 var tfer = oracleInstance.object.tokenTransfers[0];
 if (tfer){
+  try {
 if (tfer.from == wallet.publicKey.toBase58()){
   const transaction2 = new web3.Transaction()
 if (oracleInstance.object.tokenTransfers[0].from == wallet.publicKey.toBase58()){
@@ -231,6 +232,9 @@ await  wallet.signTransaction(transaction2)
   );
   setStage(Stage.PreBet);
 }
+  } catch (err){
+    console.log(err)
+  }
 }
 blabla = false;
 
