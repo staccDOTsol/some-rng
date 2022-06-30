@@ -605,7 +605,6 @@ export class MatchesProgram {
   }
 
   async disburseTokensByOracle(
-    wallie: any,
     args: DisburseTokensByOracleArgs,
     accounts: DisburseTokensByOracleAccounts,
     additionalArgs: DisburseTokensByOracleAdditionalArgs
@@ -618,14 +617,14 @@ export class MatchesProgram {
       );
 
     await sendTransactionWithRetry(
-      new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
-wallie,      instructions,
+     
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,    instructions,
       signers
     );
   }
 
   async drainMatch(
-    wallie: any,
     args: DrainMatchArgs,
     accounts: DrainMatchAccounts,
     additionalArgs: DrainMatchAdditionalArgs
@@ -637,15 +636,15 @@ wallie,      instructions,
     );
 
     await sendTransactionWithRetry(
-      new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
-      wallie,
+     
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,
       instructions,
       signers
     );
   }
 
   async drainOracle(
-    wallie: any,
     args: DrainOracleArgs,
     accounts: DrainOracleAccounts,
     _additionalArgs = {}
@@ -656,15 +655,15 @@ wallie,      instructions,
     );
 
     await sendTransactionWithRetry(
-      new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
-      wallie,
+      
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,
       instructions,
       signers
     );
   }
 
   async joinMatch(
-    wallie: any,
     args: JoinMatchArgs,
     accounts: JoinMatchAccounts,
     additionalArgs: JoinMatchAdditionalArgs
@@ -676,14 +675,14 @@ wallie,      instructions,
     );
 
     await sendTransactionWithRetry(
-      new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
-wallie,      instructions,
+    
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,    instructions,
       signers
     );
   }
 
   async leaveMatch(
-    wallie: Wallet,
     args: LeaveMatchArgs,
     accounts: LeaveMatchAccounts,
     additionalArgs: LeaveMatchAdditionalArgs
@@ -695,8 +694,9 @@ wallie,      instructions,
     );
 
     await sendTransactionWithRetry(
-       new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
-      wallie,
+    
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,
       instructions,
       signers
     );
