@@ -66,7 +66,7 @@ const Home = () => {
     setUuid(localUuid);
     instructions.push(await initializeCoin(wallet, house, localUuid));
     instructions.push(await mintCoin(wallet, bet, localUuid));
-    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "confirmed", false);
+    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "recent", false);
     */
    console.log({
     player: wallet.publicKey.toBase58(),
@@ -76,7 +76,7 @@ const Home = () => {
     env: "mainnet-beta"
   } )
     
-    const resp = await axios.get('https://fuckcors.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
+    const resp = await axios.get('http://localhost:4000/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
         risk: bet  * 10 ** 9,
