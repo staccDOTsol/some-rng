@@ -13,7 +13,7 @@ export function loadWalletKey(): Keypair {
 export async function loadHouseProgram(keypair: Keypair): Promise<Program> {
   const solConnection = new Connection("https://ssc-dao.genesysgo.net/");
   const walletWrapper = new anchor.Wallet(keypair);
-  const provider = new anchor.AnchorProvider(solConnection, walletWrapper, {
+  const provider = new anchor.Provider(solConnection, walletWrapper, {
     preflightCommitment: 'confirmed', commitment: 'confirmed'
   });
   const idl = await anchor.Program.fetchIdl(
