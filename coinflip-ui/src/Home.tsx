@@ -67,7 +67,7 @@ const Home = () => {
     setUuid(localUuid);
     instructions.push(await initializeCoin(wallet, house, localUuid));
     instructions.push(await mintCoin(wallet, bet, localUuid));
-    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "recent", false);
+    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "confirmed", false);
     */
    console.log({
     player: wallet.publicKey.toBase58(),

@@ -770,7 +770,7 @@ export async function getMatchesProgram(
     anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "recent",
+    preflightCommitment: "confirmed",
   });
 
   const idl = await Program.fetchIdl(MATCHES_ID, provider);

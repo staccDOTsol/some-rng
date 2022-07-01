@@ -695,7 +695,7 @@ return {instructions, signers}
     );
 
     await sendTransactionWithRetry(
-        new web3.Connection("https://ssc-dao.genesysgo.net/", {confirmTransactionInitialTimeout:670000, commitment: "recent"}),
+        new web3.Connection("https://ssc-dao.genesysgo.net/", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
   wallie,    
       instructions,
       signers
@@ -807,7 +807,7 @@ export async function getMatchesProgram(
     anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "recent",
+    preflightCommitment: "confirmed",
   });
 
   const idl = await Program.fetchIdl(MATCHES_ID, provider);
