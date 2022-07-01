@@ -630,6 +630,7 @@ export class MatchesProgram {
   }
 
   async disburseTokensByOracle(
+    wallie: any,
     args: DisburseTokensByOracleArgs,
     accounts: DisburseTokensByOracleAccounts,
     additionalArgs: DisburseTokensByOracleAdditionalArgs
@@ -640,13 +641,7 @@ export class MatchesProgram {
         accounts,
         additionalArgs
       );
-
-    await sendTransactionWithRetry(
-      (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,
-      instructions,
-      signers
-    );
+return {instructions, signers}
   }
 
   async drainMatch(

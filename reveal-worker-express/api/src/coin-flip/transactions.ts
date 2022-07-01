@@ -87,7 +87,7 @@ export async function sendSignedTransaction({
   const txid: TransactionSignature = await connection.sendRawTransaction(
       rawTransaction,
       {
-        skipPreflight: true,
+        skipPreflight: false,
       },
   );
 
@@ -97,7 +97,7 @@ export async function sendSignedTransaction({
   (async () => {
     while (!done && getUnixTs() - startTime < timeout) {
       connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: true,
+        skipPreflight: false,
       });
       await sleep(500);
     }

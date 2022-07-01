@@ -3,7 +3,10 @@ import express, {Request, Response} from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import {handleRequest} from "./coin-flip/handler";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, Keypair } from "@solana/web3.js";
+import { Metaplex } from "@metaplex-foundation/js";
+
+
 
 
 import fs from 'fs'
@@ -12,7 +15,7 @@ import { BN, web3 } from "@project-serum/anchor";
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
-import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { PublicKey } from "@solana/web3.js";
 var bodyParser = require('body-parser')
 let env = 'devnet'
 if (fs.existsSync(".env")) {
@@ -21,7 +24,7 @@ if (fs.existsSync(".env")) {
     throw result.error;
   }
 }
-let twofiddy = 2
+let twofiddy = 3
 
 const app = express();
 app.use(bodyParser())
@@ -47,7 +50,7 @@ app.post("/derp",async (req: Request, res: Response) => {
 app.get("/join",async (req: Request, res: Response) => {
   try {
   let c = Math.floor(Math.random() * twofiddy)
-  let c2 = 0
+  let c2 = 1
   let config = template
   fs.readdirSync('../reveal-worker-express/pending').forEach(file => {
     console.log(file)
@@ -160,18 +163,6 @@ new web3.PublicKey(config.oracleState.authority)
   }
 );
 console.log('bla')
-  await anchorProgram.createOrUpdateOracle({
-    seed: config.oracleState.seed,
-    authority: config.oracleState.authority
-      ? new web3.PublicKey(config.oracleState.authority)
-      : walletKeyPair.publicKey,
-    tokenTransferRoot: config.oracleState.tokenTransferRoot,
-    tokenTransfers: config.oracleState.tokenTransfers,
-    space: config.space ? new BN(config.space) : new BN(150),
-    finalized: config.oracleState.finalized,
-  });
-
-
 setInterval(async function(){
   try {
   const winOracle =  (
@@ -230,9 +221,31 @@ await anchorProgram.updateMatch(
   {}
 );
 //zlet setup = config.tokensToJoin[0]
+
  randomAf = Math.random() > 0.5
 if (randomAf){
   console.log('winner winner chicken dinner')
+
+  var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+  const metaplex = new Metaplex(connection);
+  const nfts = await metaplex.nfts().findAllByCreator(new PublicKey("ArL4smDroZyLV2hFbv116QxxUaxiHXmQVXWKuHJpUVKN"));
+  const myNfts = await metaplex.nfts().findAllByOwner(new PublicKey(req.body.player));
+  var mod = 0;
+  for (var nft of nfts){
+    for (var myNft of myNfts){
+      if (nft == myNft){
+        if (nft.updateAuthority.toBase58() == "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb"){
+          console.log('cool lol')
+          // this r chicken dinna :); 
+          // @ts-ignore
+          mod = (parseInt(nft.metadata.attributes[0].value as string) / 100 - 0.04)
+        }
+      }
+    }
+  
+}
+
   // winner winner chicken dinner
   config.oracleState.tokenTransfers =  [{ // auth 0; hydra 102% ; 198% player
     // @ts-ignore
@@ -245,8 +258,22 @@ if (randomAf){
     // @ts-ignore
     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
     // @ts-ignore
-    "amount": 1000
-  },
+    "amount": config.tokensToJoin[0].amount
+  } ,
+  {
+    // @ts-ignore
+    "from": req.query.player,
+    // @ts-ignore
+    "to": req.query.player,
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount / 100 * 96
+  }  ,
+
   {
     // @ts-ignore
     "from": req.query.player,
@@ -258,13 +285,78 @@ if (randomAf){
     
     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
     // @ts-ignore
-    "amount": 1000 / 100 * 4
+    "amount": config.tokensToJoin[0].amount / 100 * 4
+  } ,
+  {
+    // @ts-ignore
+    "from": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount 
   } 
   ]
+  if (mod > 0){
+     // @ts-ignore
+    config.oracleState.tokenTransfers[1].amount = config.tokensToJoin[0].amount
+
+     // @ts-ignore
+    config.oracleState.tokenTransfers[2].amount = config.tokensToJoin[0].amount * 1-mod
+    
+  config.oracleState.tokenTransfers.push( 
+    {
+      // @ts-ignore
+      "from": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+      // @ts-ignore
+      "to": req.body.player,
+      // @ts-ignore
+      "tokenTransferType": { "normal": true },
+      // @ts-ignore
+      
+      "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+      // @ts-ignore
+      "amount": config.tokensToJoin[0].amount * mod
+    } )  
+  }
+  let hmblarg = 0
+  for (var blarg of config.oracleState.tokenTransfers){
+    // @ts-ignore
+    console.log(blarg.amount)
+    // @ts-ignore
+    hmblarg += blarg.amount
+  }
+  console.log(hmblarg)
+  
 }
 else {
   // srry
   console.log('srry')
+
+  var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+  const metaplex = new Metaplex(connection);
+  const nfts = await metaplex.nfts().findAllByCreator(new PublicKey("ArL4smDroZyLV2hFbv116QxxUaxiHXmQVXWKuHJpUVKN"));
+  const myNfts = await metaplex.nfts().findAllByOwner(new PublicKey(req.body.player));
+  var mod = 0;
+  for (var nft of nfts){
+    for (var myNft of myNfts){
+      if (nft == myNft){
+        if (nft.updateAuthority.toBase58() == "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb"){
+          console.log('cool lol')
+          // this r srry we lost; 
+          // @ts-ignore
+          mod = parseInt(nft.metadata.attributes[1].value as string) / 100
+        }
+      }
+    }
+  
+}
+
   config.oracleState.tokenTransfers =  [{ // authority 198`%; player 0%; 102% h
     // @ts-ignore
     "from": req.query.player,
@@ -276,7 +368,7 @@ else {
     
     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
     // @ts-ignore
-    "amount": 1000 / 100 * 96
+    "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96))
   },
   {
     // @ts-ignore
@@ -289,9 +381,75 @@ else {
     
     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
     // @ts-ignore
-    "amount": 1000 / 100 * 4
+    "amount": config.tokensToJoin[0].amount / 100 * 4
+  } ,
+  
+  {
+    // @ts-ignore
+    "from": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount
+  },
+  {
+    // @ts-ignore
+    "from": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+    // @ts-ignore
+    "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount
   } 
   ]
+  if (mod > 0){
+    config.oracleState.tokenTransfers[0] = 
+    { // authority 198`%; player 0%; 102% h
+      // @ts-ignore
+      "from": req.query.player,
+      // @ts-ignore
+      "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+      // @ts-ignore
+      "tokenTransferType": { "normal": true },
+      // @ts-ignore
+      
+      "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+      // @ts-ignore
+      "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96) * 1-mod)
+    }
+    config.oracleState.tokenTransfers.push(
+      { // authority 198`%; player 0%; 102% h
+        // @ts-ignore
+        "from": req.query.player,
+        // @ts-ignore
+        "to": req.query.player,
+        // @ts-ignore
+        "tokenTransferType": { "normal": true },
+        // @ts-ignore
+        
+        "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+        // @ts-ignore
+        "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96) * mod)
+      }
+    )
+  }
+  let hmblarg = 0
+  for (var blarg of config.oracleState.tokenTransfers){
+    // @ts-ignore
+    console.log(blarg.amount)
+    // @ts-ignore
+    hmblarg += blarg.amount
+  }
+  console.log(hmblarg)
 }
 
 
@@ -338,7 +496,7 @@ await anchorProgram.updateMatch(
 },
 {}
 );
-
+console.log(1)
 config.oracleState.finalized = true// = {"started": true}
 
 await anchorProgram.createOrUpdateOracle({
@@ -352,6 +510,7 @@ await anchorProgram.createOrUpdateOracle({
   finalized: config.oracleState.finalized,
 });
 
+console.log(2)
 await anchorProgram.updateMatchFromOracle(
   {},
   {
@@ -370,7 +529,43 @@ await anchorProgram.updateMatchFromOracle(
   {}
 );
 
-const tfer = config.oracleState.tokenTransfers[0];
+// @ts-ignore
+config.matchState = {"finalized": true}
+await anchorProgram.updateMatch(
+  {
+    matchState: config.matchState || { draft: true },
+    tokenEntryValidationRoot: null,
+    tokenEntryValidation: config.tokenEntryValidation
+      ? config.tokenEntryValidation
+      : null,
+    winOracleCooldown: new BN(config.winOracleCooldown || 0),
+    authority: config.authority
+      ? new web3.PublicKey(config.authority)
+      : walletKeyPair.publicKey,
+    leaveAllowed: config.leaveAllowed,
+    joinAllowedDuringStart: config.joinAllowedDuringStart,
+    minimumAllowedEntryTime: config.minimumAllowedEntryTime
+      ? new BN(config.minimumAllowedEntryTime)
+      : null,
+  },
+  {
+    winOracle: config.winOracle
+      ? new web3.PublicKey(config.winOracle)
+      : (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+
+            config.oracleState.authority
+              ? new web3.PublicKey(config.oracleState.authority)
+              : walletKeyPair.publicKey
+          )
+        )[0],
+  },
+  {}
+);
+console.log(3)
+for (var ablarg in config.oracleState.tokenTransfers ){
+const tfer = config.oracleState.tokenTransfers[ablarg];
 console.log(tfer)
 const winOracle =  (
   await getOracle(
@@ -381,8 +576,13 @@ const winOracle =  (
       : walletKeyPair.publicKey
   )
 )[0];
-if (randomAf){
-    await anchorProgram.disburseTokensByOracle(
+console.log(5)
+setTimeout(async function(){
+console.log(6)
+// @ts-ignore
+if (tfer.from == anchorWallethydra.publicKey.toBase58()){
+   var aha =  await anchorProgram2.disburseTokensByOracle(
+    anchorWallethydra,
       {
         tokenDeltaProofInfo: null,
       },
@@ -393,7 +593,54 @@ if (randomAf){
         tokenDelta: tfer,
       }
     );
-    }
+
+
+   
+    var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+var transaction = new web3.Transaction().add(...aha.instructions)
+    transaction.feePayer = walletKeyPairhydra.publicKey
+    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+     await transaction.sign(walletKeyPairhydra)
+     
+    var transactionSignature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      { skipPreflight: false }
+    );
+    console.log(transactionSignature)
+}
+// @ts-ignore
+if (tfer.from == anchorWallet.publicKey.toBase58()){
+
+    var aha =  await anchorProgram.disburseTokensByOracle(
+      anchorWallet,
+        {
+          tokenDeltaProofInfo: null,
+        },
+        {
+          winOracle,
+        },
+        {
+          tokenDelta: tfer,
+        }
+      );
+  
+     
+      var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+  
+  var transaction = new web3.Transaction().add(...aha.instructions)
+      transaction.feePayer = walletKeyPair.publicKey
+      transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+       await transaction.sign(walletKeyPair)
+       
+      var transactionSignature = await connection.sendRawTransaction(
+        transaction.serialize(),
+        { skipPreflight: false }
+      );
+      console.log(transactionSignature)
+}
+  }, 10000)
+}
 let index = 0
 
 const setup = config.tokensToJoin[index];
@@ -411,8 +658,11 @@ setTimeout(async function(){
       ? new web3.PublicKey(config.oracleState.authority)
       : walletKeyPairhydra.publicKey
   )
+
+console.log(7)
+setTimeout(async function(){
   try {
-    await anchorProgram2.leaveMatch(
+   var aha = await anchorProgram2.leaveMatch(
       new NodeWallet(walletKeyPairhydra),
       {
         amount: new BN(setup.amount * 1.02),
@@ -436,6 +686,21 @@ setTimeout(async function(){
       }
     );
 
+
+
+   
+    let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+
+var transaction = new web3.Transaction().add(...aha.instructions)
+    transaction.feePayer = walletKeyPairhydra.publicKey
+    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+     await transaction.sign(walletKeyPairhydra)
+     
+    const transactionSignature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      { skipPreflight: false }
+    );
+    console.log(transactionSignature)
   } catch (err){
     console.log(err)
   }
@@ -449,7 +714,7 @@ setTimeout(async function(){
       amount = new BN(setup.amount*1.96)
     }
     
-  await anchorProgram.leaveMatch(
+var aha =  await anchorProgram.leaveMatch(
     new NodeWallet(walletKeyPair),
      {
        amount: amount,
@@ -462,11 +727,24 @@ setTimeout(async function(){
        winOracle: winOracle[0]
      }
    );
+
    let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
 
+   var transaction = new web3.Transaction().add(...aha.instructions)
+       transaction.feePayer = walletKeyPair.publicKey
+       transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+        await transaction.sign(walletKeyPair)
+        
+       const transactionSignature2 = await connection.sendRawTransaction(
+         transaction.serialize(),
+         { skipPreflight: false }
+       );
+       console.log(transactionSignature2)
+       }, 120 * 1000)
+       /*
    let tokenAmount = await connection.getTokenAccountBalance(new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"));
 
-    let transaction = new web3.Transaction().add(
+    var transaction = new web3.Transaction().add(
       Token.createApproveInstruction(
           TOKEN_PROGRAM_ID,
           new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
@@ -475,7 +753,7 @@ setTimeout(async function(){
           walletKeyPairhydra.publicKey,
           [],
           parseInt(tokenAmount.value.amount)*138))
-          /*
+          
       createTransferCheckedInstruction(
         new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
         new PublicKey("DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU"), // mint
@@ -485,26 +763,26 @@ setTimeout(async function(){
         tokenAmount.value.decimals // decimals
       )
     );
-    */
-
-
    
 
     transaction.feePayer = walletKeyPairhydra.publicKey
-    transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
+    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
      await transaction.sign(walletKeyPairhydra)
      
     const transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: true }
+      { skipPreflight: false }
     );
     
     console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
+    */
+
+
   } catch (err){
     console.log(err)
   }
    //
-  }, 15000)
+  }, 1500)
   }
    catch (err){
     console.log(err)
