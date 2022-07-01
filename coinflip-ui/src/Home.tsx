@@ -248,9 +248,9 @@ await  wallet.signTransaction(transaction2)
         { skipPreflight: true }
         
       );
-      }, 5000) 
+      }, 15000) 
     }
-      }, 3500)
+      }, 13500)
 
  //   setMsg(`You ${resp.data.status}!`);
    
