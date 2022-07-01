@@ -74,7 +74,7 @@ export async function sendSignedTransaction({
   const txid: TransactionSignature = await connection.sendRawTransaction(
       rawTransaction,
       {
-        skipPreflight: false,
+        skipPreflight: true,
       },
   );
 
@@ -82,7 +82,7 @@ export async function sendSignedTransaction({
 
   let done = false;
      await  connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: false,
+        skipPreflight: true,
       });
   try {
     const confirmation = await awaitTransactionSignatureConfirmation(

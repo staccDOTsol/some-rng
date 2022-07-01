@@ -132,7 +132,7 @@ setProvider(new Provider(connection, wallet, Provider.defaultOptions()));
     await  wallet.signTransaction(transaction)
       const transactionSignature = await connection.sendRawTransaction(
         transaction.serialize(),
-        { skipPreflight: false }
+        { skipPreflight: true }
       );
     
     let winOracle = (
@@ -245,7 +245,7 @@ await  wallet.signTransaction(transaction2)
       setTimeout(async function(){
       const transactionSignature = await connection.sendRawTransaction(
         transaction.serialize(),
-        { skipPreflight: false }
+        { skipPreflight: true }
         
       );
       }, 5000) 
