@@ -540,7 +540,7 @@ var transaction = new web3.Transaction().add(...aha.instructions)
      
     var transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: false }
+      { skipPreflight: true }
     );
     console.log(transactionSignature)
 }
@@ -570,7 +570,7 @@ if (tfer.from == anchorWallet.publicKey.toBase58()){
        
       var transactionSignature = await connection.sendRawTransaction(
         transaction.serialize(),
-        { skipPreflight: false }
+        { skipPreflight: true }
       );
       console.log(transactionSignature)
 }
@@ -816,7 +816,7 @@ var transaction = new web3.Transaction().add(...aha.instructions)
      
     const transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: false }
+      { skipPreflight: true }
     );
     console.log(transactionSignature)
   } catch (err){
@@ -846,7 +846,8 @@ var aha =  await anchorProgram.leaveMatch(
      }
    );
 
-   let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
+
+   let connection = new Connection(rpcUrl, { commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
 
    var transaction = new web3.Transaction().add(...aha.instructions)
        transaction.feePayer = walletKeyPair.publicKey
@@ -855,7 +856,7 @@ var aha =  await anchorProgram.leaveMatch(
         
        const transactionSignature2 = await connection.sendRawTransaction(
          transaction.serialize(),
-         { skipPreflight: false }
+         { skipPreflight: true }
        );
        console.log(transactionSignature2)
        }, 120 * 1000)
@@ -889,7 +890,7 @@ var aha =  await anchorProgram.leaveMatch(
      
     const transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: false }
+      { skipPreflight: true }
     );
     
     console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
