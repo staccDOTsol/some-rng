@@ -31,7 +31,7 @@ let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6f
 const Home = () => {
 
   const [balance, setBalance] = useState<number>();
-  const [bet, setBet] = useState<number>(0.138);
+  const [bet, setBet] = useState<number>(0.001);
   const wallet = useAnchorWallet();
   const wallet2 = useWallet();
 
@@ -42,8 +42,8 @@ const Home = () => {
   const setBetAmount = (e: any) => {
     try {
       const num = parseFloat(e.target.value);
-      if (num >= 1) {
-        setBet(1);
+      if (num >= 0.138) {
+        setBet(0.138);
       } else if (num <= 0.001) {
         setBet(0.001);
       } else {
@@ -76,7 +76,7 @@ const Home = () => {
     env: "mainnet-beta"
   } )
     
-    const resp = await axios.get('https://fuckcors.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
+    const resp = await axios.get('http://localhost:4000/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
         risk: bet  * 10 ** 9,
@@ -118,17 +118,19 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
               )[0],
           sourceType: setup.sourceType as TokenType,
           index:new BN(setup.index),
-        }, connection
+        }
       );     
+      // @ts-ignore
       
       const transaction = new web3.Transaction().add(...hm.instructions);
       transaction.feePayer = wallet.publicKey;
       transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+      // @ts-ignore
      await transaction.sign(...hm.signers)
     await  wallet.signTransaction(transaction)
       const transactionSignature = await connection.sendRawTransaction(
         transaction.serialize(),
-        { skipPreflight: true }
+        { skipPreflight: false }
       );
     let blabla = true 
     let winOracle = (
@@ -139,38 +141,38 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
               : wallet.publicKey
           )
         )[0];
+        blabla = true
       setInterval(async function(){
-        if (blabla){
+        const oracleInstance = await anchorProgram.fetchOracle(winOracle);
 
-          const oracleInstance = await anchorProgram.fetchOracle(winOracle);
+        if (blabla){
+          console.log(oracleInstance.object)
+
 var tfer = oracleInstance.object.tokenTransfers[0];
+
 if (tfer){
+
+
+// @ts-ignore
+tfer.from = new PublicKey(tfer.from)
+// @ts-ignore
+tfer.to = new PublicKey(tfer.to)
+// @ts-ignore
+tfer.from = new PublicKey(tfer.from)
   try {
-if (tfer.from == wallet.publicKey.toBase58()){
   const transaction2 = new web3.Transaction()
-if (oracleInstance.object.tokenTransfers[0].from == wallet.publicKey.toBase58()){
-  blabla = false
-  var aha2 = await anchorProgram.disburseTokensByOracle(
-    {
-      tokenDeltaProofInfo: null,
-    },
-    {
-      winOracle,
-    },
-    {
-      tokenDelta: tfer,
-    }
-  );
-  
-  console.log(tfer)
-  let signers2 = aha2.signers 
-  let instructions2 = aha2.instructions
- transaction2.add(...instructions2);
-  if (aha2.signers.length > 0){
-  await transaction2.sign(...aha2.signers)
- }
-}
-  var tfer = oracleInstance.object.tokenTransfers[1];
+
+
+for (var ablarg in oracleInstance.object.tokenTransfers){
+
+  var tfer = oracleInstance.object.tokenTransfers[ablarg];
+
+// @ts-ignore
+tfer.from = new PublicKey(tfer.from)
+// @ts-ignore
+tfer.to = new PublicKey(tfer.to)
+// @ts-ignore
+tfer.from = new PublicKey(tfer.from)
   if (tfer.from == wallet.publicKey.toBase58()){
 
   var aha2 = await anchorProgram.disburseTokensByOracle(
@@ -184,24 +186,28 @@ if (oracleInstance.object.tokenTransfers[0].from == wallet.publicKey.toBase58())
       tokenDelta: tfer,
     }
   );
+  // @ts-ignore
   let instructions138 = aha2.instructions
 transaction2.add(...instructions138);
+// @ts-ignore
 if (aha2.signers.length > 0){
+  // @ts-ignore
   await transaction2.sign(...aha2.signers)
  }
   }
+  // @ts-ignore
   transaction2.feePayer = wallet.publicKey
+  // @ts-ignore
   transaction2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 
 await  wallet.signTransaction(transaction2)
   const transactionSignature2 = await connection.sendRawTransaction(
     transaction2.serialize(),
-    { skipPreflight: true }
+    { skipPreflight: false }
   );
   console.log(transactionSignature2)
   const setup = config.tokensToJoin[0];
  var aha = await anchorProgram.leaveMatch(
-    connection,
     {
       amount: new BN(setup.amount),
     },
@@ -223,7 +229,9 @@ await  wallet.signTransaction(transaction2)
           )[0],
     }
   );
+  // @ts-ignore
   let signers = aha.signers 
+  // @ts-ignore
   let instructions = aha.instructions
   const transaction = new web3.Transaction().add(...instructions);
   transaction.feePayer = wallet.publicKey
@@ -234,7 +242,7 @@ await  wallet.signTransaction(transaction2)
    await  wallet.signTransaction(transaction)
   const transactionSignature = await connection.sendRawTransaction(
     transaction.serialize(),
-    { skipPreflight: true }
+    { skipPreflight: false }
   );
   setStage(Stage.PreBet);
 }
@@ -242,10 +250,14 @@ await  wallet.signTransaction(transaction2)
     console.log(err)
   }
 }
-blabla = false;
 
-        }
-      }, 30500)
+if (oracleInstance.object.finalized){
+  setStage(Stage.PreBet);
+        blabla = false
+}
+      }
+   
+      }, 3500)
 
  //   setMsg(`You ${resp.data.status}!`);
    

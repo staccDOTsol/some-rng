@@ -6,8 +6,9 @@ import {
   BN,
   Provider,
   AnchorProvider,
+  Wallet,
 } from "@project-serum/anchor";
-import { Connection, SystemProgram, Transaction } from "@solana/web3.js";
+import { SystemProgram } from "@solana/web3.js";
 
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
 import { MATCHES_ID, TOKEN_PROGRAM_ID } from "../constants/programIds";
@@ -235,7 +236,7 @@ export class MatchesInstruction {
       tfer.from
     );
 
-    let destinationTokenAccount = new web3.PublicKey(tfer.to);
+    let destinationTokenAccount = tfer.to;
     const info = await (
       this.program.provider as AnchorProvider
     ).connection.getAccountInfo(destinationTokenAccount);
@@ -245,7 +246,7 @@ export class MatchesInstruction {
     if (!info.owner.equals(TOKEN_PROGRAM_ID)) {
       const destinationTokenOwner = destinationTokenAccount;
       destinationTokenAccount = (
-        await getAtaForMint(new web3.PublicKey(tfer.mint), destinationTokenAccount)
+        await getAtaForMint(tfer.mint, destinationTokenAccount)
       )[0];
 
       const exists = await (
@@ -616,12 +617,12 @@ export class MatchesProgram {
       );
 /*
     await sendTransactionWithRetry(
+     
       (this.program.provider as AnchorProvider).connection,
-      (this.program.provider as AnchorProvider).wallet,
-      instructions,
+      (this.program.provider as AnchorProvider).wallet,    instructions,
       signers
     ); */
-   return {signers, instructions}
+    return { instructions, signers }
   }
 
   async drainMatch(
@@ -636,6 +637,7 @@ export class MatchesProgram {
     );
 
     await sendTransactionWithRetry(
+    
       (this.program.provider as AnchorProvider).connection,
       (this.program.provider as AnchorProvider).wallet,
       instructions,
@@ -654,6 +656,7 @@ export class MatchesProgram {
     );
 
     await sendTransactionWithRetry(
+      
       (this.program.provider as AnchorProvider).connection,
       (this.program.provider as AnchorProvider).wallet,
       instructions,
@@ -664,22 +667,25 @@ export class MatchesProgram {
   async joinMatch(
     args: JoinMatchArgs,
     accounts: JoinMatchAccounts,
-    additionalArgs: JoinMatchAdditionalArgs,
-    connection: Connection
+    additionalArgs: JoinMatchAdditionalArgs
   ) {
     const { instructions, signers } = await this.instruction.joinMatch(
       args,
       accounts,
       additionalArgs
     );
-
-    
-    
-   return {instructions, signers}
+    return { instructions, signers }
+/*
+    await sendTransactionWithRetry(
+      
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,     instructions,
+      signers
+    );
+    */
   }
 
   async leaveMatch(
-    connection: Connection,
     args: LeaveMatchArgs,
     accounts: LeaveMatchAccounts,
     additionalArgs: LeaveMatchAdditionalArgs
@@ -689,10 +695,16 @@ export class MatchesProgram {
       accounts,
       additionalArgs
     );
-   return {signers, instructions}
+/*
+    await sendTransactionWithRetry(
+    
+      (this.program.provider as AnchorProvider).connection,
+      (this.program.provider as AnchorProvider).wallet,
+      instructions,
+      signers
+    ); */
+    return { instructions, signers }
   }
-
-  
 
   async updateMatch(
     args: UpdateMatchArgs,
@@ -750,12 +762,15 @@ export async function getMatchesProgram(
   env: string,
   customRpcUrl: string
 ): Promise<MatchesProgram> {
-  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
+  if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
 
-  const solConnection = new web3.Connection(customRpcUrl, {confirmTransactionInitialTimeout: 600000})
+  const solConnection = new web3.Connection(customRpcUrl || getCluster(env));
+
+  if (anchorWallet instanceof web3.Keypair)
+    anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "recent",
+    preflightCommitment: "confirmed",
   });
 
   const idl = await Program.fetchIdl(MATCHES_ID, provider);
