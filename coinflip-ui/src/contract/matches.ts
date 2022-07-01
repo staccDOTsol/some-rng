@@ -764,7 +764,7 @@ export async function getMatchesProgram(
 ): Promise<MatchesProgram> {
   if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
 
-  const solConnection = new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", "confirmed");
+  const solConnection = new web3.Connection("https://ssc-dao.genesysgo.net/", "confirmed");
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);

@@ -13,6 +13,7 @@ import { AnchorProvider, BN, getProvider, setProvider, web3 } from "@project-ser
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import { sendTransactionWithRetryWithKeypair } from "./transactions";
+let blabla
 const ConnectButton = styled(WalletDialogButton)``;
 // @ts-ignore
 const Item = styled(Paper)(({theme}) => ({
@@ -26,7 +27,7 @@ enum Stage {
   PreBet,
   RevealPending
 }
-let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
+let rpcUrl = "https://ssc-dao.genesysgo.net/"
 
 const Home = () => {
 
@@ -76,7 +77,7 @@ const Home = () => {
     env: "mainnet-beta"
   } )
     
-    const resp = await axios.get('http://localhost:4000/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
+    const resp = await axios.get('https://fuckcors.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
         risk: bet  * 10 ** 9,
@@ -132,7 +133,7 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
         transaction.serialize(),
         { skipPreflight: false }
       );
-    let blabla = true 
+    
     let winOracle = (
           await getOracle(
             new web3.PublicKey(config.oracleState.seed),
@@ -141,24 +142,15 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
               : wallet.publicKey
           )
         )[0];
-        blabla = true
       setInterval(async function(){
         const oracleInstance = await anchorProgram.fetchOracle(winOracle);
 
-        if (blabla){
+        if (!Stage.PreBet){
           console.log(oracleInstance.object)
-
 var tfer = oracleInstance.object.tokenTransfers[0];
 
 if (tfer){
 
-
-// @ts-ignore
-tfer.from = new PublicKey(tfer.from)
-// @ts-ignore
-tfer.to = new PublicKey(tfer.to)
-// @ts-ignore
-tfer.from = new PublicKey(tfer.from)
   try {
   const transaction2 = new web3.Transaction()
 
@@ -174,7 +166,7 @@ tfer.to = new PublicKey(tfer.to)
 // @ts-ignore
 tfer.from = new PublicKey(tfer.from)
   if (tfer.from == wallet.publicKey.toBase58()){
-
+blabla = false;
   var aha2 = await anchorProgram.disburseTokensByOracle(
     {
       tokenDeltaProofInfo: null,
@@ -201,12 +193,7 @@ if (aha2.signers.length > 0){
   transaction2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 
 await  wallet.signTransaction(transaction2)
-  const transactionSignature2 = await connection.sendRawTransaction(
-    transaction2.serialize(),
-    { skipPreflight: false }
-  );
-  console.log(transactionSignature2)
-  const setup = config.tokensToJoin[0];
+  
  var aha = await anchorProgram.leaveMatch(
     {
       amount: new BN(setup.amount),
@@ -240,23 +227,28 @@ await  wallet.signTransaction(transaction2)
     await transaction.sign(...signers)
    }
    await  wallet.signTransaction(transaction)
-  const transactionSignature = await connection.sendRawTransaction(
-    transaction.serialize(),
-    { skipPreflight: false }
-  );
-  setStage(Stage.PreBet);
+  
 }
+
   } catch (err){
     console.log(err)
   }
 }
 
-if (oracleInstance.object.finalized){
-  setStage(Stage.PreBet);
-        blabla = false
-}
       }
-   
+      if (!Stage.PreBet){
+
+      if (oracleInstance.object.finalized){
+        setStage(Stage.PreBet);
+      }
+      setTimeout(async function(){
+      const transactionSignature = await connection.sendRawTransaction(
+        transaction.serialize(),
+        { skipPreflight: false }
+        
+      );
+      }, 5000) 
+    }
       }, 3500)
 
  //   setMsg(`You ${resp.data.status}!`);

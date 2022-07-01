@@ -4,7 +4,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import {handleRequest} from "./coin-flip/handler";
 import { Connection, Keypair } from "@solana/web3.js";
-import { Metaplex } from "@metaplex-foundation/js";
+//import { Metaplex } from "@metaplex-foundation/js";
 
 
 
@@ -15,7 +15,8 @@ import { BN, web3 } from "@project-serum/anchor";
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
-import { PublicKey } from "@solana/web3.js";
+var mod = 0
+//import { PublicKey } from "@solana/web3.js";
 var bodyParser = require('body-parser')
 let env = 'devnet'
 if (fs.existsSync(".env")) {
@@ -170,7 +171,7 @@ catch (err){
   console.log(err)
   lols.slice(lols.indexOf(req.query.player as string), 1)
 
-  fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
+  //fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
 }
 console.log('bla')
 setInterval(async function(){
@@ -236,12 +237,15 @@ await anchorProgram.updateMatch(
 if (randomAf){
   console.log('winner winner chicken dinner')
 
+   mod = 0;
+/*
   var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
 
   const metaplex = new Metaplex(connection);
   const nfts = await metaplex.nfts().findAllByCreator(new PublicKey("ArL4smDroZyLV2hFbv116QxxUaxiHXmQVXWKuHJpUVKN"));
   const myNfts = await metaplex.nfts().findAllByOwner(new PublicKey(req.body.player));
-  var mod = 0;
+
+  
   for (var nft of nfts){
     for (var myNft of myNfts){
       if (nft == myNft){
@@ -255,6 +259,7 @@ if (randomAf){
     }
   
 }
+*/
 
   // winner winner chicken dinner
   config.oracleState.tokenTransfers =  [{ // auth 0; hydra 102% ; 198% player
@@ -269,34 +274,7 @@ if (randomAf){
     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
     // @ts-ignore
     "amount": config.tokensToJoin[0].amount
-  } ,
-  {
-    // @ts-ignore
-    "from": req.query.player,
-    // @ts-ignore
-    "to": req.query.player,
-    // @ts-ignore
-    "tokenTransferType": { "normal": true },
-    // @ts-ignore
-    
-    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-    // @ts-ignore
-    "amount": config.tokensToJoin[0].amount / 100 * 96
   }  ,
-
-  {
-    // @ts-ignore
-    "from": req.query.player,
-    // @ts-ignore
-    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
-    // @ts-ignore
-    "tokenTransferType": { "normal": true },
-    // @ts-ignore
-    
-    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-    // @ts-ignore
-    "amount": config.tokensToJoin[0].amount / 100 * 4
-  } ,
   {
     // @ts-ignore
     "from": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
@@ -347,12 +325,14 @@ else {
   // srry
   console.log('srry')
 
+   mod = 0;
+
+/*
   var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
 
   const metaplex = new Metaplex(connection);
   const nfts = await metaplex.nfts().findAllByCreator(new PublicKey("ArL4smDroZyLV2hFbv116QxxUaxiHXmQVXWKuHJpUVKN"));
   const myNfts = await metaplex.nfts().findAllByOwner(new PublicKey(req.body.player));
-  var mod = 0;
   for (var nft of nfts){
     for (var myNft of myNfts){
       if (nft == myNft){
@@ -365,34 +345,9 @@ else {
       }
     }
   
-}
+} */
 
-  config.oracleState.tokenTransfers =  [{ // authority 198`%; player 0%; 102% h
-    // @ts-ignore
-    "from": req.query.player,
-    // @ts-ignore
-    "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
-    // @ts-ignore
-    "tokenTransferType": { "normal": true },
-    // @ts-ignore
-    
-    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-    // @ts-ignore
-    "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96))
-  },
-  {
-    // @ts-ignore
-    "from": req.query.player,
-    // @ts-ignore
-    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
-    // @ts-ignore
-    "tokenTransferType": { "normal": true },
-    // @ts-ignore
-    
-    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-    // @ts-ignore
-    "amount": config.tokensToJoin[0].amount / 100 * 4
-  } ,
+  config.oracleState.tokenTransfers =  [
   
   {
     // @ts-ignore
@@ -421,55 +376,86 @@ else {
     "amount": config.tokensToJoin[0].amount
   } 
   ]
-  if (mod > 0){
-    config.oracleState.tokenTransfers[0] = 
-    { // authority 198`%; player 0%; 102% h
-      // @ts-ignore
-      "from": req.query.player,
-      // @ts-ignore
-      "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
-      // @ts-ignore
-      "tokenTransferType": { "normal": true },
-      // @ts-ignore
+
+  await anchorProgram.createOrUpdateOracle({
+    seed: config.oracleState.seed,
+    authority: config.oracleState.authority
+      ? new web3.PublicKey(config.oracleState.authority)
+      : walletKeyPair.publicKey,
+    tokenTransferRoot: config.oracleState.tokenTransferRoot,
+    tokenTransfers: config.oracleState.tokenTransfers,
+    space: config.space ? new BN(config.space) : new BN(150),
+    finalized: config.oracleState.finalized,
+    });
       
-      "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-      // @ts-ignore
-      "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96) * 1-mod)
-    }
-    config.oracleState.tokenTransfers.push(
-      { // authority 198`%; player 0%; 102% h
-        // @ts-ignore
-        "from": req.query.player,
-        // @ts-ignore
-        "to": req.query.player,
-        // @ts-ignore
-        "tokenTransferType": { "normal": true },
-        // @ts-ignore
-        
-        "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
-        // @ts-ignore
-        "amount": Math.floor((config.tokensToJoin[0].amount / 100 * 96) * mod)
-      }
-    )
-  }
+    await anchorProgram.updateMatch(
+    {
+      matchState: config.matchState || { draft: true },
+      tokenEntryValidationRoot: null,
+      tokenEntryValidation: config.tokenEntryValidation
+        ? config.tokenEntryValidation
+        : null,
+      winOracleCooldown: new BN(config.winOracleCooldown || 0),
+      authority: config.authority
+        ? new web3.PublicKey(config.authority)
+        : walletKeyPair.publicKey,
+      leaveAllowed: config.leaveAllowed,
+      joinAllowedDuringStart: config.joinAllowedDuringStart,
+      minimumAllowedEntryTime: config.minimumAllowedEntryTime
+        ? new BN(config.minimumAllowedEntryTime)
+        : null,
+    },
+    {
+      winOracle: config.winOracle
+        ? new web3.PublicKey(config.winOracle)
+        : (
+            await getOracle(
+              new web3.PublicKey(config.oracleState.seed),
+    
+              config.oracleState.authority
+                ? new web3.PublicKey(config.oracleState.authority)
+                : walletKeyPair.publicKey
+            )
+          )[0],
+    },
+    {}
+    );
+
+ //   arggg = [config.oracleState.tokenTransfers[2]]
+ for (var i = 0; i <= 4; i=i+2){
+ let arggg = [config.oracleState.tokenTransfers[i], config.oracleState.tokenTransfers[i+1]]
+
+  console.log(arggg)
   let hmblarg = 0
-  for (var blarg of config.oracleState.tokenTransfers){
+  for (var blarg of arggg){
     // @ts-ignore
     console.log(blarg.amount)
     // @ts-ignore
     hmblarg += blarg.amount
   }
   console.log(hmblarg)
-}
 
 
+console.log({
+  seed: config.oracleState.seed,
+  authority: config.oracleState.authority
+    ? new web3.PublicKey(config.oracleState.authority)
+    : walletKeyPair.publicKey,
+  tokenTransferRoot: config.oracleState.tokenTransferRoot,
+  tokenTransfers: arggg,
+  space: config.space ? new BN(config.space) : new BN(150),
+  finalized: config.oracleState.finalized,
+  })
+  var done = false; 
+  while (!done){
+    try {
 await anchorProgram.createOrUpdateOracle({
 seed: config.oracleState.seed,
 authority: config.oracleState.authority
   ? new web3.PublicKey(config.oracleState.authority)
   : walletKeyPair.publicKey,
 tokenTransferRoot: config.oracleState.tokenTransferRoot,
-tokenTransfers: config.oracleState.tokenTransfers,
+tokenTransfers: arggg,
 space: config.space ? new BN(config.space) : new BN(150),
 finalized: config.oracleState.finalized,
 });
@@ -506,76 +492,15 @@ await anchorProgram.updateMatch(
 },
 {}
 );
-console.log(1)
-config.oracleState.finalized = true// = {"started": true}
-
-await anchorProgram.createOrUpdateOracle({
-  seed: config.oracleState.seed,
-  authority: config.oracleState.authority
-    ? new web3.PublicKey(config.oracleState.authority)
-    : walletKeyPair.publicKey,
-  tokenTransferRoot: config.oracleState.tokenTransferRoot,
-  tokenTransfers: config.oracleState.tokenTransfers,
-  space: config.space ? new BN(config.space) : new BN(150),
-  finalized: config.oracleState.finalized,
-});
-
-console.log(2)
-await anchorProgram.updateMatchFromOracle(
-  {},
-  {
-    winOracle: config.winOracle
-      ? new web3.PublicKey(config.winOracle)
-      : (
-          await getOracle(
-            new web3.PublicKey(config.oracleState.seed),
-
-            config.oracleState.authority
-              ? new web3.PublicKey(config.oracleState.authority)
-              : walletKeyPair.publicKey
-          )
-        )[0],
-  },
-  {}
-);
-
-// @ts-ignore
-config.matchState = {"finalized": true}
-await anchorProgram.updateMatch(
-  {
-    matchState: config.matchState || { draft: true },
-    tokenEntryValidationRoot: null,
-    tokenEntryValidation: config.tokenEntryValidation
-      ? config.tokenEntryValidation
-      : null,
-    winOracleCooldown: new BN(config.winOracleCooldown || 0),
-    authority: config.authority
-      ? new web3.PublicKey(config.authority)
-      : walletKeyPair.publicKey,
-    leaveAllowed: config.leaveAllowed,
-    joinAllowedDuringStart: config.joinAllowedDuringStart,
-    minimumAllowedEntryTime: config.minimumAllowedEntryTime
-      ? new BN(config.minimumAllowedEntryTime)
-      : null,
-  },
-  {
-    winOracle: config.winOracle
-      ? new web3.PublicKey(config.winOracle)
-      : (
-          await getOracle(
-            new web3.PublicKey(config.oracleState.seed),
-
-            config.oracleState.authority
-              ? new web3.PublicKey(config.oracleState.authority)
-              : walletKeyPair.publicKey
-          )
-        )[0],
-  },
-  {}
-);
+done = true 
+    }
+    catch (err){
+      console.log(err)
+    }
+  }
 console.log(3)
-for (var ablarg in config.oracleState.tokenTransfers ){
-const tfer = config.oracleState.tokenTransfers[ablarg];
+for (var ablarg in arggg ){
+const tfer = arggg[ablarg];
 console.log(tfer)
 const winOracle =  (
   await getOracle(
@@ -649,7 +574,190 @@ if (tfer.from == anchorWallet.publicKey.toBase58()){
       );
       console.log(transactionSignature)
 }
-  }, 10000)
+}, 10000)
+}
+}
+console.log(1)
+config.oracleState.finalized = true// = {"started": true}
+
+await anchorProgram.createOrUpdateOracle({
+  seed: config.oracleState.seed,
+  authority: config.oracleState.authority
+    ? new web3.PublicKey(config.oracleState.authority)
+    : walletKeyPair.publicKey,
+  tokenTransferRoot: config.oracleState.tokenTransferRoot,
+  tokenTransfers: config.oracleState.tokenTransfers,
+  space: config.space ? new BN(config.space) : new BN(150),
+  finalized: config.oracleState.finalized,
+});
+done = true 
+    
+  
+console.log(2)
+await anchorProgram.updateMatchFromOracle(
+  {},
+  {
+    winOracle: config.winOracle
+      ? new web3.PublicKey(config.winOracle)
+      : (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+
+            config.oracleState.authority
+              ? new web3.PublicKey(config.oracleState.authority)
+              : walletKeyPair.publicKey
+          )
+        )[0],
+  },
+  {}
+);
+
+// @ts-ignore
+config.matchState = {"finalized": true}
+await anchorProgram.updateMatch(
+  {
+    matchState: config.matchState || { draft: true },
+    tokenEntryValidationRoot: null,
+    tokenEntryValidation: config.tokenEntryValidation
+      ? config.tokenEntryValidation
+      : null,
+    winOracleCooldown: new BN(config.winOracleCooldown || 0),
+    authority: config.authority
+      ? new web3.PublicKey(config.authority)
+      : walletKeyPair.publicKey,
+    leaveAllowed: config.leaveAllowed,
+    joinAllowedDuringStart: config.joinAllowedDuringStart,
+    minimumAllowedEntryTime: config.minimumAllowedEntryTime
+      ? new BN(config.minimumAllowedEntryTime)
+      : null,
+  },
+  {
+    winOracle: config.winOracle
+      ? new web3.PublicKey(config.winOracle)
+      : (
+          await getOracle(
+            new web3.PublicKey(config.oracleState.seed),
+
+            config.oracleState.authority
+              ? new web3.PublicKey(config.oracleState.authority)
+              : walletKeyPair.publicKey
+          )
+        )[0],
+  },
+  {}
+);
+
+if (randomAf){
+
+config.oracleState.tokenTransfers =  [
+  {
+    // @ts-ignore
+    "from": req.query.player,
+    // @ts-ignore
+    "to": req.query.player,
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount * 0.96
+  }  ,
+
+  {
+    // @ts-ignore
+    "from": req.query.player,
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount / 100 * 4
+  }]
+
+  if (mod > 0){
+    // @ts-ignore
+   config.oracleState.tokenTransfers[1].amount = config.tokensToJoin[0].amount
+
+    // @ts-ignore
+   config.oracleState.tokenTransfers[2].amount = config.tokensToJoin[0].amount * 1-mod
+   
+ config.oracleState.tokenTransfers.push( 
+   {
+     // @ts-ignore
+     "from": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+     // @ts-ignore
+     "to": req.body.player,
+     // @ts-ignore
+     "tokenTransferType": { "normal": true },
+     // @ts-ignore
+     
+     "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+     // @ts-ignore
+     "amount": config.tokensToJoin[0].amount * mod
+   } )  
+ }
+} else {
+  config.oracleState.tokenTransfers = [{ // authority 198`%; player 0%; 102% h
+    // @ts-ignore
+    "from": req.query.player,
+    // @ts-ignore
+    "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": Math.floor((config.tokensToJoin[0].amount * 0.96))
+  },
+  {
+    // @ts-ignore
+    "from": req.query.player,
+    // @ts-ignore
+    "to": "JAReaQwjLJACN89gJ4vLkqSbvbpx9uAmh1AEQy3NkPKb",
+    // @ts-ignore
+    "tokenTransferType": { "normal": true },
+    // @ts-ignore
+    
+    "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+    // @ts-ignore
+    "amount": config.tokensToJoin[0].amount * 0.04
+  } ]
+  if (mod > 0){
+    config.oracleState.tokenTransfers[0] = 
+    { // authority 198`%; player 0%; 102% h
+      // @ts-ignore
+      "from": req.query.player,
+      // @ts-ignore
+      "to": "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
+      // @ts-ignore
+      "tokenTransferType": { "normal": true },
+      // @ts-ignore
+      
+      "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+      // @ts-ignore
+      "amount": Math.floor((config.tokensToJoin[0].amount * 0.96) * 1-mod)
+    }
+    config.oracleState.tokenTransfers.push(
+      { // authority 198`%; player 0%; 102% h
+        // @ts-ignore
+        "from": req.query.player,
+        // @ts-ignore
+        "to": req.query.player,
+        // @ts-ignore
+        "tokenTransferType": { "normal": true },
+        // @ts-ignore
+        
+        "mint": "DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU",
+        // @ts-ignore
+        "amount": Math.floor((config.tokensToJoin[0].amount * 0.96) * mod)
+      }
+    )
+  }
 }
 let index = 0
 
@@ -794,6 +902,7 @@ var aha =  await anchorProgram.leaveMatch(
    //
   }, 1500)
   }
+}
    catch (err){
     console.log(err)
     lols.slice(lols.indexOf(req.query.player as string), 1)
@@ -839,23 +948,23 @@ await anchorProgram.drainOracle(
 try {
   lols.slice(lols.indexOf(req.query.player as string), 1)
 
-fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
+//fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
 }
 catch (err){
 lols.slice(lols.indexOf(req.query.player as string), 1)
-fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
+//fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
 
 }
   }
 
-// fs.unlinkSync('../reveal-worker-express/notpending/' + file) 
+// //fs.unlinkSync('../reveal-worker-express/notpending/' + file) 
 } catch (err){
   console.log(err)
-  fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
+  //fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
 
-// fs.unlinkSync('../reveal-worker-express/notpending/' + file)
+// //fs.unlinkSync('../reveal-worker-express/notpending/' + file)
 
-//fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
+////fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
 lols.slice(lols.indexOf(req.query.player as string), 1)
 }
 
@@ -927,7 +1036,7 @@ let template = {
   ]
 }
 let blarg = true 
-let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
+let rpcUrl = "https://ssc-dao.genesysgo.net/"
 
     
 setInterval(async function(){
@@ -1011,7 +1120,9 @@ try {
     );
   
 } catch (err){
+  if (err.toString().indexOf('already been processed') == -1){ 
   console.log(err)
+  }
 }
   }
  blarg = true 

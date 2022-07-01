@@ -1293,7 +1293,7 @@ export async function getItemProgram(
   env: string,
   customRpcUrl: string
 ): Promise<ItemProgram> {
-  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
+  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://ssc-dao.genesysgo.net/"} ;
 
   const solConnection = new web3.Connection(customRpcUrl, {confirmTransactionInitialTimeout: 600000})
 
@@ -1301,7 +1301,7 @@ export async function getItemProgram(
     anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "confirmed",
+    preflightCommitment: "recent",
   });
 
   const idl = await Program.fetchIdl(ITEM_ID, provider);
