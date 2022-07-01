@@ -133,13 +133,7 @@ new web3.PublicKey(config.oracleState.authority)
     index:new BN(setup.index),
   }
 );
-}
-catch (err){
-  lols.slice(lols.indexOf(req.query.player as string), 1)
 
-  fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
-}
-try {
 const walletKeyPairhydra = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('../reveal-worker-express/idhydra.json').toString())))//new Uint8Array(walletKey));
   const anchorWallethydra = new NodeWallet(walletKeyPairhydra)
 const anchorProgram2 = await getMatchesProgram(anchorWallethydra, env, rpcUrl);
@@ -173,6 +167,7 @@ new web3.PublicKey(config.oracleState.authority)
 
 }
 catch (err){
+  console.log(err)
   lols.slice(lols.indexOf(req.query.player as string), 1)
 
   fs.unlinkSync('../reveal-worker-express/notpending/' + req.query.player) 
