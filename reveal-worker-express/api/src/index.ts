@@ -43,7 +43,7 @@ app.get("/api", (_: Request, res: Response) => {
 
 app.post("/derp",async (req: Request, res: Response) => {
   let ablarg = req.body.ablarg
-  let connection = new Connection(rpcUrl, {confirmTransactionInitialTimeout: 360000})
+  let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
   let awhoo = await connection.sendEncodedTransaction(ablarg)
   console.log(awhoo)
   res.send(200)
@@ -531,7 +531,7 @@ if (tfer.from == anchorWallethydra.publicKey.toBase58()){
 
 
    
-    var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+    let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
 
 var transaction = new web3.Transaction().add(...aha.instructions)
     transaction.feePayer = walletKeyPairhydra.publicKey
@@ -561,7 +561,7 @@ if (tfer.from == anchorWallet.publicKey.toBase58()){
       );
   
      
-      var connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+      let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
   
   var transaction = new web3.Transaction().add(...aha.instructions)
       transaction.feePayer = walletKeyPair.publicKey
@@ -807,7 +807,7 @@ setTimeout(async function(){
 
 
    
-    let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+    let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
 
 var transaction = new web3.Transaction().add(...aha.instructions)
     transaction.feePayer = walletKeyPairhydra.publicKey
@@ -846,7 +846,7 @@ var aha =  await anchorProgram.leaveMatch(
      }
    );
 
-   let connection = new Connection(rpcUrl,{confirmTransactionInitialTimeout: 600000})
+   let connection = new Connection(rpcUrl, {commitment: "confirmed", confirmTransactionInitialTimeout: 360000})
 
    var transaction = new web3.Transaction().add(...aha.instructions)
        transaction.feePayer = walletKeyPair.publicKey
