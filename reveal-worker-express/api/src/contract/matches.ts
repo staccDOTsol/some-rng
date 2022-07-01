@@ -695,7 +695,7 @@ return {instructions, signers}
     );
 
     await sendTransactionWithRetry(
-        new web3.Connection("https://ssc-dao.genesysgo.net/", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
+        new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
   wallie,    
       instructions,
       signers
@@ -799,7 +799,7 @@ export async function getMatchesProgram(
   env: string,
   customRpcUrl: string
 ): Promise<MatchesProgram> {
-  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://ssc-dao.genesysgo.net/"} ;
+  if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
 
   const solConnection = new web3.Connection(customRpcUrl, {commitment:"confirmed", confirmTransactionInitialTimeout: 600000});
 
