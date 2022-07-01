@@ -42,7 +42,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    block || (await connection.getLatestBlockhash(commitment))
+    block || (await connection.getRecentBlockhash(commitment))
   ).blockhash;
 
   if (includesFeePayer) {
@@ -83,7 +83,7 @@ export async function sendTransactionWithRetry(
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    await connection.getLatestBlockhash(commitment)
+    await connection.getRecentBlockhash(commitment)
   ).blockhash;
 
   transaction.feePayer = wallet.publicKey;
@@ -193,7 +193,7 @@ async function simulateTransaction(
   commitment: Commitment
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // @ts-ignore
-  transaction.recentBlockhash = await connection.getLatestBlockhash(
+  transaction.recentBlockhash = await connection.getRecentBlockhash(
     // @ts-ignore
     connection._disableBlockhashCaching
   );

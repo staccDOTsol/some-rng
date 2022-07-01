@@ -33,7 +33,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   const transaction = new Transaction();
   instructions.forEach(instruction => transaction.add(instruction));
   transaction.recentBlockhash = (
-      block || (await connection.getLatestBlockhash(commitment))
+      block || (await connection.getRecentBlockhash(commitment))
   ).blockhash;
 
   // if (signers.length > 0) {

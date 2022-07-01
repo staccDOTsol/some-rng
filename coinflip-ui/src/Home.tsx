@@ -125,7 +125,7 @@ setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions
       
       const transaction = new web3.Transaction().add(...hm.instructions);
       transaction.feePayer = wallet.publicKey;
-      transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+      transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
       // @ts-ignore
      await transaction.sign(...hm.signers)
     await  wallet.signTransaction(transaction)
@@ -190,7 +190,7 @@ if (aha2.signers.length > 0){
   // @ts-ignore
   transaction2.feePayer = wallet.publicKey
   // @ts-ignore
-  transaction2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+  transaction2.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
 
 await  wallet.signTransaction(transaction2)
   
@@ -222,7 +222,7 @@ await  wallet.signTransaction(transaction2)
   let instructions = aha.instructions
   const transaction = new web3.Transaction().add(...instructions);
   transaction.feePayer = wallet.publicKey
-  transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+  transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
   if (signers.length > 0){
     await transaction.sign(...signers)
    }

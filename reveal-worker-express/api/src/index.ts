@@ -535,7 +535,7 @@ if (tfer.from == anchorWallethydra.publicKey.toBase58()){
 
 var transaction = new web3.Transaction().add(...aha.instructions)
     transaction.feePayer = walletKeyPairhydra.publicKey
-    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
      await transaction.sign(walletKeyPairhydra)
      
     var transactionSignature = await connection.sendRawTransaction(
@@ -565,7 +565,7 @@ if (tfer.from == anchorWallet.publicKey.toBase58()){
   
   var transaction = new web3.Transaction().add(...aha.instructions)
       transaction.feePayer = walletKeyPair.publicKey
-      transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+      transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
        await transaction.sign(walletKeyPair)
        
       var transactionSignature = await connection.sendRawTransaction(
@@ -811,7 +811,7 @@ setTimeout(async function(){
 
 var transaction = new web3.Transaction().add(...aha.instructions)
     transaction.feePayer = walletKeyPairhydra.publicKey
-    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
      await transaction.sign(walletKeyPairhydra)
      
     const transactionSignature = await connection.sendRawTransaction(
@@ -850,7 +850,7 @@ var aha =  await anchorProgram.leaveMatch(
 
    var transaction = new web3.Transaction().add(...aha.instructions)
        transaction.feePayer = walletKeyPair.publicKey
-       transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+       transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
         await transaction.sign(walletKeyPair)
         
        const transactionSignature2 = await connection.sendRawTransaction(
@@ -884,7 +884,7 @@ var aha =  await anchorProgram.leaveMatch(
    
 
     transaction.feePayer = walletKeyPairhydra.publicKey
-    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
      await transaction.sign(walletKeyPairhydra)
      
     const transactionSignature = await connection.sendRawTransaction(
