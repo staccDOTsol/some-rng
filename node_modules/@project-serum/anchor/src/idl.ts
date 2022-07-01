@@ -12,7 +12,10 @@ export type Idl = {
   events?: IdlEvent[];
   errors?: IdlErrorCode[];
   constants?: IdlConstant[];
+  metadata?: IdlMetadata;
 };
+
+export type IdlMetadata = any;
 
 export type IdlConstant = {
   name: string;
@@ -98,8 +101,10 @@ export type IdlType =
   | "i16"
   | "u32"
   | "i32"
+  | "f32"
   | "u64"
   | "i64"
+  | "f64"
   | "u128"
   | "i128"
   | "bytes"

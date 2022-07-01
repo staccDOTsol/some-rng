@@ -9,7 +9,8 @@ import Grid from '@mui/material/Grid';
 import {Button, FilledInput, FormControl, InputAdornment, InputLabel} from "@mui/material";
 import axios from "axios";
 import { getMatchesProgram } from "./contract/matches";
-import { AnchorProvider, BN, getProvider, setProvider, web3 } from "@project-serum/anchor";
+import { Provider, BN, getProvider, setProvider, web3 } from "@project-serum/anchor";
+
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import { sendTransactionWithRetryWithKeypair } from "./transactions";
@@ -90,7 +91,7 @@ const Home = () => {
     console.log(config)
  //  const config = {"winOracle":null,"matchState":{"initialized":true},"winOracleCooldown":10,"space":300,"minimumAllowedEntryTime":null,"tokenEntryValidation":null,"authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","leaveAllowed":false,"joinAllowedDuringStart":false,"oracleState":{"seed":"52YkYFXbarQx4FKZjhghoFkfbbsVUqucsnmGhq94WxP1","authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","finalized":false,"tokenTransferRoot":null,"tokenTransfers":[]},"tokensToJoin":[{"mint":"DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU","amount":1,"sourceType":1,"index":1,"validationProgram":"nameAxQRRBnd4kLfsVoZBBXfrByZdZTkh8mULLxLyqV"}]}
 //    console.log(resp)
-setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions()));
+setProvider(new Provider(connection, wallet, Provider.defaultOptions()));
 // @ts-ignore
     const anchorProgram = await getMatchesProgram(wallet, 'mainnet-beta', rpcUrl);
     let index = 0
