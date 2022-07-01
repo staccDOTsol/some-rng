@@ -695,7 +695,7 @@ return {instructions, signers}
     );
 
     await sendTransactionWithRetry(
-        new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "confirmed"}),
+        new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2", {confirmTransactionInitialTimeout:670000, commitment: "recent"}),
   wallie,    
       instructions,
       signers
@@ -801,13 +801,13 @@ export async function getMatchesProgram(
 ): Promise<MatchesProgram> {
   if (customRpcUrl) { log.debug("USING CUSTOM URL", customRpcUrl) } else { customRpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"} ;
 
-  const solConnection = new web3.Connection(customRpcUrl || getCluster(env), {confirmTransactionInitialTimeout: 600000});
+  const solConnection = new web3.Connection(customRpcUrl, {commitment:"confirmed", confirmTransactionInitialTimeout: 600000});
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "confirmed",
+    preflightCommitment: "recent",
   });
 
   const idl = await Program.fetchIdl(MATCHES_ID, provider);

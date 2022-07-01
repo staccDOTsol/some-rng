@@ -965,6 +965,7 @@ blarg = false
     //@ts-ignore
     var config = JSON.parse(configString);
 console.log('a')
+try {
     await anchorProgram.createOrUpdateOracle({
       seed: config.oracleState.seed,
       authority: config.oracleState.authority
@@ -1008,6 +1009,10 @@ console.log('a')
       {},
       config.oracleState
     );
+  
+} catch (err){
+  console.log(err)
+}
   }
  blarg = true 
 }

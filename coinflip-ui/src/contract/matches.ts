@@ -764,13 +764,13 @@ export async function getMatchesProgram(
 ): Promise<MatchesProgram> {
   if (customRpcUrl) log.debug("USING CUSTOM URL", customRpcUrl);
 
-  const solConnection = new web3.Connection(customRpcUrl || getCluster(env));
+  const solConnection = new web3.Connection("https://solana--mainnet.datahub.figment.io/apikey/36eb346d92b67d8fd9046b02347b13f1", "confirmed");
 
   if (anchorWallet instanceof web3.Keypair)
     anchorWallet = new NodeWallet(anchorWallet);
 
   const provider = new AnchorProvider(solConnection, anchorWallet, {
-    preflightCommitment: "confirmed",
+    preflightCommitment: "recent",
   });
 
   const idl = await Program.fetchIdl(MATCHES_ID, provider);
