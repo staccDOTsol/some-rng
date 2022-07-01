@@ -33,7 +33,7 @@ app.use(cors());
 
 
 app.get("/", (_: Request, res: Response) => {
-  res.send({message: "Dont forget to tip https://twitter.com/STACCoverflow"});
+  res.send({message: "Dont forget to tip https://twitter.com/STACCoverflow ; hey silly u are in the wrong place :) go to the one without the prepended  www. ha \n you are lookin for https://autist.design catch y'all on da flip"});
 });
 
 
@@ -72,7 +72,7 @@ if (config.tokensToJoin[0].amount  <= 0.138 * 10 ** 9){
   console.log('gud')
   const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('../reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
   const anchorWallet = new NodeWallet(walletKeyPair)
-  console.log(`wallet public key: ${walletKeyPair.publicKey}`);
+  console.log(`wallet public key:3 ${walletKeyPair.publicKey}`);
   console.log('joinnnnin')
   const anchorProgram = await getMatchesProgram(anchorWallet, env, rpcUrl);
 
@@ -1062,7 +1062,7 @@ blarg = false
 
     //const walletKeyPair = loadWalletKey('../reveal-worker-express/id.json');
     const walletKeyPair = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('../reveal-worker-express/id.json').toString())))//new Uint8Array(walletKey));
-    console.log(`wallet public key: ${walletKeyPair.publicKey}`);
+    console.log(`wallet public key: 4${walletKeyPair.publicKey}`);
     const anchorWallet = new NodeWallet(walletKeyPair)
 
     const anchorProgram = await getMatchesProgram(anchorWallet, env, rpcUrl);

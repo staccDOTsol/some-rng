@@ -6,7 +6,7 @@ import {Program} from "@project-serum/anchor";
 
 export function loadWalletKey(): Keypair {
   const keypair = Keypair.fromSecretKey(new Uint8Array(walletKey));
-  console.log(`wallet public key: ${keypair.publicKey}`);
+  console.log(`wallet public key: 5 ${keypair.publicKey}`);
   return keypair;
 }
 

@@ -5,7 +5,6 @@ import {
   Program,
   BN,
   Provider,
-  Provider,
 } from "@project-serum/anchor";
 import { SystemProgram } from "@solana/web3.js";
 

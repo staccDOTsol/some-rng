@@ -78,7 +78,7 @@ const Home = () => {
     env: "mainnet-beta"
   } )
     
-    const resp = await axios.get('https://fuckcors.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
+    const resp = await axios.get('https://www.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
         risk: bet  * 10 ** 9,

@@ -1,10 +1,8 @@
 // @ts-nocheck
-
 import {
   web3,
   Program,
   BN,
-  Provider,
   Provider,
   Wallet,
 } from "@project-serum/anchor";
