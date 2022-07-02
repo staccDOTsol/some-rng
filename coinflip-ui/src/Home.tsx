@@ -240,7 +240,8 @@ await  wallet.signTransaction(transaction2)
       if (!Stage.PreBet){
 
       if (oracleInstance.object.finalized){
-        setStage(Stage.PreBet);
+       // setStage(Stage.PreBet);
+       
         setTimeout(async function(){
         
           const transactionSignature = await connection.sendRawTransaction(
@@ -248,6 +249,7 @@ await  wallet.signTransaction(transaction2)
             { skipPreflight: false }
             
           );
+          alert('lol refresh page to win/lose againnn sers')
           }, 15000) 
       }
       
@@ -278,7 +280,7 @@ await  wallet.signTransaction(transaction2)
   return (
       <>
         <main className="container">
-          {wallet && <p className="pp">Balance: {(balance || 0).toLocaleString()} OG staccOverflows <br />get moar here https://app.strataprotocol.com/swap/DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU<br /></p>}
+          {wallet && <p className="pp">Balance: {(balance || 0).toLocaleString()} OG staccOverflows <br />get moar here https://app.strataprotocol.com/swap/DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU<br />fck is this? certainly nothin lol https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharing also do not clik here https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta hmm moar alfa later lol</p>}
           {!wallet && <ConnectButton>Connect Wallet</ConnectButton>}
           {wallet && stage == Stage.PreBet && <div>
             <Grid container spacing={0}>
