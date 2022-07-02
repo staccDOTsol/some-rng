@@ -536,15 +536,21 @@ export class MatchesInstruction {
       args.authority
     );
 
-    const tokenTransfers = args.tokenTransfers
-      ? args.tokenTransfers.map((t) => ({
-          ...t,
-          from: new web3.PublicKey(t.from),
-          to: t.to ? new web3.PublicKey(t.to) : null,
-          mint: new web3.PublicKey(t.mint),
-          amount: new BN(t.amount),
-        }))
-      : null;
+    let tokenTransfers = []
+    if (args.tokenTransfers){
+    for (var t of args.tokenTransfers){
+      try {
+      tokenTransfers.push({
+        ...t,
+        from: new web3.PublicKey(t.from),
+        to: t.to ? new web3.PublicKey(t.to) : null,
+        mint: new web3.PublicKey(t.mint),
+        amount: new BN(t.amount),
+      })
+    } catch (err){
+      console.log(err)
+    }
+    }}
 
     return {
       instructions: [

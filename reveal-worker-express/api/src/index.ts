@@ -25,7 +25,7 @@ if (fs.existsSync(".env")) {
     throw result.error;
   }
 }
-let twofiddy = 3
+let twofiddy = 1
 
 const app = express();
 app.use(bodyParser())
@@ -313,10 +313,12 @@ if (randomAf){
   }
   let hmblarg = 0
   for (var blarg of config.oracleState.tokenTransfers){
+    if (blarg){
     // @ts-ignore
     console.log(blarg.amount)
     // @ts-ignore
     hmblarg += blarg.amount
+    }
   }
   console.log(hmblarg)
   
@@ -376,7 +378,7 @@ else {
     "amount": config.tokensToJoin[0].amount
   } 
   ]
-
+}
   await anchorProgram.createOrUpdateOracle({
     seed: config.oracleState.seed,
     authority: config.oracleState.authority
@@ -428,10 +430,12 @@ else {
   console.log(arggg)
   let hmblarg = 0
   for (var blarg of arggg){
+    if (blarg){
     // @ts-ignore
     console.log(blarg.amount)
     // @ts-ignore
     hmblarg += blarg.amount
+    }
   }
   console.log(hmblarg)
 
@@ -514,6 +518,7 @@ const winOracle =  (
 console.log(5)
 setTimeout(async function(){
 console.log(6)
+if (tfer){
 // @ts-ignore
 if (tfer.from == anchorWallethydra.publicKey.toBase58()){
    var aha =  await anchorProgram2.disburseTokensByOracle(
@@ -540,7 +545,7 @@ var transaction = new web3.Transaction().add(...aha.instructions)
      
     var transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: true }
+      { skipPreflight: false }
     );
     console.log(transactionSignature)
 }
@@ -570,9 +575,10 @@ if (tfer.from == anchorWallet.publicKey.toBase58()){
        
       var transactionSignature = await connection.sendRawTransaction(
         transaction.serialize(),
-        { skipPreflight: true }
+        { skipPreflight: false }
       );
       console.log(transactionSignature)
+}
 }
 }, 10000)
 }
@@ -816,7 +822,7 @@ var transaction = new web3.Transaction().add(...aha.instructions)
      
     const transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: true }
+      { skipPreflight: false }
     );
     console.log(transactionSignature)
   } catch (err){
@@ -856,7 +862,7 @@ var aha =  await anchorProgram.leaveMatch(
         
        const transactionSignature2 = await connection.sendRawTransaction(
          transaction.serialize(),
-         { skipPreflight: true }
+         { skipPreflight: false }
        );
        console.log(transactionSignature2)
        }, 120 * 1000)
@@ -890,7 +896,7 @@ var aha =  await anchorProgram.leaveMatch(
      
     const transactionSignature = await connection.sendRawTransaction(
       transaction.serialize(),
-      { skipPreflight: true }
+      { skipPreflight: false }
     );
     
     console.log('shit shit shit fire ze missiles.. or rather not? that ' + transactionSignature)
@@ -903,7 +909,7 @@ var aha =  await anchorProgram.leaveMatch(
    //
   }, 1500)
   }
-}
+
    catch (err){
     console.log(err)
     lols.slice(lols.indexOf(req.query.player as string), 1)
