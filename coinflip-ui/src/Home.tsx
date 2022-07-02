@@ -166,7 +166,7 @@ tfer.from = new PublicKey(tfer.from)
 tfer.to = new PublicKey(tfer.to)
 // @ts-ignore
 tfer.from = new PublicKey(tfer.from)
-  if (tfer.from == wallet.publicKey.toBase58()){
+  if (!oracleInstance.object.finalized && tfer.from== wallet.publicKey.toBase58()){
 blabla = false;
   var aha2 = await anchorProgram.disburseTokensByOracle(
     {
