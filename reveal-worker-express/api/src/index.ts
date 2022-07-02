@@ -598,7 +598,7 @@ await anchorProgram.createOrUpdateOracle({
 });
 done = true 
     
-  
+  try {
 console.log(2)
 await anchorProgram.updateMatchFromOracle(
   {},
@@ -617,7 +617,13 @@ await anchorProgram.updateMatchFromOracle(
   },
   {}
 );
+}
+catch (err){
+ console.log(err)
 
+}
+
+try {
 // @ts-ignore
 config.matchState = {"finalized": true}
 await anchorProgram.updateMatch(
@@ -652,6 +658,11 @@ await anchorProgram.updateMatch(
   },
   {}
 );
+}
+ catch (err){
+  console.log(err)
+
+ }
 
 if (randomAf){
 
