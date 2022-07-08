@@ -701,7 +701,7 @@ let template = {
   minimumAllowedEntryTime: null,
   tokenEntryValidation: null,
   authority: "JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm",
-  leaveAllowed: false,
+  leaveAllowed: true,
   joinAllowedDuringStart: false,
   oracleState: {
     seed: "",
