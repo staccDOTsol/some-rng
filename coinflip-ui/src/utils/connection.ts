@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { clusterApiUrl } from "@solana/web3.js";
 
 type Cluster = {
@@ -7,10 +8,18 @@ type Cluster = {
 export const CLUSTERS: Cluster[] = [
   {
     name: "mainnet-beta",
-    url: "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2",
-  }
+    url: "https://api.metaplex.solana.com/",
+  },
+  {
+    name: "testnet",
+    url: clusterApiUrl("testnet"),
+  },
+  {
+    name: "mainnet-beta",
+    url: clusterApiUrl("mainnet-beta"),
+  },
 ];
-export const DEFAULT_CLUSTER = CLUSTERS[0];
+export const DEFAULT_CLUSTER = CLUSTERS[2];
 export function getCluster(name: string): string {
   for (const cluster of CLUSTERS) {
     if (cluster.name === name) {

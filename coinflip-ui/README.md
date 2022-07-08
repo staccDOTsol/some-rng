@@ -64,13 +64,13 @@ REACT_APP_CANDY_START_DATE=__PLACEHOLDER__
 This is a unix time stamp that configures when your mint will be open.
 
 ```
-REACT_APP_SOLANA_NETWORK=devnet
+REACT_APP_SOLANA_NETWORK=mainnet-beta
 ```
 
 This identifies the Solana network you want to connect to. Options are `devnet`, `testnet`, and `mainnet`.
 
 ```
-REACT_APP_SOLANA_RPC_HOST=https://solana--mainnet.datahub.figment.io/apikey/36eb346d92b67d8fd9046b02347b13f1
+REACT_APP_SOLANA_RPC_HOST=https://ssc-dao.genesysgo.net/
 ```
 
 This identifies the RPC server your web app will access the Solana network through.

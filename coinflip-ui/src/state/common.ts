@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { web3, BN } from "@project-serum/anchor";
 
 export class Permissiveness {

@@ -7,5 +7,5 @@ export const jare = "4tui4yfA6MNgLhjXmKBATrPvEUGseEeqQrqAyVHintUQ";
 export const author = new PublicKey(jare);
 export const house = new PublicKey("ASTu9TrWQkQL693SzAZ2533f871WUP3RxkW9y6nLGP9L");
 export const DEFAULT_TIMEOUT = 30000;
-export const DEVNET = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2";
-export const MAINNET = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2";
+export const DEVNET = "https://ssc-dao.genesysgo.net/";
+export const MAINNET = "https://ssc-dao.genesysgo.net/";

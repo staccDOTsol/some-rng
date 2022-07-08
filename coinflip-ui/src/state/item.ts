@@ -1,6 +1,4 @@
 // @ts-nocheck
-
-
 import { BN, Program, web3 } from "@project-serum/anchor";
 import { deserializeUnchecked } from "borsh";
 import { extendBorsh } from "../utils/borsh";

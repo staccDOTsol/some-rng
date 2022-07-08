@@ -7,15 +7,15 @@ type Cluster = {
 export const CLUSTERS: Cluster[] = [
   {
     name: "mainnet-beta",
-    url: "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2",
+    url: "https://ssc-dao.genesysgo.net/",
   },
   {
     name: "testnet",
     url: clusterApiUrl("testnet"),
   },
   {
-    name: "devnet",
-    url: clusterApiUrl("devnet"),
+    name: "mainnet-beta",
+    url: clusterApiUrl("mainnet-beta"),
   },
 ];
 export const DEFAULT_CLUSTER = CLUSTERS[2];

@@ -15,7 +15,7 @@ interface Results {
 }
 
 enum ENV {
-  devnet = "devnet",
+  devnet = "mainnet-beta",
   mainnet = "mainnet-beta"
 }
 

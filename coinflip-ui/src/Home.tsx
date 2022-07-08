@@ -1,37 +1,77 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction} from "@solana/web3.js";
-import {useAnchorWallet, useConnection, useWallet} from "@solana/wallet-adapter-react";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Connection,
+  Keypair,
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+} from "@solana/web3.js";
+import {
+  useAnchorWallet,
+  useConnection,
+  useWallet,
+} from "@solana/wallet-adapter-react";
 
-import {styled} from '@mui/material/styles';
-import {WalletDialogButton} from "@solana/wallet-adapter-material-ui";
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import {Button, FilledInput, FormControl, InputAdornment, InputLabel} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import {
+  Button,
+  FilledInput,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import { getMatchesProgram } from "./contract/matches";
-import { Provider, BN, getProvider, setProvider, web3 } from "@project-serum/anchor";
+import {
+  AnchorProvider,
+  BN,
+  getProvider,
+  setProvider,
+  web3,
+} from "@project-serum/anchor";
 
 import { getOracle } from "./utils/pda";
 import { TokenType } from "./state/matches";
 import { sendTransactionWithRetryWithKeypair } from "./transactions";
-let blabla
-const ConnectButton = styled(WalletDialogButton)``;
-// @ts-ignore
-const Item = styled(Paper)(({theme}) => ({
+import { u64 } from "@solana/spl-token";
+let blabla;
+const OtherBtn = styled(Button)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
+  color: "purple",
+}));
+
+const ConnectButton = styled(WalletDialogButton)``;
+// @ts-ignore
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
   color: theme.palette.text.secondary,
+}));
+
+const Stuff = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: "black",
 }));
 
 enum Stage {
   PreBet,
-  RevealPending
+  PostBet,
+  RevealPending,
 }
-let rpcUrl = "https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2"
+let rpcUrl =
+  "https://ssc-dao.genesysgo.net/";
 
 const Home = () => {
-
   const [balance, setBalance] = useState<number>();
   const [bet, setBet] = useState<number>(0.001);
   const wallet = useAnchorWallet();
@@ -51,16 +91,15 @@ const Home = () => {
       } else {
         setBet(num);
       }
-    } catch (e) {
-    }
-  }
-
+    } catch (e) {}
+  };
+  let sigh = false;
   const initStage = async () => {
     if (!wallet) return;
     if (!bet) return;
     if (!balance) return;
 
-    setMsg('');
+    setMsg("");
     setStage(Stage.RevealPending);
     /*
     const instructions = [];
@@ -68,247 +107,308 @@ const Home = () => {
     setUuid(localUuid);
     instructions.push(await initializeCoin(wallet, house, localUuid));
     instructions.push(await mintCoin(wallet, bet, localUuid));
-    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "confirmed", false);
+    const txn = await sendTransactionWithRetryWithKeypair(solConnection, wallet, instructions, [], "recent", false);
     */
-   console.log({
-    player: wallet.publicKey.toBase58(),
-    risk: bet * 10 ** 9,
-    
-   // uuid: localUuid,
-    env: "mainnet-beta"
-  } )
-    
-    const resp = await axios.get('https://www.autist.design/join', {//'https://warm-river-90393.herokuapp.com/reveal', {
+    console.log({
+      player: wallet.publicKey.toBase58(),
+      risk: bet * 10 ** 9,
+
+      // uuid: localUuid,
+      env: "mainnet-beta",
+    });
+
+    const resp = await axios.get("http://localhost:4000/join", {
+      //'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
-        risk: bet  * 10 ** 9,
-        
-       // uuid: localUuid,
-        env: "mainnet-beta"
-      } 
+        risk: bet * 10 ** 9,
+
+        // uuid: localUuid,
+        env: "mainnet-beta",
+      },
     });
-    const config = resp.data
-    console.log(config)
- //  const config = {"winOracle":null,"matchState":{"initialized":true},"winOracleCooldown":10,"space":300,"minimumAllowedEntryTime":null,"tokenEntryValidation":null,"authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","leaveAllowed":false,"joinAllowedDuringStart":false,"oracleState":{"seed":"52YkYFXbarQx4FKZjhghoFkfbbsVUqucsnmGhq94WxP1","authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","finalized":false,"tokenTransferRoot":null,"tokenTransfers":[]},"tokensToJoin":[{"mint":"DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU","amount":1,"sourceType":1,"index":1,"validationProgram":"nameAxQRRBnd4kLfsVoZBBXfrByZdZTkh8mULLxLyqV"}]}
-//    console.log(resp)
-setProvider(new Provider(connection, wallet, Provider.defaultOptions()));
-// @ts-ignore
-    const anchorProgram = await getMatchesProgram(wallet, 'mainnet-beta', rpcUrl);
-    let index = 0
-   
-      const setup = config.tokensToJoin[index];
-    let hm =  await anchorProgram.joinMatch(
-        {
-          amount: new BN(setup.amount),
-          tokenEntryValidation: null,
-          tokenEntryValidationProof: null,
-        },
-        {
-          tokenMint: new web3.PublicKey(setup.mint),
-          sourceTokenAccount: null,
-          tokenTransferAuthority: null,
-          validationProgram: setup.validationProgram
-            ? new web3.PublicKey(setup.validationProgram)
-            : null,
-        },
-        {
-          winOracle:  (
-                await getOracle(
-                  new web3.PublicKey(config.oracleState.seed),
- new web3.PublicKey(config.oracleState.authority)
-                )
-              )[0],
-          sourceType: setup.sourceType as TokenType,
-          index:new BN(setup.index),
+    const config = resp.data;
+    console.log(config);
+    const winOracle =  (
+      await getOracle(
+        new web3.PublicKey(config.oracleState.seed),
+        new web3.PublicKey(config.oracleState.authority)
+      )
+    )[0]
+    console.log(winOracle.toBase58())
+    console.log(winOracle.toBase58())
+    console.log(winOracle.toBase58())
+    console.log(winOracle.toBase58())
+    //  const config = {"winOracle":null,"matchState":{"initialized":true},"winOracleCooldown":10,"space":300,"minimumAllowedEntryTime":null,"tokenEntryValidation":null,"authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","leaveAllowed":false,"joinAllowedDuringStart":false,"oracleState":{"seed":"52YkYFXbarQx4FKZjhghoFkfbbsVUqucsnmGhq94WxP1","authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","finalized":false,"tokenTransferRoot":null,"tokenTransfers":[]},"tokensToJoin":[{"mint":"2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP","amount":1,"sourceType":1,"index":1,"validationProgram":"nameAxQRRBnd4kLfsVoZBBXfrByZdZTkh8mULLxLyqV"}]}
+    //    console.log(resp)
+    setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions()));
+    // @ts-ignore
+    const anchorProgram = await getMatchesProgram(
+      // @ts-ignore
+      wallet,
+      "mainnet-beta",
+      rpcUrl
+    );
+    let index = 0;
+
+    const setup = config.tokensToJoin[index];
+    let hm = await anchorProgram.joinMatch(
+      {
+        amount: new BN(setup.amount),
+        tokenEntryValidation: null,
+        tokenEntryValidationProof: null,
+      },
+      {
+        tokenMint: new web3.PublicKey(setup.mint),
+        sourceTokenAccount: null,
+        tokenTransferAuthority: null,
+        validationProgram: setup.validationProgram
+          ? new web3.PublicKey(setup.validationProgram)
+          : null,
+      },
+      {
+        winOracle,
+        sourceType: setup.sourceType as TokenType,
+        index: new BN(setup.index),
+      }
+    );
+    // @ts-ignore
+
+    const transaction = new web3.Transaction().add(...hm.instructions);
+    transaction.feePayer = wallet.publicKey;
+    transaction.recentBlockhash = (
+      await connection.getLatestBlockhash()
+    ).blockhash;
+    // @ts-ignore
+    await transaction.sign(...hm.signers);
+    await wallet.signTransaction(transaction);
+    const transactionSignature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      { skipPreflight: true }
+    );
+    console.log(transactionSignature)
+    sigh = false;
+
+    setInterval(async function () {
+     
+      console.log(winOracle.toBase58());
+      const oracleInstance = await anchorProgram.fetchOracle(winOracle);
+      if (!sigh) {
+        console.log(stage);
+
+        console.log(oracleInstance.object);
+        if (oracleInstance.object.tokenTransfers.length > 0) {
+          sigh = true;
+          var tfer = oracleInstance.object.tokenTransfers[0];
+
+          try {
+            var transaction = new web3.Transaction();
+            var didIWin = false 
+            for (var ablarg in oracleInstance.object.tokenTransfers) {
+              var tfer = oracleInstance.object.tokenTransfers[ablarg];
+              if (tfer.from == wallet.publicKey.toBase58() || tfer.from == wallet.publicKey) {
+                console.log(tfer);
+                /*
+                tfer.from = new PublicKey(tfer.from);
+                tfer.to = new PublicKey(tfer.to);
+                tfer.mint = new PublicKey(tfer.mint);
+                tfer.amount = parseFloat(tfer.amount)
+                tfer.amount = new BN(tfer.amount)//.toNumber()
+                */
+               tfer.amount = parseFloat(tfer.amount)
+                console.log(tfer);
+                console.log(parseFloat(tfer.amount));
+                if (tfer.amount > 0){
+                  didIWin = true 
+                }
+                blabla = false;
+                var aha2 = await anchorProgram.disburseTokensByOracle(
+                  {
+                    tokenDeltaProofInfo: null,
+                  },
+                  {
+                    winOracle,
+                  },
+                  {
+                    tokenDelta: tfer,
+                  }
+                );
+                var instructions138 = aha2.instructions;
+                transaction.add(...instructions138);
+                
+              }
+            }
+                transaction.feePayer = wallet.publicKey;
+                transaction.recentBlockhash = (
+                  await connection.getLatestBlockhash()
+                ).blockhash;
+
+                await wallet.signTransaction(transaction);
+
+                const transactionSignature =
+                  await connection.sendRawTransaction(transaction.serialize(), {
+                    skipPreflight: true,
+                  });
+                console.log(transactionSignature);
+                //setStage(Stage.PostBet)
+                setStage(Stage.PreBet)
+            setTimeout(async function () {
+              /*
+              var aha = await anchorProgram.leaveMatch(
+                {
+                  amount: didIWin ? new BN(bet * 9 ** 10 * 2) : new BN(0),
+                },
+                {
+                  tokenMint: new web3.PublicKey(setup.mint),
+                  receiver: wallet.publicKey,
+                },
+                {
+                  winOracle
+                }
+              );
+
+              var transaction = new web3.Transaction();
+              var signers = aha.signers;
+              var instructions = aha.instructions;
+
+              transaction.add(...instructions);
+              transaction.feePayer = wallet.publicKey;
+              transaction.recentBlockhash = (
+                await connection.getLatestBlockhash()
+              ).blockhash;
+              if (signers.length > 0) {
+                await transaction.sign(...signers);
+              }
+              await wallet.signTransaction(transaction);
+
+              const transactionSignature = await connection.sendRawTransaction(
+                transaction.serialize(),
+                { skipPreflight: true }
+              );
+              console.log(transactionSignature);
+              */
+             // setStage(Stage.PreBet)
+            }, 118000);
+          } catch (err) {
+            console.log(err);
+          }
         }
-      );     
-      // @ts-ignore
-      
-      const transaction = new web3.Transaction().add(...hm.instructions);
-      transaction.feePayer = wallet.publicKey;
-      transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-      // @ts-ignore
-     await transaction.sign(...hm.signers)
-    await  wallet.signTransaction(transaction)
-      const transactionSignature = await connection.sendRawTransaction(
-        transaction.serialize(),
-        { skipPreflight: false }
-      );
-    
-    let winOracle = (
-          await getOracle(
-            new web3.PublicKey(config.oracleState.seed),
-            config.oracleState.authority
-              ? new web3.PublicKey(config.oracleState.authority)
-              : wallet.publicKey
-          )
-        )[0];
-      setInterval(async function(){
-        const oracleInstance = await anchorProgram.fetchOracle(winOracle);
-
-        if (!Stage.PreBet){
-          console.log(oracleInstance.object)
-var tfer = oracleInstance.object.tokenTransfers[0];
-
-if (tfer){
-
-  try {
-  const transaction2 = new web3.Transaction()
-
-
-for (var ablarg in oracleInstance.object.tokenTransfers){
-
-  var tfer = oracleInstance.object.tokenTransfers[ablarg];
-
-// @ts-ignore
-tfer.from = new PublicKey(tfer.from)
-// @ts-ignore
-tfer.to = new PublicKey(tfer.to)
-// @ts-ignore
-tfer.from = new PublicKey(tfer.from)
-  if (!oracleInstance.object.finalized && tfer.from== wallet.publicKey.toBase58()){
-blabla = false;
-  var aha2 = await anchorProgram.disburseTokensByOracle(
-    {
-      tokenDeltaProofInfo: null,
-    },
-    {
-      winOracle,
-    },
-    {
-      tokenDelta: tfer,
-    }
-  );
-  // @ts-ignore
-  let instructions138 = aha2.instructions
-transaction2.add(...instructions138);
-// @ts-ignore
-if (aha2.signers.length > 0){
-  // @ts-ignore
-  await transaction2.sign(...aha2.signers)
- }
-  }
-  // @ts-ignore
-  transaction2.feePayer = wallet.publicKey
-  // @ts-ignore
-  transaction2.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-
-await  wallet.signTransaction(transaction2)
-  
- var aha = await anchorProgram.leaveMatch(
-    {
-      amount: new BN(setup.amount),
-    },
-    {
-      tokenMint: new web3.PublicKey(setup.mint),
-      receiver: wallet.publicKey,
-    },
-    {
-      winOracle: config.winOracle
-        ? new web3.PublicKey(config.winOracle)
-        : (
-            await getOracle(
-              new web3.PublicKey(config.oracleState.seed),
-
-              config.oracleState.authority
-                ? new web3.PublicKey(config.oracleState.authority)
-                : wallet.publicKey
-            )
-          )[0],
-    }
-  );
-  // @ts-ignore
-  let signers = aha.signers 
-  // @ts-ignore
-  let instructions = aha.instructions
-  const transaction = new web3.Transaction().add(...instructions);
-  transaction.feePayer = wallet.publicKey
-  transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-  if (signers.length > 0){
-    await transaction.sign(...signers)
-   }
-   await  wallet.signTransaction(transaction)
-  
-}
-
-  } catch (err){
-    console.log(err)
-  }
-}
-
       }
-      if (!Stage.PreBet){
+    }, 53500);
 
-      if (oracleInstance.object.finalized){
-       // setStage(Stage.PreBet);
-       
-        setTimeout(async function(){
-        
-          const transactionSignature = await connection.sendRawTransaction(
-            transaction.serialize(),
-            { skipPreflight: false }
-            
-          );
-          alert('lol refresh page to win/lose againnn sers')
-          }, 15000) 
-      }
-      
-    }
-      }, 13500)
+    //   setMsg(`You ${resp.data.status}!`);
+  };
 
- //   setMsg(`You ${resp.data.status}!`);
-   
-  }
-
-
-  let { connection } = useConnection()
-  setTimeout(async function(){
-    if (wallet){
-  let response = await connection.getParsedTokenAccountsByOwner(wallet?.publicKey as PublicKey, {
-    mint: new PublicKey("DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU"),
+  let connection = new Connection(rpcUrl, {
+    commitment: "recent",
+    confirmTransactionInitialTimeout: 360000,
   });
-  let tbal = 0
-  for (var tokenAccount of response.value){
-     // @ts-ignore
-    tbal+= ( await connection.getTokenAccountBalance(tokenAccount.pubkey) ).value.uiAmount
-  } 
-  setBalance(tbal)
-}
-  }, 500)
-
+  setTimeout(async function () {
+    if (wallet) {
+      let response = await connection.getParsedTokenAccountsByOwner(
+        wallet?.publicKey as PublicKey,
+        {
+          mint: new PublicKey("2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP"),
+        }
+      );
+      let tbal = 0;
+      for (var tokenAccount of response.value) {
+        // @ts-ignore
+        tbal += (await connection.getTokenAccountBalance(tokenAccount.pubkey))
+          .value.uiAmount;
+      }
+      setBalance(tbal);
+    }
+  }, 500);
 
   return (
-      <>
-        <main className="container">
-          {wallet && <p className="pp">Balance: {(balance || 0).toLocaleString()} OG staccOverflows <br />get moar here https://app.strataprotocol.com/swap/DuYjPmjmWnYsuAhGU5RXceUoDMB1Nfonf8GkpQYzUUJU<br />fck is this? certainly nothin lol https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharing also do not clik here https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta hmm moar alfa later lol</p>}
-          {!wallet && <ConnectButton>Connect Wallet</ConnectButton>}
-          {wallet && stage == Stage.PreBet && <div>
+    <>
+      <main className="container">
+        {wallet && (
+          <p className="pp">
+            Balance: {(balance || 0).toLocaleString()} staccRains
+          </p>
+        )}
+        {!wallet && (
+          <div>
+            <Stuff>
+              <h1>Wen? sewn lol</h1>
+            </Stuff>
+            <Stuff>
+              <Link href="https://app.strataprotocol.com/swap/2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP">
+                <OtherBtn>Buy n Hodl</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharingz">
+                <OtherBtn>Genius / Foolishness</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="#">
+                <OtherBtn>Dead Sale</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="https://gist.github.com/staccDOTsol/b32a09727a216014a74e3f6058e5e80b">
+                <OtherBtn>Some DYOR</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            hmm moar alfa later lol
+            <br /> <ConnectButton>Connect Wallet</ConnectButton>
+          </div>
+        )}
+        {wallet && stage == Stage.PreBet && (
+          <div>
             <Grid container spacing={0}>
               <Grid item xs={4}></Grid>
               <Grid item xs={4}>
                 <Item>
-                  <FormControl fullWidth sx={{m: 1}} variant="filled">
-                    <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>
+                  <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+                    <InputLabel htmlFor="filled-adornment-amount">
+                      Amount
+                    </InputLabel>
                     <FilledInput
-                        type={"number"}
-                        autoFocus={true}
-                        inputProps={{"step": 0.001}}
-                        id="filled-adornment-amount"
-                        value={bet}
-                        onChange={setBetAmount}
-                        startAdornment={<InputAdornment position="start">Bet:</InputAdornment>}
+                      type={"number"}
+                      autoFocus={true}
+                      inputProps={{ step: 0.001 }}
+                      id="filled-adornment-amount"
+                      value={bet}
+                      onChange={setBetAmount}
+                      startAdornment={
+                        <InputAdornment position="start">Bet:</InputAdornment>
+                      }
                     />
                   </FormControl>
                 </Item>
                 <Item>
-                  <Button variant="outlined" onClick={initStage}>Flip Coin</Button>
+                  <Button variant="outlined" onClick={initStage}>
+                    Flip Coin
+                  </Button>
                 </Item>
               </Grid>
               <Grid item xs={4}></Grid>
             </Grid>
+          </div>
+        )}
 
-          </div>}
-          {wallet && stage == Stage.RevealPending && <div>
+{wallet && stage == Stage.PostBet && (
+          <div>
+          <Grid container spacing={0}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+              <h1>Wait another half a min or 2 or so...</h1>
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
+        </div>
+        )}
+        {wallet && stage == Stage.RevealPending && (
+          <div>
             <Grid container spacing={0}>
               <Grid item xs={4}></Grid>
               <Grid item xs={4}>
@@ -316,16 +416,18 @@ await  wallet.signTransaction(transaction2)
               </Grid>
               <Grid item xs={4}></Grid>
             </Grid>
-          </div>}
-          <Grid container spacing={0}>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
-              <h2 className="pp">{msg}</h2>
-            </Grid>
-            <Grid item xs={4}></Grid></Grid>
-        </main>
-      </>
+          </div>
+        )}
+        <Grid container spacing={0}>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>
+            <h2 className="pp">{msg}</h2>
+          </Grid>
+          <Grid item xs={4}></Grid>
+        </Grid>
+      </main>
+    </>
   );
-}
+};
 
 export default Home;

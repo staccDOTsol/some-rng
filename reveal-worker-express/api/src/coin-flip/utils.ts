@@ -11,7 +11,7 @@ export function loadWalletKey(): Keypair {
 }
 
 export async function loadHouseProgram(keypair: Keypair): Promise<Program> {
-  const solConnection = new Connection("https://solana--mainnet.datahub.figment.io/apikey/24c64e276fc5db6ff73da2f59bac40f2");
+  const solConnection = new Connection("https://ssc-dao.genesysgo.net/");
   const walletWrapper = new anchor.Wallet(keypair);
   const provider = new anchor.Provider(solConnection, walletWrapper, {
     preflightCommitment: 'confirmed', commitment: 'confirmed'

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { web3 } from "@project-serum/anchor";
 
 export const NAMESPACE_ID = new web3.PublicKey(

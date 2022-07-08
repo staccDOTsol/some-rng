@@ -1,6 +1,4 @@
 // @ts-nocheck
-
-
 import { web3 } from "@project-serum/anchor";
 import { NamespaceAndIndex } from "./common";
 

@@ -1,5 +1,5 @@
 [provider]
-cluster = "devnet"
+cluster = "mainnet-beta"
 wallet = "./throwaway.json"
 
 [programs.devnet]

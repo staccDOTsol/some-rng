@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Wallet } from "@project-serum/anchor/dist/cjs/provider";
 import {
   Blockhash,
@@ -34,7 +35,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   wallet: Keypair,
   instructions: TransactionInstruction[],
   signers: Keypair[],
-  commitment: Commitment = "confirmed",
+  commitment: Commitment = "singleGossip",
   includesFeePayer: boolean = false,
   block?: BlockhashAndFeeCalculator,
   beforeSend?: () => void
@@ -78,12 +79,12 @@ export async function sendTransactionWithRetry(
   wallet: Wallet,
   instructions: Array<TransactionInstruction>,
   signers: Array<Keypair>,
-  commitment: Commitment = "confirmed"
+  commitment: Commitment = "singleGossip"
 ): Promise<string | { txid: string; slot: number }> {
   const transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    await connection.getRecentBlockhash(commitment)
+    await connection.getLatestBlockhash(commitment)
   ).blockhash;
 
   transaction.feePayer = wallet.publicKey;
@@ -118,7 +119,7 @@ export async function sendSignedTransaction({
   const txid: TransactionSignature = await connection.sendRawTransaction(
     rawTransaction,
     {
-      skipPreflight: false,
+      skipPreflight: true,
     }
   );
 
@@ -128,7 +129,7 @@ export async function sendSignedTransaction({
   (async () => {
     while (!done && getUnixTs() - startTime < timeout) {
       connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: false,
+        skipPreflight: true,
       });
       await sleep(500);
     }
@@ -138,7 +139,7 @@ export async function sendSignedTransaction({
       txid,
       timeout,
       connection,
-      "confirmed",
+      "recent",
       true
     );
 
@@ -153,7 +154,6 @@ export async function sendSignedTransaction({
     slot = confirmation?.slot || 0;
   } catch (err) {
     log.error("Timeout Error caught", err);
-    // @ts-ignore
     if (err.timeout) {
       throw new Error("Timed out awaiting confirmation on transaction");
     }
@@ -194,7 +194,7 @@ async function simulateTransaction(
   commitment: Commitment
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // @ts-ignore
-  transaction.recentBlockhash = await connection._recentBlockhash(
+  transaction.recentBlockhash = await connection.getLatestBlockhash(
     // @ts-ignore
     connection._disableBlockhashCaching
   );
@@ -218,7 +218,7 @@ async function awaitTransactionSignatureConfirmation(
   txid: TransactionSignature,
   timeout: number,
   connection: Connection,
-  commitment: Commitment = "confirmed",
+  commitment: Commitment = "recent",
   queryStatus = false
 ): Promise<SignatureStatus | null | void> {
   let done = false;

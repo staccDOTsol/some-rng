@@ -1,7 +1,5 @@
 // @ts-nocheck
-
-
-import { web3, BN, Provider } from "@project-serum/anchor";
+import { web3, BN, AnchorProvider } from "@project-serum/anchor";
 import { SystemProgram } from "@solana/web3.js";
 import {
   Program,
@@ -68,7 +66,7 @@ export class Instruction extends SolKitInstruction {
           mint: accounts.mint,
           metadata: accounts.metadata,
           masterEdition: accounts.masterEdition,
-          payer: (this.program.client.provider as Provider).wallet.publicKey,
+          payer: (this.program.client.provider as AnchorProvider).wallet.publicKey,
           tokenProgram: TOKEN_PROGRAM_ID,
           systemProgram: SystemProgram.programId,
           rent: web3.SYSVAR_RENT_PUBKEY,

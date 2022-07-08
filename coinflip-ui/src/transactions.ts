@@ -25,7 +25,7 @@ export const sendTransactionWithRetryWithKeypair = async (
     wallet: AnchorWallet,
     instructions: TransactionInstruction[],
     signers: Keypair[],
-    commitment: Commitment = "confirmed",
+    commitment: Commitment = "recent",
     includesFeePayer: boolean = false,
     block?: BlockhashAndFeeCalculator,
     beforeSend?: () => void,
@@ -74,7 +74,7 @@ export async function sendSignedTransaction({
   const txid: TransactionSignature = await connection.sendRawTransaction(
       rawTransaction,
       {
-        skipPreflight: false,
+        skipPreflight: true,
       },
   );
 
@@ -82,14 +82,14 @@ export async function sendSignedTransaction({
 
   let done = false;
      await  connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: false,
+        skipPreflight: true,
       });
   try {
     const confirmation = await awaitTransactionSignatureConfirmation(
         txid,
         timeout,
         connection,
-        "confirmed",
+        "recent",
         true,
     );
 
@@ -145,7 +145,7 @@ async function simulateTransaction(
     commitment: Commitment,
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // @ts-ignore
-  transaction.recentBlockhash = await connection._recentBlockhash(
+  transaction.recentBlockhash = await connection.getLatestBlockhash(
       // @ts-ignore
       connection._disableBlockhashCaching,
   );
@@ -169,7 +169,7 @@ async function awaitTransactionSignatureConfirmation(
     txid: TransactionSignature,
     timeout: number,
     connection: Connection,
-    commitment: Commitment = "confirmed",
+    commitment: Commitment = "recent",
     queryStatus = false,
 ): Promise<SignatureStatus | null | void> {
   let done = false;

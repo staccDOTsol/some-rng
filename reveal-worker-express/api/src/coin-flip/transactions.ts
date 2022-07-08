@@ -87,7 +87,7 @@ export async function sendSignedTransaction({
   const txid: TransactionSignature = await connection.sendRawTransaction(
       rawTransaction,
       {
-        skipPreflight: false,
+        skipPreflight: true,
       },
   );
 
@@ -97,7 +97,7 @@ export async function sendSignedTransaction({
   (async () => {
     while (!done && getUnixTs() - startTime < timeout) {
       connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: false,
+        skipPreflight: true,
       });
       await sleep(500);
     }
@@ -165,7 +165,7 @@ async function simulateTransaction(
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  transaction.recentBlockhash = await connection._recentBlockhash(
+  transaction.recentBlockhash = await connection.getLatestBlockhash(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       connection._disableBlockhashCaching,
