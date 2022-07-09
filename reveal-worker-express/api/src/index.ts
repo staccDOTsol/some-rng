@@ -487,9 +487,9 @@ try {
                   }
                 }, 35000);
 
-                let index = 0;
+         //      let index = 0;
 
-                const setup = config.tokensToJoin[index];
+             //= config.tokensToJoin[index];
 
                 setTimeout(async function () {
                   try {
