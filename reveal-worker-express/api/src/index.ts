@@ -503,6 +503,7 @@ try {
                     );
 
                     console.log(7);
+                    /*
                     setTimeout(async function () {
                       try {
                       } catch (err) {
@@ -550,7 +551,8 @@ try {
                           { skipPreflight: true }
                         );
                       console.log(transactionSignature2);
-                    }, 120 * 1000);
+                      
+                    }, 120 * 1000); */
                     /*
    let tokenAmount = await connection.getTokenAccountBalance(new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"));
 

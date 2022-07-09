@@ -189,7 +189,7 @@ const Home = () => {
     console.log(transactionSignature)
     sigh = false;
 
-    setInterval(async function () {
+    setTimeout(async function () {
      
       console.log(winOracle.toBase58());
       const oracleInstance = await anchorProgram.fetchOracle(winOracle);
@@ -294,7 +294,7 @@ const Home = () => {
           }
         }
       }
-    }, 83500);
+    }, 103500);
 
     //   setMsg(`You ${resp.data.status}!`);
   };
