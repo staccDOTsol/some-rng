@@ -53,7 +53,7 @@ var winOracle = h.pubkey
           amount: new BN(1000000),
         },
         {
-          tokenMint: new PublicKey("2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP"),
+          tokenMint: new PublicKey("rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL"),
           receiver: walletKeyPair.publicKey,
         },
         {

@@ -139,7 +139,7 @@ const Home = () => {
     console.log(winOracle.toBase58())
     console.log(winOracle.toBase58())
     console.log(winOracle.toBase58())
-    //  const config = {"winOracle":null,"matchState":{"initialized":true},"winOracleCooldown":10,"space":300,"minimumAllowedEntryTime":null,"tokenEntryValidation":null,"authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","leaveAllowed":false,"joinAllowedDuringStart":false,"oracleState":{"seed":"52YkYFXbarQx4FKZjhghoFkfbbsVUqucsnmGhq94WxP1","authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","finalized":false,"tokenTransferRoot":null,"tokenTransfers":[]},"tokensToJoin":[{"mint":"2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP","amount":1,"sourceType":1,"index":1,"validationProgram":"nameAxQRRBnd4kLfsVoZBBXfrByZdZTkh8mULLxLyqV"}]}
+    //  const config = {"winOracle":null,"matchState":{"initialized":true},"winOracleCooldown":10,"space":300,"minimumAllowedEntryTime":null,"tokenEntryValidation":null,"authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","leaveAllowed":false,"joinAllowedDuringStart":false,"oracleState":{"seed":"52YkYFXbarQx4FKZjhghoFkfbbsVUqucsnmGhq94WxP1","authority":"JARehRjGUkkEShpjzfuV4ERJS25j8XhamL776FAktNGm","finalized":false,"tokenTransferRoot":null,"tokenTransfers":[]},"tokensToJoin":[{"mint":"rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL","amount":1,"sourceType":1,"index":1,"validationProgram":"nameAxQRRBnd4kLfsVoZBBXfrByZdZTkh8mULLxLyqV"}]}
     //    console.log(resp)
     setProvider(new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions()));
     // @ts-ignore
@@ -308,7 +308,7 @@ const Home = () => {
       let response = await connection.getParsedTokenAccountsByOwner(
         wallet?.publicKey as PublicKey,
         {
-          mint: new PublicKey("2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP"),
+          mint: new PublicKey("rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL"),
         }
       );
       let tbal = 0;
@@ -326,7 +326,7 @@ const Home = () => {
       <main className="container">
         {wallet && (
           <p className="pp">  
-            Balance: {(balance || 0).toLocaleString()} staccRains
+            Balance: {(balance || 0).toLocaleString()} $RAIN
           </p>
         )}
         {wallet && stage == Stage.PreBet && (
@@ -364,47 +364,7 @@ const Home = () => {
         )}
         {!wallet && (
           <div> <ConnectButton>Connect Wallet</ConnectButton>
-            <Stuff>
-              <Link href="https://docs.google.com/document/d/1d3Xe6H1X4wc7WhnJC_bs1XwTPPOQ6Gt6FhLq5IUxBmg/edit?usp=sharing">
-                <OtherBtn>Grant Proposal</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            
-            <Stuff>
-              <Link href="https://app.strataprotocol.com/swap/2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP">
-                <OtherBtn>Buy n Hodl</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-
-            <Stuff>
-              <Link href="https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharingz">
-                <OtherBtn>Genius / Foolishness</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta">
-                <OtherBtn>Sale</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://gist.github.com/staccDOTsol/b32a09727a216014a74e3f6058e5e80b">
-                <OtherBtn>Some DYOR</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://stake.autist.design">
-                <OtherBtn>stake.autist.design</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-
-            hmm moar alfa later lol
-            <br />
+           
           </div>
         )}
         

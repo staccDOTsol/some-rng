@@ -38,7 +38,7 @@ let template = {
   },
   "tokensToJoin": [
     {
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       "amount": 1000,
       "sourceType": 1,
       "index": 1,
@@ -363,7 +363,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       
       // @ts-ignore
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount
     }  ,
@@ -376,7 +376,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount 
     } 
@@ -398,7 +398,7 @@ setTimeout(async function(){
         "tokenTransferType": { "normal": true },
         // @ts-ignore
         
-        "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+        "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
         // @ts-ignore
         "amount": config.tokensToJoin[0].amount * mod
       } )  
@@ -452,7 +452,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount
     },
@@ -465,7 +465,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount
     } 
@@ -777,7 +777,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount * 0.96
     }  ,
@@ -791,7 +791,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount / 100 * 4
     }]
@@ -813,7 +813,7 @@ setTimeout(async function(){
        "tokenTransferType": { "normal": true },
        // @ts-ignore
        
-       "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+       "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
        // @ts-ignore
        "amount": config.tokensToJoin[0].amount * mod
      } )  
@@ -828,7 +828,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": Math.floor((config.tokensToJoin[0].amount * 0.96))
     },
@@ -841,7 +841,7 @@ setTimeout(async function(){
       "tokenTransferType": { "normal": true },
       // @ts-ignore
       
-      "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+      "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
       // @ts-ignore
       "amount": config.tokensToJoin[0].amount * 0.04
     } ]
@@ -856,7 +856,7 @@ setTimeout(async function(){
         "tokenTransferType": { "normal": true },
         // @ts-ignore
         
-        "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+        "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
         // @ts-ignore
         "amount": Math.floor((config.tokensToJoin[0].amount * 0.96) * 1-mod)
       }
@@ -870,7 +870,7 @@ setTimeout(async function(){
           "tokenTransferType": { "normal": true },
           // @ts-ignore
           
-          "mint": "2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP",
+          "mint": "rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL",
           // @ts-ignore
           "amount": Math.floor((config.tokensToJoin[0].amount * 0.96) * mod)
         }
@@ -990,7 +990,7 @@ setTimeout(async function(){
             
         createTransferCheckedInstruction(
           new PublicKey("Hdocsu5XxuZA8ruobNgB6Mi6GvXscLzMCtjr4j17cLrF"), // from (should be a token account)
-          new PublicKey("2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP"), // mint
+          new PublicKey("rainH85N1vCoerCi4cQ3w6mCf7oYUdrsTFtFzpaRwjL"), // mint
           new PublicKey("AvzcGEMLJMt1USm4tWWSYAQYhGVBJPTKYEGnnuD6uA2M"), // to (should be a token account)
           walletKeyPairhydra.publicKey, // from's owner
           tokenAmount.value.uiAmount as number / 100 * 99, // amount, if your deciamls is 8, send 10^8 for 1 token
