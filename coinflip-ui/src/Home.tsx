@@ -73,7 +73,7 @@ let rpcUrl =
 
 const Home = () => {
   const [balance, setBalance] = useState<number>();
-  const [bet, setBet] = useState<number>(0.001);
+  const [bet, setBet] = useState<number>(10);
   const wallet = useAnchorWallet();
   const wallet2 = useWallet();
 
@@ -84,10 +84,10 @@ const Home = () => {
   const setBetAmount = (e: any) => {
     try {
       const num = parseFloat(e.target.value);
-      if (num >= 0.138) {
-        setBet(0.138);
-      } else if (num <= 0.001) {
-        setBet(0.001);
+      if (num >= 10) {
+        setBet(10);
+      } else if (num <= 0.1) {
+        setBet(0.1);
       } else {
         setBet(num);
       }
@@ -342,7 +342,7 @@ const Home = () => {
                     <FilledInput
                       type={"number"}
                       autoFocus={true}
-                      inputProps={{ step: 0.001 }}
+                      inputProps={{ step: 0.1 }}
                       id="filled-adornment-amount"
                       value={bet}
                       onChange={setBetAmount}
