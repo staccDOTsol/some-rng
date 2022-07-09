@@ -73,7 +73,7 @@ let rpcUrl =
 
 const Home = () => {
   const [balance, setBalance] = useState<number>();
-  const [bet, setBet] = useState<number>(10);
+  const [bet, setBet] = useState<number>(1);
   const wallet = useAnchorWallet();
   const wallet2 = useWallet();
 
