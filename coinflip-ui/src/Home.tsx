@@ -347,8 +347,8 @@ const Home = () => {
             </Stuff>
             <br />
             <Stuff>
-              <Link href="#">
-                <OtherBtn>Dead Sale</OtherBtn>
+              <Link href="https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta">
+                <OtherBtn>Sale</OtherBtn>
               </Link>
             </Stuff>
             <br />
@@ -358,6 +358,13 @@ const Home = () => {
               </Link>
             </Stuff>
             <br />
+            <Stuff>
+              <Link href="https://stake.autist.design">
+                <OtherBtn>stake.autist.design</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+
             hmm moar alfa later lol
             <br /> <ConnectButton>Connect Wallet</ConnectButton>
           </div>
