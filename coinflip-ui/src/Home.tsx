@@ -294,7 +294,7 @@ const Home = () => {
           }
         }
       }
-    }, 53500);
+    }, 73500);
 
     //   setMsg(`You ${resp.data.status}!`);
   };
@@ -325,49 +325,9 @@ const Home = () => {
     <>
       <main className="container">
         {wallet && (
-          <p className="pp">
+          <p className="pp">  
             Balance: {(balance || 0).toLocaleString()} staccRains
           </p>
-        )}
-        {!wallet && (
-          <div>
-            <Stuff>
-              <h1>Wen? sewn lol</h1>
-            </Stuff>
-            <Stuff>
-              <Link href="https://app.strataprotocol.com/swap/2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP">
-                <OtherBtn>Buy n Hodl</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharingz">
-                <OtherBtn>Genius / Foolishness</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta">
-                <OtherBtn>Sale</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://gist.github.com/staccDOTsol/b32a09727a216014a74e3f6058e5e80b">
-                <OtherBtn>Some DYOR</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-            <Stuff>
-              <Link href="https://stake.autist.design">
-                <OtherBtn>stake.autist.design</OtherBtn>
-              </Link>
-            </Stuff>
-            <br />
-
-            hmm moar alfa later lol
-            <br /> <ConnectButton>Connect Wallet</ConnectButton>
-          </div>
         )}
         {wallet && stage == Stage.PreBet && (
           <div>
@@ -402,6 +362,52 @@ const Home = () => {
             </Grid>
           </div>
         )}
+        {!wallet && (
+          <div> <ConnectButton>Connect Wallet</ConnectButton>
+            <Stuff>
+              <Link href="https://docs.google.com/document/d/1d3Xe6H1X4wc7WhnJC_bs1XwTPPOQ6Gt6FhLq5IUxBmg/edit?usp=sharing">
+                <OtherBtn>Grant Proposal</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            
+            <Stuff>
+              <Link href="https://app.strataprotocol.com/swap/2PAGcvionSsRsYv8vbbxbSfiNa8THnGT81q11vHU3faP">
+                <OtherBtn>Buy n Hodl</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+
+            <Stuff>
+              <Link href="https://docs.google.com/spreadsheets/d/17OQCwyKrzg93-PgA0uggyBplEL1cPVBe7KU0mx743u4/edit?usp=sharingz">
+                <OtherBtn>Genius / Foolishness</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="https://app.strataprotocol.com/lbcs/mint/FYQnbhwX7XjD3oZJNViSawg6dmzoCRCtUHHvzQZzN1Ux?cluster=mainnet-beta">
+                <OtherBtn>Sale</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="https://gist.github.com/staccDOTsol/b32a09727a216014a74e3f6058e5e80b">
+                <OtherBtn>Some DYOR</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+            <Stuff>
+              <Link href="https://stake.autist.design">
+                <OtherBtn>stake.autist.design</OtherBtn>
+              </Link>
+            </Stuff>
+            <br />
+
+            hmm moar alfa later lol
+            <br />
+          </div>
+        )}
+        
 
 {wallet && stage == Stage.PostBet && (
           <div>

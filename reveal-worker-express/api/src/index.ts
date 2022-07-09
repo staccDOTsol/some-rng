@@ -172,14 +172,14 @@ try {
             let ahm: boolean = false;
             if (!Object.keys(lols).includes(req.query.player as string)) {
               // @ts-ignore
-              lols[req.query.player] = new Date().getTime() + 1000 * 45;
+              lols[req.query.player] = new Date().getTime() + 1000 * 25;
               ahm = true;
             }
             // @ts-ignore
             else if (new Date().getTime() > lols[req.query.player]) {
               ahm = true;
               // @ts-ignore
-              lols[req.query.player] = new Date().getTime() + 1000 * 45;
+              lols[req.query.player] = new Date().getTime() + 1000 * 25;
             }
             if (ahm) {
               ////lols.push(req.query.player as string)
