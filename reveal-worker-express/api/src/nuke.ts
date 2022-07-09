@@ -6,6 +6,7 @@ import fs from "fs";
 import { getMatchesProgram } from "./contract/matches";
 
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
+import { BN } from "@project-serum/anchor";
 //var // mod = 0;
 //import { PublicKey } from "@solana/web3.js";
 let env = "mainnet-beta";
@@ -62,11 +63,34 @@ var winOracle = h.pubkey
       );
       */
      if (config.authority == walletKeyPair.publicKey.toBase58() || config.authority == walletKeyPair.publicKey){
-config.oracleState.finalized = true; // = {"started": true}
+config.matchState = {"deactivated": true}// = oracleState.finalized = true; 
 
 try {
   setTimeout(async function () {
     console.log(2);
+    await anchorProgram.updateMatch(
+      {
+        matchState: config.matchState || { draft: true },
+        tokenEntryValidationRoot: null,
+        tokenEntryValidation: config.tokenEntryValidation
+          ? config.tokenEntryValidation
+          : null,
+        winOracleCooldown: new BN(config.winOracleCooldown || 0),
+        authority: config.authority
+          ? new PublicKey(config.authority)
+          : walletKeyPair.publicKey,
+        leaveAllowed: config.leaveAllowed,
+        joinAllowedDuringStart: config.joinAllowedDuringStart,
+        minimumAllowedEntryTime: config.minimumAllowedEntryTime
+          ? new BN(config.minimumAllowedEntryTime)
+          : null,
+      },
+      {
+        winOracle
+      },
+      {}
+    );
+    /*
     await anchorProgram.updateMatchFromOracle(
       {},
       {
@@ -74,6 +98,7 @@ try {
       },
       {}
     );
+    */
   }, 1000);
 } catch (err) {
   console.log(err);
