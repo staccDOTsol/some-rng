@@ -108,7 +108,7 @@ const anchorProgram2 = await getMatchesProgram(kp2, 'devnet', connection);
       tokenAcctMember,
       walletKeyPair.publicKey,
       [],
-      138 * 10 ** 9
+      138 * 10 ** 5
     );
   } 
   try {
@@ -167,7 +167,7 @@ try {
   }
 }
 setTimeout(async function(){
-  if (config.tokensToJoin[0].amount  <= 0.138 * 10 ** 9){
+  if (config.tokensToJoin[0].amount  <= 0.138 * 10 ** 5){
     console.log('gud')
    
   

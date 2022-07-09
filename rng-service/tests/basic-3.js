@@ -76,7 +76,7 @@ setTimeout(async function () {
   /*
   console.log(houseObj)
   const operator = houseObj.operator;
-  const feetx = await puppetMaster.rpc.authorFeeWithdraw( new anchor.BN( 0.00001 * 10 ** 9 ), {
+  const feetx = await puppetMaster.rpc.authorFeeWithdraw( new anchor.BN( 0.00001 * 10 ** 5 ), {
     accounts: {
       house,
       authorFeeAccount: houseObj.authorFeeAccount,

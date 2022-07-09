@@ -111,7 +111,7 @@ const Home = () => {
     */
     console.log({
       player: wallet.publicKey.toBase58(),
-      risk: bet * 10 ** 9,
+      risk: bet * 10 ** 5,
 
       // uuid: localUuid,
       env: "mainnet-beta",
@@ -121,7 +121,7 @@ const Home = () => {
       //'https://warm-river-90393.herokuapp.com/reveal', {
       params: {
         player: wallet.publicKey.toBase58(),
-        risk: bet * 10 ** 9,
+        risk: bet * 10 ** 5,
 
         // uuid: localUuid,
         env: "mainnet-beta",

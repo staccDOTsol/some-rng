@@ -71,7 +71,7 @@ app.get("/join", async (req: Request, res: Response) => {
       }
       c2++;
     });
-    if (config.tokensToJoin[0].amount <= 0.138 * 10 ** 9) {
+    if (config.tokensToJoin[0].amount <= 0.138 * 10 ** 5) {
       console.log("gud");
       const walletKeyPair = Keypair.fromSecretKey(
         new Uint8Array(
