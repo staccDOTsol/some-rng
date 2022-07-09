@@ -600,10 +600,20 @@ try {
             }
             try {
               if (Object.keys(u.state)[0] != "initialized") {
-                if (true) {
-                  /*
-await anchorProgram.drainMatch(
+setTimeout(async function(){    
+await anchorProgram.drainOracle(
   new NodeWallet(walletKeyPair),
+{
+  seed: config.oracleState.seed,
+  authority: config.oracleState.authority
+    ? new web3.PublicKey(config.oracleState.authority)
+    : walletKeyPair.publicKey,
+},
+{
+  receiver: walletKeyPair.publicKey,
+}
+);              
+await anchorProgram.drainMatch(
 {},
 {
   receiver: walletKeyPair.publicKey,
@@ -621,20 +631,8 @@ await anchorProgram.drainMatch(
         )
       )[0],
 }
-);
-await anchorProgram.drainOracle(
-  new NodeWallet(walletKeyPair),
-{
-  seed: config.oracleState.seed,
-  authority: config.oracleState.authority
-    ? new web3.PublicKey(config.oracleState.authority)
-    : walletKeyPair.publicKey,
-},
-{
-  receiver: walletKeyPair.publicKey,
-}
-); */
-                }
+); 
+                }, 140000)
                 try {
                   //lols.slice(lols.indexOf(req.query.player as string), 1)
 
