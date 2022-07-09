@@ -20,7 +20,7 @@ if (fs.existsSync(".env")) {
     throw result.error;
   }
 }
-let twofiddy = 10;
+let twofiddy = 1;
 
 const app = express();
 app.use(bodyParser());
