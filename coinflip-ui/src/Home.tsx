@@ -294,7 +294,7 @@ const Home = () => {
           }
         }
       }
-    }, 73500);
+    }, 83500);
 
     //   setMsg(`You ${resp.data.status}!`);
   };
