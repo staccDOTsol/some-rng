@@ -7,7 +7,7 @@ Iris is like the social networking apps we're used to, but better.
 ![Screenshot](screenshot.png)
 
 ## Use
-Browser application: [iris.to](https://autist.design)
+Browser application: [iris.to](https://notiris.herokuapp.com)
 * No installation required
 * Progressive web app
   * Use offline
@@ -50,7 +50,7 @@ Profile names, photos and online status are currently public. That can be change
 The application is an unaudited proof-of-concept implementation, so don't use it for security critical purposes.
 
 ## Contact
-Join our [Discord](https://discord.gg/4Dgf54k) or send me a message on [Iris](https://autist.design/?chatWith=copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA&s=HlzYzNrhUsrn2PLi4yuRt6DiFUNM3hOmN8nFpgw6T-g&k=zvDfsInsMOI1).
+Join our [Discord](https://discord.gg/4Dgf54k) or send me a message on [Iris](https://notiris.herokuapp.com/?chatWith=copqEkzu3hmv1jM0xUOY_OyzIiJ33ihdqMQZMw5xRk0.ZUVZMvyyNoGl_Qbhr5gxDQV1NBRZGPy7UD3B9mk0DDA&s=HlzYzNrhUsrn2PLi4yuRt6DiFUNM3hOmN8nFpgw6T-g&k=zvDfsInsMOI1).
 
 ---
 

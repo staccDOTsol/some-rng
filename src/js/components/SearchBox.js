@@ -75,7 +75,7 @@ class SearchBox extends Component {
     if (!query) { return; }
 
     if (this.props.onSelect) {
-      const s = query.split('https://autist.design/profile/');
+      const s = query.split('https://notiris.herokuapp.com/profile/');
       if (s.length > 1) {
         return this.props.onSelect({key: s[1]});
       }

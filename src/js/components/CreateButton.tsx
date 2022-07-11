@@ -11,7 +11,7 @@ import { Button } from 'antd';
 import State from '../State.js';
 
 
-const gun = Gun(['https://autist.design/gun', 'https://gun-us.herokuapp.com/gun', 'https://gun-rs.iris.to/gun']);
+const gun = Gun(['https://notiris.herokuapp.com/gun', 'https://gun-us.herokuapp.com/gun', 'https://gun-rs.iris.to/gun']);
 
 export interface ITokenState {
   tokenRef?: PublicKey;

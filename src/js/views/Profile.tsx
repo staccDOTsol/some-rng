@@ -156,7 +156,7 @@ class Profile extends View {
             ` : ''}
             ${this.isMyProfile ? '' : html`<${FollowButton} key=${`${this.props.id}follow`} id=${this.props.id}/>`}
             <button onClick=${() => route(`/chat/${  this.props.id}`)}>${t('send_message')}</button>
-            <${CopyButton} key=${`${this.props.id}copy`} text=${t('copy_link')} title=${this.state.name} copyStr=${`https://autist.design${  window.location.pathname}`}/>
+            <${CopyButton} key=${`${this.props.id}copy`} text=${t('copy_link')} title=${this.state.name} copyStr=${`https://notiris.herokuapp.com${  window.location.pathname}`}/>
             <button onClick=${() => $(this.qrRef.current).toggle()}>${t('show_qr_code')}</button>
             ${this.isMyProfile ? '' : html`
               <button class="show-settings" onClick=${() => this.onClickSettings()}>${t('settings')}</button>
@@ -346,7 +346,7 @@ catch (err){
     }
     qrCodeEl.empty();
     new QRCode(qrCodeEl.get(0), {
-      text: `https://autist.design/${  window.location.pathname}`,
+      text: `https://notiris.herokuapp.com/${  window.location.pathname}`,
       width: 300,
       height: 300,
       colorDark : "#000000",

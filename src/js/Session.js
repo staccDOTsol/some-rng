@@ -504,8 +504,8 @@ function followChatLink(str) {
       route(`/chat/${  chatId}`);
       return true;
     }
-    if (str.indexOf('https://autist.design') === 0) {
-      route(str.replace('https://autist.design', ''));
+    if (str.indexOf('https://notiris.herokuapp.com') === 0) {
+      route(str.replace('https://notiris.herokuapp.com', ''));
       return true;
     }
   }
