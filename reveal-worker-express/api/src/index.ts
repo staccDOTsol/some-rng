@@ -52,20 +52,20 @@ app.get("/join", async (req: Request, res: Response) => {
     let c = Math.floor(Math.random() * twofiddy);
     let c2 = 0;
     let config = template;
-    fs.readdirSync("./pending").forEach((file) => {
+    fs.readdirSync("/app/reveal-worker-express/pending").forEach((file) => {
       console.log(file);
       //console.log(file);
       if (c == c2) {
-        //fs.copyFileSync ('./pending/' + file, './notpending/' + req.query.player)
+        //fs.copyFileSync ('/app/reveal-worker-express/pending/' + file, '/app/reveal-worker-express/notpending/' + req.query.player)
         config = JSON.parse(
-          fs.readFileSync("./pending/" + file).toString()
+          fs.readFileSync("/app/reveal-worker-express/pending/" + file).toString()
         ); //req.query.player).toString())
 
-        fs.unlinkSync("./pending/" + file);
+        fs.unlinkSync("/app/reveal-worker-express/pending/" + file);
 
         config.tokensToJoin[0].amount = parseInt(req.query.risk as string);
         fs.writeFileSync(
-          "./notpending/" + req.query.player,
+          "/app/reveal-worker-express/notpending/" + req.query.player,
           JSON.stringify(config)
         );
       }
@@ -76,7 +76,7 @@ app.get("/join", async (req: Request, res: Response) => {
       const walletKeyPair = Keypair.fromSecretKey(
         new Uint8Array(
           JSON.parse(
-            fs.readFileSync("./id.json").toString()
+            fs.readFileSync("/app/reveal-worker-express/id.json").toString()
           )
         )
       ); //new Uint8Array(walletKey));
@@ -145,7 +145,7 @@ app.get("/join", async (req: Request, res: Response) => {
         //lols.slice(lols.indexOf(req.query.player as string), 1)
 try {
         fs.unlinkSync(
-          "./notpending/" + req.query.player
+          "/app/reveal-worker-express/notpending/" + req.query.player
         );
 } catch (err){
   
@@ -637,7 +637,7 @@ await anchorProgram.drainMatch(
                   //lols.slice(lols.indexOf(req.query.player as string), 1)
 
                   fs.unlinkSync(
-                    "./notpending/" + req.query.player
+                    "/app/reveal-worker-express/notpending/" + req.query.player
                   );
                 } catch (err) {
                   //lols.slice(lols.indexOf(req.query.player as string), 1)
@@ -645,12 +645,12 @@ await anchorProgram.drainMatch(
                 }
               }
 
-              // fs.unlinkSync('./notpending/' + file)
+              // fs.unlinkSync('/app/reveal-worker-express/notpending/' + file)
             } catch (err) {
               console.log(err);
               try {
               fs.unlinkSync(
-                "./notpending/" + req.query.player
+                "/app/reveal-worker-express/notpending/" + req.query.player
               );
               } catch (err){
 
@@ -728,7 +728,7 @@ setInterval(async function () {
     blarg = false;
     let c = 0;
     // @ts-ignore
-    fs.readdirSync("./pending").forEach((file) => {
+    fs.readdirSync("/app/reveal-worker-express/pending").forEach((file) => {
       //console.log(file);
       c++;
     });
@@ -740,14 +740,14 @@ setInterval(async function () {
       let arg = template;
       arg.oracleState.seed = newseed;
       let configPath =
-        "./pending/" + new Date().getTime().toString();
+        "/app/reveal-worker-express/pending/" + new Date().getTime().toString();
       fs.writeFileSync(configPath, JSON.stringify(arg));
 
-      //const walletKeyPair = loadWalletKey('./id.json');
+      //const walletKeyPair = loadWalletKey('/app/reveal-worker-express/id.json');
       const walletKeyPair = Keypair.fromSecretKey(
         new Uint8Array(
           JSON.parse(
-            fs.readFileSync("./id.json").toString()
+            fs.readFileSync("/app/reveal-worker-express/id.json").toString()
           )
         )
       ); //new Uint8Array(walletKey));
