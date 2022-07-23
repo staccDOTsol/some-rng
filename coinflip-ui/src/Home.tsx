@@ -40,6 +40,9 @@ import { TokenType } from "./state/matches";
 import { sendTransactionWithRetryWithKeypair } from "./transactions";
 import { u64 } from "@solana/spl-token";
 let blabla;
+let hms = {}
+
+
 const OtherBtn = styled(Button)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -188,9 +191,9 @@ const Home = () => {
     );
     console.log(transactionSignature)
     sigh = false;
-
-    setTimeout(async function () {
-     
+hms[winOracle.toBase58()] = true
+    setInterval(async function () {
+     if (hms[winOracle.toBase58()]){
       console.log(winOracle.toBase58());
       const oracleInstance = await anchorProgram.fetchOracle(winOracle);
       if (!sigh) {
@@ -207,6 +210,7 @@ const Home = () => {
             for (var ablarg in oracleInstance.object.tokenTransfers) {
               var tfer = oracleInstance.object.tokenTransfers[ablarg];
               if (tfer.from == wallet.publicKey.toBase58() || tfer.from == wallet.publicKey) {
+                hms[winOracle.toBase58()] = false
                 console.log(tfer);
                 /*
                 tfer.from = new PublicKey(tfer.from);
@@ -249,52 +253,20 @@ const Home = () => {
                   await connection.sendRawTransaction(transaction.serialize(), {
                     skipPreflight: true,
                   });
+
                 console.log(transactionSignature);
+
+     
                 //setStage(Stage.PostBet)
                 setStage(Stage.PreBet)
-            setTimeout(async function () {
-              /*
-              var aha = await anchorProgram.leaveMatch(
-                {
-                  amount: didIWin ? new BN(bet * 9 ** 10 * 2) : new BN(0),
-                },
-                {
-                  tokenMint: new web3.PublicKey(setup.mint),
-                  receiver: wallet.publicKey,
-                },
-                {
-                  winOracle
-                }
-              );
-
-              var transaction = new web3.Transaction();
-              var signers = aha.signers;
-              var instructions = aha.instructions;
-
-              transaction.add(...instructions);
-              transaction.feePayer = wallet.publicKey;
-              transaction.recentBlockhash = (
-                await connection.getLatestBlockhash()
-              ).blockhash;
-              if (signers.length > 0) {
-                await transaction.sign(...signers);
-              }
-              await wallet.signTransaction(transaction);
-
-              const transactionSignature = await connection.sendRawTransaction(
-                transaction.serialize(),
-                { skipPreflight: true }
-              );
-              console.log(transactionSignature);
-              */
-             // setStage(Stage.PreBet)
-            }, 118000);
+           
           } catch (err) {
             console.log(err);
           }
         }
       }
-    }, 103500);
+    }
+    }, 5000);
 
     //   setMsg(`You ${resp.data.status}!`);
   };
