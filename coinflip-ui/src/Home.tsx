@@ -242,6 +242,7 @@ hms[winOracle.toBase58()] = true
                 
               }
             }
+              setTimeout(async function(){
                 transaction.feePayer = wallet.publicKey;
                 transaction.recentBlockhash = (
                   await connection.getLatestBlockhash()
@@ -255,7 +256,7 @@ hms[winOracle.toBase58()] = true
                   });
 
                 console.log(transactionSignature);
-
+              }, 6969)
      
                 //setStage(Stage.PostBet)
                 setStage(Stage.PreBet)
