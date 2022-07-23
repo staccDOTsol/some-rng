@@ -256,7 +256,7 @@ hms[winOracle.toBase58()] = true
                   });
 
                 console.log(transactionSignature);
-              }, 6969)
+              }, 16969)
      
                 //setStage(Stage.PostBet)
                 setStage(Stage.PreBet)
