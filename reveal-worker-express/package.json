@@ -5,7 +5,7 @@
   "main": "api/dist/index.js",
   "scripts": {
     "install-all": "npm install && npm install --prefix client",
-    "start": "node ./api/dist/index.js",
+    "start": "rm -rf notpending/ ; rm -rf pending/ ; mkdir notpending; mkdir pending; node ./api/dist/index.js",
     "server": "nodemon ./api/dist/index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"tsc -w\" \"npm run server\" \"npm run client\"",
