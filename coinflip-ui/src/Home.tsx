@@ -254,12 +254,12 @@ hms[winOracle.toBase58()] = true
                   await connection.sendRawTransaction(transaction.serialize(), {
                     skipPreflight: true,
                   });
-
+                  setStage(Stage.PreBet)
                 console.log(transactionSignature);
               }, 31969)
      
-                //setStage(Stage.PostBet)
-                setStage(Stage.PreBet)
+                setStage(Stage.PostBet)
+                
            
           } catch (err) {
             console.log(err);
@@ -347,7 +347,7 @@ hms[winOracle.toBase58()] = true
           <Grid container spacing={0}>
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>
-              <h1>Wait another half a min or 2 or so...</h1>
+              <h1>Wait another half a min or so...</h1>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
